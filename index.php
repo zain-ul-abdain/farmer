@@ -25,7 +25,7 @@ include 'include/head.php';
           <div class="w3-panel w3-blue w3-center">
             <h1 class="w3-text-orange" style="text-shadow:1px 1px 0 #444">
               <img style="width: 100px;" src="logo.jpg" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-              <b>Welcome to the Farmer Connection</b>
+              <b>Welcome to the Farmer </b>
             </h1>
           </div>
         </div>
