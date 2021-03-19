@@ -450,13 +450,35 @@ function _comment(p,u){
 	aj.onreadystatechange = function () {
 
 		if (aj.readyState == 4 && aj.status == 200) {
-			// document.getElementById('content').innerHTML = aj.responseText;
-			// alert(aj.responseText);
 			_detail(p);
 		}
 	}
 
 	aj.open("POST", "pages/comment.php");
 	aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	aj.send("action=knowledge_base&comment="+comment+"&post_id="+p+"&user_id="+u);
+	aj.send("action=comment&comment="+comment+"&post_id="+p+"&user_id="+u);
 }
+
+/* Add Like Knowledge Base*/
+function _like(p,u){
+
+	alert(p + " " +u);
+	var aj;
+	if (window.XMLHttpRequest) {
+		aj = new XMLHttpRequest();
+	} else {
+		aj = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+
+	aj.onreadystatechange = function () {
+
+		if (aj.readyState == 4 && aj.status == 200) {
+			_detail(p);
+		}
+	}
+
+	aj.open("POST", "pages/comment.php");
+	aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	aj.send("action=like&post_id="+p+"&user_id="+u);
+}
+

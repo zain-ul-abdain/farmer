@@ -174,8 +174,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'detail') {
                 <p><?php echo $post['post_description']; ?></p>
 
                 <!-- Social sharing buttons -->
-                <button type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> Like</button>
-                <span class="float-right text-muted">45 likes - 2 comments</span>
+                <?php
+                $query55 = "SELECT * FROM post_like WHERE is_like='1' AND post_id='".$post['post_id']."' AND user_assign_role_id=".$_SESSION['user']['user_assign_role_id'];
+                $db->_result($query55);
+                  if ($db->result->num_rows) {
+                    ?>
+                <button style="color: blue;" type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> Liked</button>
+                    <?php
+                  }else{
+                    ?>
+                <button id="like" onclick="_like(<?php echo $id; ?>,<?php echo $_SESSION['user']['user_assign_role_id']; ?>)" type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> Like</button>
+                    <?php
+
+                  }
+                ?>
+                <span class="float-right text-muted">4 likes - 2 comments</span>
               </div>
               <!-- /.card-body -->
               <div class="card-footer card-comments">
