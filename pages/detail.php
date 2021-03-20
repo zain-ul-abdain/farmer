@@ -109,9 +109,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'detail') {
         <div id="display_box" style="display: none;">
           <div class="row">
 
-
-
-            <div class="col-12" style="position: absolute;">
+            <div class="col-9" style="position: absolute;">
               <div class="card card-widget">
                 <div class="card-header">
                   <div class="card-tools">
@@ -124,7 +122,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'detail') {
                   </div>
                 </div>
                 <div class="card-body">
-
                   <img id="img_box" src="https://dummyimage.com/vga">
                 </div>
               </div>
