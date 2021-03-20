@@ -4,7 +4,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'df') {
 
   require_once '../require/database.php';
 
-$q = "SELECT * FROM post
+  $q = "SELECT * FROM post
         INNER JOIN user_assign_role ON post.user_assign_role_id=user_assign_role.user_assign_role_id 
         INNER JOIN user_role ON user_role.user_role_id=user_assign_role.user_role_id 
         INNER JOIN category ON category.category_id=post.category_id 

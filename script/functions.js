@@ -274,12 +274,12 @@ function _close() {
 }
 
 /* Add comment Knowledge Base*/
-function _comment(p,u,a) {
+function _comment(p, u, a) {
   var comment = document.getElementById("comment").value;
 
   aj.onreadystatechange = function () {
     if (aj.readyState == 4 && aj.status == 200) {
-      _detail(p,a);
+      _detail(p, a);
     }
   };
 
@@ -294,7 +294,7 @@ function _comment(p,u,a) {
 function _like(p, u, a) {
   aj.onreadystatechange = function () {
     if (aj.readyState == 4 && aj.status == 200) {
-      _detail(p,a);
+      _detail(p, a);
     }
   };
 

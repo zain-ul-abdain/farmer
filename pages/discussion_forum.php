@@ -98,19 +98,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'discussion_forum') {
                         <td>
                           <select name="category" id="cat" class="form-control">
                             <option value="">Select Category</option>
-                            <?php 
-                              $db->_result("SELECT * FROM category INNER JOIN category_assign ON category.category_id=category_assign.category_id WHERE category_assign.post_type='discussion_forum' AND parent_category IS NULL");
-                              if ($db->result->num_rows) {
-                                while ($set = mysqli_fetch_assoc($db->result)) {
-                                ?>
-                                  <option value="<?php echo $set['category_id'];?>"><?php echo $set['category'];?></option>
-                                <?php
-                                }
-                              }else{
-                                ?>
-                                  <option value="">No Category</option>
-                                <?php
+                            <?php
+                            $db->_result("SELECT * FROM category INNER JOIN category_assign ON category.category_id=category_assign.category_id WHERE category_assign.post_type='discussion_forum' AND parent_category IS NULL");
+                            if ($db->result->num_rows) {
+                              while ($set = mysqli_fetch_assoc($db->result)) {
+                            ?>
+                                <option value="<?php echo $set['category_id']; ?>"><?php echo $set['category']; ?></option>
+                              <?php
                               }
+                            } else {
+                              ?>
+                              <option value="">No Category</option>
+                            <?php
+                            }
                             ?>
                           </select>
                         </td>
@@ -118,7 +118,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'discussion_forum') {
 
                       <tr>
                         <td colspan="2" align="center"><input type="submit" class="w3-button w3-green" name="discussion" value="POST"></td>
-                      </t>
+                        </t>
                     </tbody>
                   </table>
                 </form>
@@ -266,7 +266,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'discussion_forum') {
                         <div style="text-shadow: 1px 1px 2px black">
                           <h5 class="card-title text-primary text-white"><?php echo $rec['post_title']; ?></h5>
                           <p class="card-text text-white pb-2 pt-1">
-                          <p><?php echo $rec['first_name']." ".$rec['last_name']; ?></p>
+                          <p><?php echo $rec['first_name'] . " " . $rec['last_name']; ?></p>
                           <p><?php echo substr($rec['post_summary'], 0, 50); ?>...<a href="#" onclick="_detail(<?php echo $rec['post_id']; ?>,2)">Show details</a></p>
                           <p><i class="fa fa-tag"></i> <?php echo $rec['category']; ?></p>
                           </p>
