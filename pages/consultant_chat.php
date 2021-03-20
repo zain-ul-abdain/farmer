@@ -215,7 +215,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
                   </li>
                   <li>
                     <textarea></textarea>
-                    <button onclick="_rating()">Rate</button>
+                    <button onclick="_rating()" class="w3-button w3-success">Rate</button>
                   </li>
                   <!-- End Contact Item -->
                 </ul>
