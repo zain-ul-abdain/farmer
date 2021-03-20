@@ -1,7 +1,13 @@
 <?php
 
 require_once 'require/database.php';
-$q = "SELECT * FROM post INNER JOIN user_assign_role ON post.user_assign_role_id=user_assign_role.user_assign_role_id INNER JOIN user_role ON user_role.user_role_id=user_assign_role.user_role_id INNER JOIN category ON category.category_id=post.category_id INNER JOIN USER ON user.user_id=user_assign_role.user_id WHERE post_type='Discussion Forum' ORDER BY post.post_id DESC";
+$q = "SELECT * FROM post 
+      INNER JOIN user_assign_role ON post.user_assign_role_id=user_assign_role.user_assign_role_id 
+      INNER JOIN user_role ON user_role.user_role_id=user_assign_role.user_role_id 
+      INNER JOIN category ON category.category_id=post.category_id 
+      INNER JOIN USER ON user.user_id=user_assign_role.user_id 
+      WHERE post_type='Discussion Forum' 
+      ORDER BY post.post_id DESC";
 
 $db->_result($q);
 $res = $db->result;
@@ -24,6 +30,7 @@ $res = $db->result;
         $res = $db->result;
         $a = 0;
         while ($post = mysqli_fetch_assoc($res)) {
+
           $db->_result("SELECT added_on FROM post WHERE post_id=" . $post['post_id']);
           $time = mysqli_fetch_assoc($db->result);
           $a++;
@@ -34,19 +41,17 @@ $res = $db->result;
                 <div class="card-body">
                   <div class="card mb-2 bg-gradient-dark">
 
-                    <img style="width: auto;height: 300px;" class="card-img-top" src="https://media.istockphoto.com/photos/blur-office-meeting-background-business-people-working-group-in-picture-id1136476890?k=6&m=1136476890&s=170667a&w=0&h=107wDnv0hT_uEYEm0h8m4yrJJu4aIRyDzZdlDJqXe8Q=" alt="Dist Photo 1">
+                    <img style="width: auto;height: 300px; opacity: 0.5;" class="card-img-top" src="https://i.pinimg.com/originals/af/8d/63/af8d63a477078732b79ff9d9fc60873f.jpg" alt="Dist">
 
                     <div class="card-img-overlay d-flex flex-column justify-content-end">
 
-                      <div style="text-shadow: 1px 1px 2px black">
+                      <div>
                         <h5 class="card-title text-primary text-white"><?php echo $post['post_title']; ?></h5>
-                        <p class="card-text text-white pb-2 pt-1">
-                          <?php echo $post['post_description']; ?>..<a href="#" onclick="_detail(<?php echo $post['post_id']; ?>)">Show more</a>
-
-
+                        <p class="card-text text-white pb-2 pt-1" style="text-shadow: 2px 2px 1px black;">
                         <p><?php echo $post['first_name'] . " " . $post['last_name'] . " (" . $post['user_role'] . ")"; ?></p>
-                        <p><?php echo "Category : " . $post['category']; ?></p>
-                        <p class="text-white"><i class="fa fa-clock"> Posted on: <?php echo date('H:i a d-M-y', strtotime($time['added_on'])); ?></i></p>
+
+                        <p><?php echo substr($post['post_summary'], 0, 50); ?>...<a href="#" onclick="_detail(<?php echo $post['post_id']; ?>,2)">Show details</a></p>
+                        <p><i class="fa fa-tag"></i> <?php echo $post['category']; ?></p>
                         </p>
                       </div>
                     </div>

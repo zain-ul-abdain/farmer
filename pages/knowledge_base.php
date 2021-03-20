@@ -59,8 +59,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'knowledge_base') {
         </div>
 
         <?php
-          if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] != 'Other') {
-          ?>
+        if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] != 'Other') {
+        ?>
 
           <div class="card card-danger direct-chat direct-chat-danger shadow-lg collapsed-card">
 
@@ -93,10 +93,22 @@ if (isset($_POST['action']) && $_POST['action'] == 'knowledge_base') {
                       <tr>
                         <td>Category</td>
                         <td>
-                          <select id="category" class="form-control" name="category" onchange="get_child_category()">
-                            <option value="">Select category</option>
-                            <option value="1">Rice</option>
-                            <option value="3">Fruit</option>
+                          <select name="category" id="cat" class="form-control">
+                            <option value="">Select Category</option>
+                            <?php
+                            $db->_result("SELECT * FROM category INNER JOIN category_assign ON category.category_id=category_assign.category_id WHERE category_assign.post_type='Knowledge_Base' AND parent_category IS NULL");
+                            if ($db->result->num_rows) {
+                              while ($set = mysqli_fetch_assoc($db->result)) {
+                            ?>
+                                <option value="<?php echo $set['category_id']; ?>"><?php echo $set['category']; ?></option>
+                              <?php
+                              }
+                            } else {
+                              ?>
+                              <option value="">No Category</option>
+                            <?php
+                            }
+                            ?>
                           </select>
                         </td>
                       </tr>
@@ -152,7 +164,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'knowledge_base') {
                       <b>
                         <h4><?php echo $post['post_title']; ?></h4>
                       </b>
-                      <p><?php echo substr($post['post_summary'], 0, 80); ?>..<a href="#" onclick="_detail(<?php echo $post['post_id']; ?>)">Show details</a></p>
+                      <p><?php echo substr($post['post_summary'], 0, 80); ?>..<a href="#" onclick="_detail(<?php echo $post['post_id']; ?>,1)">Show details</a></p>
                       <div class="row mb-3">
                         <div class="col-sm-6">
                           <?php
@@ -253,8 +265,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'knowledge_base') {
                               INNER JOIN user_role ON user_role.user_role_id=user_assign_role.user_role_id 
                               INNER JOIN category ON category.category_id=post.category_id 
                               INNER JOIN USER ON user.user_id=user_assign_role.user_id 
-                              WHERE post_type='Knowledge Base' 
-                              ORDER BY post.post_id DESC LIMIT 4";
+                                                WHERE post_type='Knowledge Base' 
+                                                ORDER BY post.post_id DESC LIMIT 4";
                 $result = mysqli_query($db->connection, $query);
                 if ($result->num_rows) {
                   while ($rec = mysqli_fetch_assoc($result)) {
@@ -266,13 +278,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'knowledge_base') {
                 ?>
                     <div class="card mb-2 bg-gradient-dark">
 
-                      <img style="width: auto;height: 300px;" class="card-img-top" src="<?php echo $rec2['file_name']; ?>" alt="Dist">
+                      <img style="width: auto;height: 300px; opacity: 0.5;" class="card-img-top" src="<?php echo $rec2['file_name']; ?>" alt="Dist">
 
                       <div class="card-img-overlay d-flex flex-column justify-content-end">
 
-                        <div style="text-shadow: 1px 1px 2px black">
+                        <div>
                           <h5 class="card-title text-primary text-white"><?php echo $rec['post_title']; ?></h5>
-                          <p class="card-text text-white pb-2 pt-1">
+                          <p class="card-text text-white pb-2 pt-1" style="text-shadow: 2px 2px 1px black;">
+                          <p><?php echo $rec['first_name'] . " " . $rec['last_name'] . " (" . $rec['user_role'] . ")"; ?></p>
+
                           <p><?php echo substr($rec['post_summary'], 0, 50); ?>...<a href="#" onclick="_detail(<?php echo $rec['post_id']; ?>,1)">Show details</a></p>
                           <p><i class="fa fa-tag"></i> <?php echo $rec['category']; ?></p>
                           </p>

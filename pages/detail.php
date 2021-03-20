@@ -12,6 +12,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'detail') {
   $db->_result($q);
   $res = $db->result;
 
+  $a = ($_POST['num'] == 2) ? 2 : 1;
+
 ?>
   <!-- Post -->
   <style type="text/css">
@@ -107,16 +109,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'detail') {
         <div id="display_box" style="display: none;">
           <div class="row">
 
-            <div class="col-2">
-            </div>
 
-            <div class="col-8" style="position: absolute;">
+
+            <div class="col-12" style="position: absolute;">
               <div class="card card-widget">
                 <div class="card-header">
                   <div class="card-tools">
-                    <button type="button" class="btn btn-tool" title="Mark as read">
-                      <i class="far fa-circle"></i>
-                    </button>
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
                     </button>
@@ -131,8 +129,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'detail') {
                 </div>
               </div>
             </div>
-            <div class="col-2">
-            </div>
+
           </div>
         </div>
         <?php
@@ -150,7 +147,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'detail') {
             // $pics = mysqli_fetch_assoc($result);
         ?>
             <div id="blur" class="row">
-              <div class="col-6">
+              <div <?php if ($_POST['num'] != 2) {
+                      echo "class='col-6'";
+                    } else {
+                      echo "class='col-12'";
+                    } ?>>
                 <!-- Box Comment -->
                 <div class="card card-widget">
                   <div class="card-header">
@@ -179,29 +180,30 @@ if (isset($_POST['action']) && $_POST['action'] == 'detail') {
 
                     <!-- Social sharing buttons -->
                     <?php
-                      if (isset($_SESSION['user'])) {
-                        $query55 = "SELECT * FROM post_like WHERE is_like='1' AND post_id='" . $post['post_id'] . "' AND user_assign_role_id=" . $_SESSION['user']['user_assign_role_id'];
-                        $db->_result($query55);
-                        if ($db->result->num_rows) {
-                          ?>
-                            <button style="color: blue;" type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> Liked</button>
-                          <?php
-                        }else {
-                          ?>
-                            <button id="like" onclick="_like(<?php echo $id; ?>,<?php echo $_SESSION['user']['user_assign_role_id']; ?>)" type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> Like</button>
-                          <?php
-
-                        }
-                      }
-
-                      $qw = "SELECT count(post_like_id) AS 'likes' FROM post_like WHERE is_like=1 AND post_id=".$post['post_id']; 
-                      $db->_result($qw);
-                      $like = mysqli_fetch_assoc($db->result);
-                      $qw = "SELECT count(post_reply_id) AS 'comments' FROM post_reply WHERE post_id=".$post['post_id']; 
-                      $db->_result($qw);
-                      $comment = mysqli_fetch_assoc($db->result);
+                    if (isset($_SESSION['user'])) {
+                      $query55 = "SELECT * FROM post_like WHERE is_like='1' AND post_id='" . $post['post_id'] . "' AND user_assign_role_id=" . $_SESSION['user']['user_assign_role_id'];
+                      $db->_result($query55);
+                      if ($db->result->num_rows) {
                     ?>
-                    <span class="float-right text-muted"><?php echo $like['likes']." likes - ";echo $comment['comments']." comments"; ?></span>
+                        <button style="color: blue;" type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> Liked</button>
+                      <?php
+                      } else {
+                      ?>
+                        <button id="like" onclick="_like(<?php echo $id; ?>,<?php echo $_SESSION['user']['user_assign_role_id']; ?>,<?php echo $a; ?>)" type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> Like</button>
+                    <?php
+
+                      }
+                    }
+
+                    $qw = "SELECT count(post_like_id) AS 'likes' FROM post_like WHERE is_like=1 AND post_id=" . $post['post_id'];
+                    $db->_result($qw);
+                    $like = mysqli_fetch_assoc($db->result);
+                    $qw = "SELECT count(post_reply_id) AS 'comments' FROM post_reply WHERE post_id=" . $post['post_id'];
+                    $db->_result($qw);
+                    $comment = mysqli_fetch_assoc($db->result);
+                    ?>
+                    <span class="float-right text-muted"><?php echo $like['likes'] . " likes - ";
+                                                          echo $comment['comments'] . " comments"; ?></span>
                   </div>
                   <!-- /.card-body -->
                   <div class="card-footer card-comments">
@@ -240,7 +242,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'detail') {
                           <div class="img-push">
                             <input id="comment" type="text" class="form-control" placeholder="Post your comment here ..!">
                           </div>
-                          <button onclick="_comment(<?php echo $id; ?>,<?php echo $_SESSION['user']['user_assign_role_id']; ?>)" class="btn btn-danger">Send</button>
+                          <button onclick="_comment(<?php echo $id; ?>,<?php echo $_SESSION['user']['user_assign_role_id']; ?>,<?php echo $a; ?>)" class="btn btn-danger">Send</button>
                         </div>
                       </div>
                     </div>
@@ -253,104 +255,109 @@ if (isset($_POST['action']) && $_POST['action'] == 'detail') {
                 </div>
                 <!-- /.card -->
               </div>
+              <?php
+              if ($_POST['num'] != 2) {
+              ?>
+                <div class="col-6">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="mt-5 ">Post Attachments</h4>
+                      <ul class="nav nav-tabs" id="custom-content-above-tab" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link active" id="custom-content-above-home-tab" data-toggle="pill" href="#custom-content-above-home" role="tab" aria-controls="custom-content-above-home" aria-selected="true">Images</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="custom-content-above-profile-tab" data-toggle="pill" href="#custom-content-above-profile" role="tab" aria-controls="custom-content-above-profile" aria-selected="false">Audio</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="custom-content-above-messages-tab" data-toggle="pill" href="#custom-content-above-messages" role="tab" aria-controls="custom-content-above-messages" aria-selected="false">Video</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="custom-content-above-settings-tab" data-toggle="pill" href="#custom-content-above-settings" role="tab" aria-controls="custom-content-above-settings" aria-selected="false">Documents</a>
+                        </li>
+                      </ul>
+                      <div class="tab-content" id="custom-content-above-tabContent">
+                        <div class="tab-pane fade show active" id="custom-content-above-home" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
+                          <?php
+                          $query1   = "SELECT * FROM post_attachment WHERE file_type='image' AND post_id = $id";
+                          $result1  = mysqli_query($db->connection, $query1);
 
-              <div class="col-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="mt-5 ">Post Attachments</h4>
-                    <ul class="nav nav-tabs" id="custom-content-above-tab" role="tablist">
-                      <li class="nav-item">
-                        <a class="nav-link active" id="custom-content-above-home-tab" data-toggle="pill" href="#custom-content-above-home" role="tab" aria-controls="custom-content-above-home" aria-selected="true">Images</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="custom-content-above-profile-tab" data-toggle="pill" href="#custom-content-above-profile" role="tab" aria-controls="custom-content-above-profile" aria-selected="false">Audio</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="custom-content-above-messages-tab" data-toggle="pill" href="#custom-content-above-messages" role="tab" aria-controls="custom-content-above-messages" aria-selected="false">Video</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="custom-content-above-settings-tab" data-toggle="pill" href="#custom-content-above-settings" role="tab" aria-controls="custom-content-above-settings" aria-selected="false">Documents</a>
-                      </li>
-                    </ul>
-                    <div class="tab-content" id="custom-content-above-tabContent">
-                      <div class="tab-pane fade show active" id="custom-content-above-home" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
-                        <?php
-                        $query1   = "SELECT * FROM post_attachment WHERE file_type='image' AND post_id = $id";
-                        $result1  = mysqli_query($db->connection, $query1);
-
-                        if ($result1->num_rows) {
-                          while ($img = mysqli_fetch_assoc($result1)) {
-                        ?>
-                            <img onclick="light_box(this)" style="width: 150px;height: 150px;" src="<?php echo $img['file_name']; ?>">
-                        <?php
+                          if ($result1->num_rows) {
+                            while ($img = mysqli_fetch_assoc($result1)) {
+                          ?>
+                              <img onclick="light_box(this)" style="width: 150px;height: 150px;" src="<?php echo $img['file_name']; ?>">
+                          <?php
+                            }
                           }
-                        }
 
-                        ?>
-                      </div>
-                      <div class="tab-pane fade" id="custom-content-above-profile" role="tabpanel" aria-labelledby="custom-content-above-profile-tab">
-                        <?php
-                        $query1   = "SELECT * FROM post_attachment WHERE file_type='audio' AND post_id = $id";
-                        $result1  = mysqli_query($db->connection, $query1);
+                          ?>
+                        </div>
+                        <div class="tab-pane fade" id="custom-content-above-profile" role="tabpanel" aria-labelledby="custom-content-above-profile-tab">
+                          <?php
+                          $query1   = "SELECT * FROM post_attachment WHERE file_type='audio' AND post_id = $id";
+                          $result1  = mysqli_query($db->connection, $query1);
 
-                        if ($result1->num_rows) {
-                          $a = 0;
-                          while ($img = mysqli_fetch_assoc($result1)) {
-                            $a++;
-                        ?>
-                            <br>
-                            <audio controls>
-                              <source src="<?php echo $img['file_name']; ?>" type="audio/mpeg">
-                              Your browser does not support the audio element.
-                            </audio>
-                        <?php
+                          if ($result1->num_rows) {
+                            $a = 0;
+                            while ($img = mysqli_fetch_assoc($result1)) {
+                              $a++;
+                          ?>
+                              <br>
+                              <audio controls>
+                                <source src="<?php echo $img['file_name']; ?>" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                              </audio>
+                          <?php
+                            }
                           }
-                        }
 
-                        ?>
-                      </div>
-                      <div class="tab-pane fade" id="custom-content-above-messages" role="tabpanel" aria-labelledby="custom-content-above-messages-tab">
-                        <?php
-                        $query1   = "SELECT * FROM post_attachment WHERE file_type='video' AND post_id = $id";
-                        $result1  = mysqli_query($db->connection, $query1);
+                          ?>
+                        </div>
+                        <div class="tab-pane fade" id="custom-content-above-messages" role="tabpanel" aria-labelledby="custom-content-above-messages-tab">
+                          <?php
+                          $query1   = "SELECT * FROM post_attachment WHERE file_type='video' AND post_id = $id";
+                          $result1  = mysqli_query($db->connection, $query1);
 
-                        if ($result1->num_rows) {
-                          $a = 0;
-                          while ($img = mysqli_fetch_assoc($result1)) {
-                            $a++;
-                        ?>
-                            <video width="320" height="240" controls>
-                              <source src="<?php echo $img['file_name']; ?>" type="video/mp4">
-                              Your browser does not support the video tag.
-                            </video>
-                        <?php
+                          if ($result1->num_rows) {
+                            $a = 0;
+                            while ($img = mysqli_fetch_assoc($result1)) {
+                              $a++;
+                          ?>
+                              <video width="320" height="240" controls>
+                                <source src="<?php echo $img['file_name']; ?>" type="video/mp4">
+                                Your browser does not support the video tag.
+                              </video>
+                          <?php
+                            }
                           }
-                        }
 
-                        ?>
-                      </div>
-                      <div class="tab-pane fade" id="custom-content-above-settings" role="tabpanel" aria-labelledby="custom-content-above-settings-tab">
-                        <?php
-                        $query1   = "SELECT * FROM post_attachment WHERE file_type='application' AND post_id = $id";
-                        $result1  = mysqli_query($db->connection, $query1);
+                          ?>
+                        </div>
+                        <div class="tab-pane fade" id="custom-content-above-settings" role="tabpanel" aria-labelledby="custom-content-above-settings-tab">
+                          <?php
+                          $query1   = "SELECT * FROM post_attachment WHERE file_type='application' AND post_id = $id";
+                          $result1  = mysqli_query($db->connection, $query1);
 
-                        if ($result1->num_rows) {
-                          $a = 0;
-                          while ($img = mysqli_fetch_assoc($result1)) {
-                            $a++;
-                        ?>
-                            <br>
-                            <a href="<?php echo $img['file_name']; ?>"><?php echo "Document_" . $a; ?></a>
-                        <?php
+                          if ($result1->num_rows) {
+                            $a = 0;
+                            while ($img = mysqli_fetch_assoc($result1)) {
+                              $a++;
+                          ?>
+                              <br>
+                              <a href="<?php echo $img['file_name']; ?>"><?php echo "Document_" . $a; ?></a>
+                          <?php
+                            }
                           }
-                        }
 
-                        ?>
+                          ?>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              <?php
+              }
+              ?>
 
             </div>
         <?php
