@@ -462,7 +462,6 @@ function _comment(p,u){
 /* Add Like Knowledge Base*/
 function _like(p,u){
 
-	alert(p + " " +u);
 	var aj;
 	if (window.XMLHttpRequest) {
 		aj = new XMLHttpRequest();

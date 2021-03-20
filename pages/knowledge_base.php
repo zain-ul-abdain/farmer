@@ -59,8 +59,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'knowledge_base') {
         </div>
 
         <?php
-        if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] != 'Other') {
-        ?>
+          if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] != 'Other') {
+          ?>
 
           <div class="card card-danger direct-chat direct-chat-danger shadow-lg collapsed-card">
 

@@ -32,18 +32,24 @@ if (isset($_POST['action']) && $_POST['action'] == 'discussion_forum') {
         </div>
 
         <?php
-        if (!empty($_SESSION['user']) && $_SESSION['user']['user_role'] != "Other" && $_SESSION['user']['user_role'] != "Consultant") {
+        if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] != 'Other') {
         ?>
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-12">
-                <div class="w3-card-4 w3-margin">
 
-                  <form class="w3-container" action="forms/post_process.php" method="POST" enctype="multipart/form-data">
-                    <div class="w3-container w3-blue">
-                      <h3>Start Thread</h3>
-                    </div>
-                    <table class="w3-table">
+          <div class="card card-danger direct-chat direct-chat-danger shadow-lg collapsed-card">
+
+            <div class="card-header">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-plus"> Create Thread</i>
+              </button>
+            </div>
+
+            <div class="card-body" style="display: none;">
+              <div class="direct-chat-messages" style="height: 470px;">
+
+                <form class="w3-container" action="forms/post_process.php" method="POST" enctype="multipart/form-data">
+                  <div id="child"></div>
+                  <table class="w3-table">
+                    <tbody>
                       <tr>
                         <td>Title</td>
                         <td><input type="text" class="form-control" name="title"></td>
@@ -54,38 +60,33 @@ if (isset($_POST['action']) && $_POST['action'] == 'discussion_forum') {
                       </tr>
                       <tr>
                         <td>Description</td>
-                        <td><textarea name="desc" class="form-control" cols="30" rows="5"></textarea></td>
+                        <td><textarea name="desc" class="form-control" cols="30" rows="5"></textarea>
+                        </td>
                       </tr>
                       <tr>
                         <td>Category</td>
                         <td>
                           <select id="category" class="form-control" name="category" onchange="get_child_category()">
                             <option value="">Select category</option>
-                            <?php
-                            $db->_result("SELECT * FROM category INNER JOIN category_assign ON category.category_id=category_assign.category_id WHERE category_assign.post_type='discussion_forum' AND parent_category IS NULL");
-                            $a = $db->result;
-                            while ($category = mysqli_fetch_assoc($db->result)) {
-                            ?>
-                              <option value="<?php echo $category['category_id']; ?>"><?php echo $category['category']; ?></option>
-                            <?php
-                            }
-                            ?>
+                            <option value="1">Rice</option>
                           </select>
                         </td>
                       </tr>
-                      <div id="child"></div>
+
                       <tr>
                         <td colspan="2" align="center"><input type="submit" class="w3-button w3-green" name="discussion" value="POST"></td>
                       </tr>
-                    </table>
-                  </form>
-                </div>
+                    </tbody>
+                  </table>
+                </form>
+
               </div>
             </div>
           </div>
         <?php
         }
         ?>
+
 
       </div><!-- /.container-fluid -->
     </section>
