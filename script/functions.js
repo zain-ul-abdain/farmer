@@ -111,8 +111,9 @@ function _manage() {
 }
 
 /* Chat with Consultant*/
-function chat_open(a) {
+function chat_open(a, b) {
   var id = a;
+  var category_id = b;
 
   aj.onreadystatechange = function () {
     if (aj.readyState == 4 && aj.status == 200) {
@@ -122,7 +123,7 @@ function chat_open(a) {
 
   aj.open("POST", "pages/consultant_chat.php");
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  aj.send("action=consultant_chat&id=" + id);
+  aj.send("action=consultant_chat&id=" + id + "&category_id=" + category_id);
 }
 
 /* Add Post*/
@@ -285,20 +286,9 @@ function _star(stars) {
 }
 
 /* Rating Consultant*/
-function _rating() {
+function _rating(star,msg) {
+  // var star = document.getElementId("star").value;
+  // var msg = document.getElementId("rating_msg").value;
 
-  var star  = document.getElementId("star").value;
-  var msg   = document.getElementId("rating_msg").value;
-
-  alert(star);
-
-  aj.onreadystatechange = function () {
-    if (aj.readyState == 4 && aj.status == 200) {
-      document.getElementById("msg").innerHTML = aj.responseText;
-    }
-  };
-
-  //aj.open("POST","pages/manage_users.php");
-  //aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  //aj.send("action=active_user&id="+id+"&status="+status);
+  alert(star, msg);
 }

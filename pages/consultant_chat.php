@@ -2,7 +2,7 @@
 if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
 
   require_once '../require/database.php';
-
+  session_start();
   $id = $_POST['id'];
 
   $db->_result("SELECT * FROM user WHERE user_id=" . $id);
@@ -145,13 +145,18 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
                         <input onclick="_star(this.value)" type="radio" id="star1" name="rate" value="1" />
                         <label for="star1" title="text">1 star</label>
                       </div>
-                      <input type="hidden"  id="star" value="0">
+                      <input type="hidden" id="star" value="0">
+
                       <!-- /.contacts-list-info -->
                     </a>
                   </li>
                   <li>
                     <textarea id="rating_msg"></textarea>
-                    <button onclick="_rating(<?php echo $_SESSION['user']['user_assign_role_id'];?>,)" class="w3-button w3-success">Rate</button>
+                    <?php
+                    if (isset($_SESSION['user'])) { ?>
+                      <button onclick="_rating(<?php echo $_SESSION['user']['user_assign_role_id']; ?>)" class="w3-button w3-success">Rate</button>
+                    <?php
+                    } ?>
                   </li>
                   <!-- End Contact Item -->
                 </ul>
@@ -168,6 +173,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
                     <button type="submit" class="btn btn-primary">Send</button>
                   </span>
                 </div>
+                <input type="hidden" id="category_id" value="<?php echo $_POST['category_id']; ?>">
               </form>
             </div>
             <!-- /.card-footer-->
@@ -186,123 +192,3 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
 <?php
 }
 ?>
-  <div class="content-wrapper">
-
-        <div class="col-12">
-          <!-- DIRECT CHAT DANGER -->
-          <div class="card card-danger direct-chat direct-chat-danger shadow-lg">
-            <div class="card-header">
-              <h3 class="card-title">Shadow - Large</h3>
-
-              <div class="card-tools">
-                <span title="3 New Messages" class="badge">3</span>
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
-                  <i class="fas fa-comments"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-              <!-- Conversations are loaded here -->
-              <div class="direct-chat-messages">
-            
-                         
-                    <div class="container-fluid">
-                      <div class="row">
-                        <div class="col-12">
-                          <div class="w3-card-4 w3-margin">
-
-                            <form class="w3-container" action="forms/post_process.php" method="POST" enctype="multipart/form-data">
-                              <div class="w3-container w3-blue">
-                                <h3>Create Post</h3>
-                              </div>
-                              <table class="w3-table">
-                                <tr>
-                                  <td>Title</td>
-                                  <td><input type="text" class="form-control" name="title"></td>
-                                </tr>
-                                <tr>
-                                  <td>Summary</td>
-                                  <td><input type="text" class="form-control" name="summary"></td>
-                                </tr>
-                                <tr>
-                                  <td>Description</td>
-                                  <td><textarea name="desc" class="form-control" cols="30" rows="5"></textarea></td>
-                                </tr>
-                                <tr>
-                                  <td>Category</td>
-                                  <td>
-                                    <select id="category" class="form-control" name="category" onchange="get_child_category()">
-                                      <option value="">Select category</option>
-                                      <?php
-                                      $db->_result("SELECT * FROM category INNER JOIN category_assign ON category.category_id=category_assign.category_id WHERE category_assign.post_type='Knowledge_Base' AND parent_category IS NULL");
-                                      $a = $db->result;
-                                      while ($category = mysqli_fetch_assoc($db->result)) {
-                                      ?>
-                                        <option value="<?php echo $category['category_id']; ?>"><?php echo $category['category']; ?></option>
-                                      <?php
-                                      }
-                                      ?>
-                                    </select>
-                                  </td>
-                                </tr>
-                                <div id="child"></div>
-                                <tr>
-                                  <td>Attachments </td>
-                                  <td>
-                                    <div class="custom-file">
-                                      <input type="file" name="file[]" class="custom-file-input" id="customFile" multiple>
-                                      <label class="custom-file-label" for="customFile">Choose file</label>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td colspan="2" align="center"><input type="submit" class="w3-button w3-green" name="submit" value="POST"></td>
-                                </tr>
-                              </table>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                 
-
-                
-              </div>
-              <!--/.direct-chat-messages-->
-
-              <!-- Contacts are loaded here -->
-              <div class="direct-chat-contacts">
-                <ul class="contacts-list">
-                  <li>
-                    <a href="#">
-                      <img class="contacts-list-img" src="../dist/img/user1-128x128.jpg" alt="User Avatar">
-
-                      <div class="contacts-list-info">
-                        <span class="contacts-list-name">
-                          Count Dracula
-                          <small class="contacts-list-date float-right">2/28/2015</small>
-                        </span>
-                        <span class="contacts-list-msg">How have you been? I was...</span>
-                      </div>
-                      <!-- /.contacts-list-info -->
-                    </a>
-                  </li>
-                  <!-- End Contact Item -->
-                </ul>
-                <!-- /.contatcts-list -->
-              </div>
-              <!-- /.direct-chat-pane -->
-            </div>
-            <!-- /.card-body -->
-           
-            <!-- /.card-footer-->
-          </div>
-          <!--/.direct-chat -->
-        </div>

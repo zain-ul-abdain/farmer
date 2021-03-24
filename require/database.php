@@ -52,10 +52,10 @@
 			$this->result = mysqli_query($this->connection,$query);
 		}
 
-		public function _register($first_name,$last_name,$email,$password,$img,$city_id,$exp_lvl,$phone,$add){
+		public function _register($first_name,$last_name,$email,$password,$img,$city_id,$exp_lvl,$phone,$add,$category_id){
 
-			$q = "INSERT INTO user(first_name,last_name,user_email,user_password,user_image,city_id,expert_level,phone_number,address)
-					VALUES('$first_name','$last_name','$email','$password','$img','$city_id','$exp_lvl','$phone','$add')";
+			$q = "INSERT INTO user(first_name,last_name,user_email,user_password,user_image,city_id,expert_level,phone_number,address,category_id)
+					VALUES('$first_name','$last_name','$email','$password','$img','$city_id','$exp_lvl','$phone','$add','$category_id')";
 			$this->result = mysqli_query($this->connection,$q);
 			$this->last_id = mysqli_insert_id($this->connection);
 		}

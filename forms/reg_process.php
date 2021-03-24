@@ -62,7 +62,7 @@ if (isset($_POST['register'])) {
     if (isset($_POST['category'])) {
       # code...
     }
-    $db->_register($_POST['first_name'], $_POST['last_name'], $_POST['email'], hash("md5", $_POST['password']), "images/" . $_FILES['picture']['name'], $_POST['city'], $_POST['expert'], $_POST['number'], $_POST['address']);
+    $db->_register($_POST['first_name'], $_POST['last_name'], $_POST['email'], hash("md5", $_POST['password']), "images/" . $_FILES['picture']['name'], $_POST['city'], $_POST['expert'], $_POST['number'], $_POST['address'],$_POST['category']);
     if ($db->result) {
       echo "User Registered";
       $insert = "INSERT INTO user_assign_role(user_id,user_role_id) VALUES('" . $db->last_id . "','" . $_POST['role_id'] . "')";

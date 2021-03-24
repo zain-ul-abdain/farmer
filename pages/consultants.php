@@ -29,7 +29,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant') {
         <div class="card-body pb-0">
           <div class="row d-flex align-items-stretch">
             <?php
-            $db->query = "SELECT * FROM USER INNER JOIN user_assign_role ON user.user_id=user_assign_role.user_id INNER JOIN user_role ON user_role.user_role_id=user_assign_role.user_role_id WHERE user_role.user_role='Consultant'";
+            $db->query = "SELECT * FROM USER INNER JOIN category ON category.category_id=user.category_id INNER JOIN user_assign_role ON user.user_id=user_assign_role.user_id INNER JOIN user_role ON user_role.user_role_id=user_assign_role.user_role_id WHERE user_role.user_role='Consultant'";
             $db->result = mysqli_query($db->connection, $db->query);
             if ($db->result->num_rows) {
               while ($consultant = mysqli_fetch_assoc($db->result)) {
@@ -43,10 +43,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant') {
                       <div class="row">
                         <div class="col-7">
                           <h2 class="lead"><b><?php echo $consultant['first_name']; ?></b></h2>
-                          <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                          <p class="text-muted text-sm"><b>Consultancy Category: </b> <?php echo $consultant['category']; ?> </p>
                           <ul class="ml-4 mb-0 fa-ul text-muted">
-                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: Demo Street 123, Demo City 04312, NJ</li>
-                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: + 800 - 12 12 23 52</li>
+                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: <?php echo $consultant['address']; ?></li>
+                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: <?php echo $consultant['phone_number']; ?></li>
                           </ul>
                         </div>
                         <div class="col-5 text-center">
@@ -56,7 +56,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant') {
                     </div>
                     <div class="card-footer">
                       <div class="text-right">
-                        <a onclick="chat_open(<?php echo $consultant['user_id']; ?>)" href="#" class="btn btn-sm bg-teal">
+                        <a onclick="chat_open(<?php echo $consultant['user_id']; ?>,<?php echo $consultant['category_id']; ?>)" href="#" class="btn btn-sm bg-teal">
                           <i class="fas fa-comments"></i>
                         </a>
                         <a href="#" class="btn btn-sm btn-primary">
