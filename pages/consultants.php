@@ -50,13 +50,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant') {
                           </ul>
                         </div>
                         <div class="col-5 text-center">
-                          <img src="<?php echo $consultant['user_image']; ?>" alt="user-avatar" class="img-circle img-fluid">
+                          <img style="width: 200px; height: 150px;" src="<?php echo $consultant['user_image']; ?>" alt="user-avatar" class="img-circle img-fluid">
                         </div>
                       </div>
                     </div>
                     <div class="card-footer">
                       <div class="text-right">
-                        <a onclick="chat_open(<?php echo $consultant['user_id']; ?>,<?php echo $consultant['category_id']; ?>)" href="#" class="btn btn-sm bg-teal">
+                        <a onclick="chat_open(<?php echo $consultant['user_assign_role_id']; ?>,<?php echo $consultant['category_id']; ?>)" href="#" class="btn btn-sm bg-teal">
                           <i class="fas fa-comments"></i>
                         </a>
                         <a href="#" class="btn btn-sm btn-primary">

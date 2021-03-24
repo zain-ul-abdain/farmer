@@ -78,10 +78,26 @@ input[type=submit]:hover {
               </div>
               <div class="row">
                 <div class="col-25">
-                  <label for="lname">Summary</label>
+                  <label for="lname">Description</label>
                 </div>
                 <div class="col-75">
-                  <input type="text" id="lname" name="p_summary" placeholder="Product Summary">
+                  <input type="text" id="lname" name="p_desc" placeholder="Product Description">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-25">
+                  <label for="price">Price</label>
+                </div>
+                <div class="col-75">
+                  <input type="number" id="price" class="form-control" name="price" placeholder="Price">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-25">
+                  <label for="qty">Quantity</label>
+                </div>
+                <div class="col-75">
+                  <input type="number" id="qty" class="form-control" name="quantity" placeholder="Quantity">
                 </div>
               </div>
               <div class="row">
@@ -109,7 +125,7 @@ input[type=submit]:hover {
                   <label for="subject">Subject</label>
                 </div>
                 <div class="col-75">
-                  <input class="w3-input" type="file" name="file">
+                  <input class="w3-input" type="file" name="file[]" multiple>
                 </div>
               </div>
               <div class="row">

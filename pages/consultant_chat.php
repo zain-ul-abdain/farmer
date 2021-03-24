@@ -5,7 +5,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
   session_start();
   $id = $_POST['id'];
 
-  $db->_result("SELECT * FROM user WHERE user_id=" . $id);
+  $db->_result("SELECT * FROM user_assign_role INNER JOIN user ON user.user_id=user_assign_role.user_id  WHERE user_assign_role.user_assign_role_id=" . $id);
 
   if ($db->result->num_rows) {
 
@@ -67,7 +67,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
               <h3 class="card-title">Chat with <?php echo $user['first_name']; ?></h3>
 
               <div class="card-tools">
-                <span title="3 New Messages" class="badge bg-primary">3</span>
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
                 </button>
@@ -153,8 +152,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
                   <li>
                     <textarea id="rating_msg"></textarea>
                     <?php
+             
                     if (isset($_SESSION['user'])) { ?>
-                      <button onclick="_rating(<?php echo $_SESSION['user']['user_assign_role_id']; ?>)" class="w3-button w3-success">Rate</button>
+                      <button onclick="_rating(<?php echo $_SESSION['user']['user_assign_role_id']; ?>,<?php echo $user['user_assign_role_id'];?>)" class="w3-button w3-success">Rate</button>
                     <?php
                     } ?>
                   </li>
@@ -170,7 +170,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
                 <div class="input-group">
                   <input type="text" name="message" placeholder="Type Message ..." class="form-control">
                   <span class="input-group-append">
-                    <button type="submit" class="btn btn-primary">Send</button>
+                    <button onclick="chat_start(<?php echo $_SESSION['user']['user_assign_role_id'];?>)" type="button" class="btn btn-primary">Send</button>
                   </span>
                 </div>
                 <input type="hidden" id="category_id" value="<?php echo $_POST['category_id']; ?>">

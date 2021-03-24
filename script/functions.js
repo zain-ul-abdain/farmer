@@ -110,22 +110,6 @@ function _manage() {
   aj.send("action=manage_users");
 }
 
-/* Chat with Consultant*/
-function chat_open(a, b) {
-  var id = a;
-  var category_id = b;
-
-  aj.onreadystatechange = function () {
-    if (aj.readyState == 4 && aj.status == 200) {
-      document.getElementById("content").innerHTML = aj.responseText;
-    }
-  };
-
-  aj.open("POST", "pages/consultant_chat.php");
-  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  aj.send("action=consultant_chat&id=" + id + "&category_id=" + category_id);
-}
-
 /* Add Post*/
 function add_post() {
   aj.onreadystatechange = function () {
@@ -286,9 +270,29 @@ function _star(stars) {
 }
 
 /* Rating Consultant*/
-function _rating(star,msg) {
+function _rating(star, msg) {
   // var star = document.getElementId("star").value;
   // var msg = document.getElementId("rating_msg").value;
 
   alert(star, msg);
+}
+
+/* Chat with Consultant*/
+function chat_open(a, b) {
+  var id = a;
+  var category_id = b;
+
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      document.getElementById("content").innerHTML = aj.responseText;
+    }
+  };
+
+  aj.open("POST", "pages/consultant_chat.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=consultant_chat&id=" + id + "&category_id=" + category_id);
+}
+
+function chat_start() {
+  alert("ok123");
 }
