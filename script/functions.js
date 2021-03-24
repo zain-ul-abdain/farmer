@@ -169,30 +169,6 @@ function active(s, id) {
 }
 
 /* Rating Consultant*/
-function _rating() {
-  alert(document.getElementsByName("rate"));
-  var star = 0;
-
-  star += document.getElementById("star1").value;
-  star += document.getElementById("star2").value;
-  star += document.getElementById("star3").value;
-  star += document.getElementById("star4").value;
-  star += document.getElementById("star5").value;
-
-  alert(star);
-
-  aj.onreadystatechange = function () {
-    if (aj.readyState == 4 && aj.status == 200) {
-      document.getElementById("msg").innerHTML = aj.responseText;
-    }
-  };
-
-  //aj.open("POST","pages/manage_users.php");
-  //aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  //aj.send("action=active_user&id="+id+"&status="+status);
-}
-
-/* Rating Consultant*/
 function _detail(a, b) {
   var id = a;
   var num = b;
@@ -301,4 +277,28 @@ function _like(p, u, a) {
   aj.open("POST", "pages/comment.php");
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   aj.send("action=like&post_id=" + p + "&user_id=" + u + "&a=" + a);
+}
+
+/* Add Like Knowledge Base*/
+function _star(stars) {
+  document.getElementById("star").value = stars;
+}
+
+/* Rating Consultant*/
+function _rating() {
+
+  var star  = document.getElementId("star").value;
+  var msg   = document.getElementId("rating_msg").value;
+
+  alert(star);
+
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      document.getElementById("msg").innerHTML = aj.responseText;
+    }
+  };
+
+  //aj.open("POST","pages/manage_users.php");
+  //aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  //aj.send("action=active_user&id="+id+"&status="+status);
 }

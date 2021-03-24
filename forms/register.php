@@ -78,6 +78,30 @@ $db->_select("country");
       aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       aj.send("action=city&city=" + city);
     }
+
+    function consultant_category(role) {
+
+      if (role == 4) {
+        var aj;
+        if (window.XMLHttpRequest) {
+          aj = new XMLHttpRequest();
+        } else {
+          aj = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        aj.onreadystatechange = function() {
+
+          if (aj.readyState == 4 && aj.status == 200) {
+            document.getElementById('consultant_type').innerHTML = aj.responseText;
+            // alert(aj.responseText);
+          }
+        }
+
+        aj.open("POST", "reg_process.php");
+        aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        aj.send("action=role&role_id=" + role);
+      }
+    }
   </script>
 </head>
 
@@ -165,7 +189,7 @@ $db->_select("country");
 
           <div class="form-group">
 
-            <select name="role_id" class="form-control select2" style="width: 100%;" required>
+            <select name="role_id" onchange="consultant_category(this.value)" class="form-control select2" style="width: 100%;" required>
               <option value="">Select Role Type</option>
               <?php
               $query = "SELECT * FROM user_role";
@@ -184,6 +208,7 @@ $db->_select("country");
               ?>
             </select>
           </div>
+          <div id="consultant_type"></div>
 
           <div class="form-group">
 

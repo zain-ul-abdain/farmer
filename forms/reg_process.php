@@ -51,7 +51,7 @@ if (isset($_POST['action']) && $_POST['action'] == "city") {
       ?>
     </select>
   </div>
-<?php
+  <?php
 }
 if (isset($_POST['register'])) {
   echo "<pre>";
@@ -59,6 +59,9 @@ if (isset($_POST['register'])) {
   print_r($_FILES);
   if (move_uploaded_file($_FILES['picture']['tmp_name'], "../images/" . $_FILES['picture']['name'])) {
     echo "Picture Uploaded";
+    if (isset($_POST['category'])) {
+      # code...
+    }
     $db->_register($_POST['first_name'], $_POST['last_name'], $_POST['email'], hash("md5", $_POST['password']), "images/" . $_FILES['picture']['name'], $_POST['city'], $_POST['expert'], $_POST['number'], $_POST['address']);
     if ($db->result) {
       echo "User Registered";
@@ -66,18 +69,43 @@ if (isset($_POST['register'])) {
       $res = mysqli_query($db->connection, $insert);
       if ($res) {
         echo "Role Inserted";
-        header("location:register.php?msg=Registration Successfull..!");
+        // header("location:register.php?msg=Registration Successfull..!");
       } else {
-        header("location:register.php?msg=Role not inserted");
+        // header("location:register.php?msg=Role not inserted");
         echo "Role not Inserted";
       }
     } else {
       echo "User not Registered";
-      header("location:register.php?msg=Registration Failed");
+      // header("location:register.php?msg=Registration Failed");
     }
   } else {
     echo "image not uploaded";
-    header("location:register.php?msg=Image not uploaded");
+    // header("location:register.php?msg=Image not uploaded");
   }
 }
+
+
+if (isset($_POST['action']) && $_POST['action'] == "role") {
+  $db->_result("SELECT * FROM category_assign INNER JOIN category ON category.category_id=category_assign.category_id WHERE post_type='Consultancy'");
+
+  if ($db->result->num_rows) {
+  ?>
+    <div class="form-group">
+      <select name="category" name="category" id="category" class="form-control select2" required>
+        <option value="">Select Consultancy Type</option>
+        <?php
+        while ($rec = mysqli_fetch_assoc($db->result)) {
+        ?>
+          <option value="<?php echo $rec['category_id']; ?>"><?php echo $rec['category']; ?></option>
+        <?php
+        }
+        ?>
+      </select>
+    </div>
+<?php
+  }
+}
+
+
+
 ?>
