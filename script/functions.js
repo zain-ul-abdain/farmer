@@ -293,6 +293,20 @@ function chat_open(a, b) {
   aj.send("action=consultant_chat&id=" + id + "&category_id=" + category_id);
 }
 
-function chat_start() {
-  alert("ok123");
+function chat_start(u,c) {
+
+  let txt = document.getElementById("txt").value;
+  alert("User: "+u);
+  alert("Consultant: "+c);
+  alert("Query: "+txt);
+
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      document.getElementById("content").innerHTML = aj.responseText;
+    }
+  };
+
+  aj.open("POST", "pages/consultant_chat.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=consultant_chat&id=" + id + "&category_id=" + category_id);
 }

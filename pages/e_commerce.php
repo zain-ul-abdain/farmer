@@ -1,11 +1,4 @@
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="pages/shop/css/bootstrap.min.css">
-<!-- Site CSS -->
-<link rel="stylesheet" href="pages/shop/css/style.css">
-<!-- Responsive CSS -->
-<link rel="stylesheet" href="pages/shop/css/responsive.css">
-<!-- Custom CSS -->
-<link rel="stylesheet" href="pages/shop/css/custom.css">
+
 <?php
 
 session_start();
@@ -101,21 +94,3 @@ $item = mysqli_fetch_assoc($res);
 </div>
 <!-- /.content-wrapper -->
 
-<!-- ALL JS FILES -->
-<script src="pages/shop/js/jquery-3.2.1.min.js"></script>
-<script src="pages/shop/js/popper.min.js"></script>
-<script src="pages/shop/js/bootstrap.min.js"></script>
-<!-- ALL PLUGINS -->
-<script src="pages/shop/js/jquery.superslides.min.js"></script>
-<script src="pages/shop/js/bootstrap-select.js"></script>
-<script src="pages/shop/js/inewsticker.js"></script>
-<script src="pages/shop/js/bootsnav.js."></script>
-<script src="pages/shop/js/images-loded.min.js"></script>
-<script src="pages/shop/js/isotope.min.js"></script>
-<script src="pages/shop/js/owl.carousel.min.js"></script>
-<script src="pages/shop/js/baguetteBox.min.js"></script>
-<script src="pages/shop/js/jquery-ui.js"></script>
-<script src="pages/shop/js/jquery.nicescroll.min.js"></script>
-<script src="pages/shop/js/form-validator.min.js"></script>
-<script src="pages/shop/js/contact-form-script.js"></script>
-<script src="pages/shop/js/custom.js"></script>

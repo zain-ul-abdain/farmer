@@ -1,3 +1,22 @@
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="pages/shop/css/bootstrap.min.css">
+<!-- Site CSS -->
+<link rel="stylesheet" href="pages/shop/css/style.css">
+<!-- Responsive CSS -->
+<link rel="stylesheet" href="pages/shop/css/responsive.css">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="pages/shop/css/custom.css">
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- Site CSS -->
+<link rel="stylesheet" href="css/style.css">
+<!-- Responsive CSS -->
+<link rel="stylesheet" href="css/responsive.css">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="css/custom.css">
 <?php
 
 session_start();
@@ -54,7 +73,7 @@ $res = $db->result;
           $img = mysqli_fetch_assoc($db->result);
         ?>
 
-          <div class="col-lg-3 col-md-6 special-grid best-seller w3-card-4 w3-padding">
+          <div class="col-lg-3 col-md-6 special-grid best-seller">
             <div class="products-single fix">
               <div class="box-img-hover">
                 <div class="type-lb">
@@ -82,5 +101,42 @@ $res = $db->result;
 
       </div>
     </div>
+
+
   </div>
   <!-- End Products  -->
+
+  <!-- ALL JS FILES -->
+  <script src="pages/shop/js/jquery-3.2.1.min.js"></script>
+  <script src="pages/shop/js/popper.min.js"></script>
+  <script src="pages/shop/js/bootstrap.min.js"></script>
+  <!-- ALL PLUGINS -->
+  <script src="pages/shop/js/jquery.superslides.min.js"></script>
+  <script src="pages/shop/js/bootstrap-select.js"></script>
+  <script src="pages/shop/js/inewsticker.js"></script>
+  <script src="pages/shop/js/bootsnav.js."></script>
+  <script src="pages/shop/js/images-loded.min.js"></script>
+  <script src="pages/shop/js/isotope.min.js"></script>
+  <script src="pages/shop/js/owl.carousel.min.js"></script>
+  <script src="pages/shop/js/baguetteBox.min.js"></script>
+  <script src="pages/shop/js/jquery-ui.js"></script>
+  <script src="pages/shop/js/jquery.nicescroll.min.js"></script>
+  <script src="pages/shop/js/form-validator.min.js"></script>
+  <script src="pages/shop/js/contact-form-script.js"></script>
+  <script src="pages/shop/js/custom.js"></script>
+  <!-- ALL JS FILES -->
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <!-- ALL PLUGINS -->
+  <script src="js/jquery.superslides.min.js"></script>
+  <script src="js/bootstrap-select.js"></script>
+  <script src="js/inewsticker.js"></script>
+  <script src="js/bootsnav.js."></script>
+  <script src="js/images-loded.min.js"></script>
+  <script src="js/isotope.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/baguetteBox.min.js"></script>
+  <script src="js/form-validator.min.js"></script>
+  <script src="js/contact-form-script.js"></script>
+  <script src="js/custom.js"></script>

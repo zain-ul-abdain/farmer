@@ -168,9 +168,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
             <div class="card-footer">
               <form action="#" method="post">
                 <div class="input-group">
-                  <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                  <input id="txt" type="text" name="message" placeholder="Type Message ..." class="form-control">
                   <span class="input-group-append">
-                    <button onclick="chat_start(<?php echo $_SESSION['user']['user_assign_role_id'];?>)" type="button" class="btn btn-primary">Send</button>
+                    <button onclick="chat_start(<?php echo $_SESSION['user']['user_assign_role_id'];?>,<?php echo$user['user_assign_role_id'];?>)" type="button" class="btn btn-primary">Send</button>
                   </span>
                 </div>
                 <input type="hidden" id="category_id" value="<?php echo $_POST['category_id']; ?>">

@@ -14,25 +14,27 @@ if ($db->result) {
 
 		$file = $_FILES['file'];
 		$count = 0;
-		echo "mkdir = " . mkdir("../uploads/$last_id");
+		echo "mkdir = " . mkdir("../products/$last_id");
 
 		foreach ($_FILES['file']['name'] as $key => $value) {
 
 			$arr = explode("/", $file['type'][$key]);
 			$file_type = $arr[0];
-			$file_name = "uploads/$last_id/" . $_FILES['file']['name'][$key];
+			$file_name = "products/$last_id/" . $_FILES['file']['name'][$key];
 			$tmp_name = $_FILES['file']['tmp_name'][$key];
 
 			if (move_uploaded_file($tmp_name, "../" . $file_name)) {
 				$count++;
-				$insert = "INSERT INTO post_attachment(post_id,file_name,file_type) VALUES('$last_id','$file_name','$file_type')";
+				$insert = "INSERT INTO product_image(product_id,image_path) VALUES('$last_id','$file_name')";
 				$db->_result($insert);
 				echo "Image uploaded";
 			}
 		}
-		header("location:../index.php?action=product&msg=Product updated Successfully ..! $count files uploaded");
-		exit();
 	}
+	header("location:../index.php?action=product&msg=Product updated Successfully ..! $count files uploaded");
+	exit();
 } else {
+	header("location:../index.php?action=product&msg=Product not updated ..! $count files uploaded");
+	exit();
 	echo 'not ok';
 }
