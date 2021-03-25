@@ -1,3 +1,46 @@
+<style type="text/css">
+  .rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+  }
+
+  .rate:not(:checked)>input {
+    position: absolute;
+    top: -9999px;
+  }
+
+  .rate:not(:checked)>label {
+    float: right;
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 30px;
+    color: #ccc;
+  }
+
+  .rate:not(:checked)>label:before {
+    content: '★ ';
+  }
+
+  .rate>input:checked~label {
+    color: #ffc700;
+  }
+
+  .rate:not(:checked)>label:hover,
+  .rate:not(:checked)>label:hover~label {
+    color: #deb217;
+  }
+
+  .rate>input:checked+label:hover,
+  .rate>input:checked+label:hover~label,
+  .rate>input:checked~label:hover,
+  .rate>input:checked~label:hover~label,
+  .rate>label:hover~input:checked~label {
+    color: #c59b08;
+  }
+</style>
 <?php
 if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
 
@@ -14,49 +57,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
     echo "not ok";
   }
 ?>
-  <style type="text/css">
-    .rate {
-      float: left;
-      height: 46px;
-      padding: 0 10px;
-    }
-
-    .rate:not(:checked)>input {
-      position: absolute;
-      top: -9999px;
-    }
-
-    .rate:not(:checked)>label {
-      float: right;
-      width: 1em;
-      overflow: hidden;
-      white-space: nowrap;
-      cursor: pointer;
-      font-size: 30px;
-      color: #ccc;
-    }
-
-    .rate:not(:checked)>label:before {
-      content: '★ ';
-    }
-
-    .rate>input:checked~label {
-      color: #ffc700;
-    }
-
-    .rate:not(:checked)>label:hover,
-    .rate:not(:checked)>label:hover~label {
-      color: #deb217;
-    }
-
-    .rate>input:checked+label:hover,
-    .rate>input:checked+label:hover~label,
-    .rate>input:checked~label:hover,
-    .rate>input:checked~label:hover~label,
-    .rate>label:hover~input:checked~label {
-      color: #c59b08;
-    }
-  </style>
   <div class="content-wrapper">
     <div class="container-fluid">
       <div class="row">
@@ -152,9 +152,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
                   <li>
                     <textarea id="rating_msg"></textarea>
                     <?php
-             
+
                     if (isset($_SESSION['user'])) { ?>
-                      <button onclick="_rating(<?php echo $_SESSION['user']['user_assign_role_id']; ?>,<?php echo $user['user_assign_role_id'];?>)" class="w3-button w3-success">Rate</button>
+                      <button onclick="_rating(<?php echo $_SESSION['user']['user_assign_role_id']; ?>,<?php echo $user['user_assign_role_id']; ?>)" class="w3-button w3-success">Rate</button>
                     <?php
                     } ?>
                   </li>
@@ -170,7 +170,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
                 <div class="input-group">
                   <input id="txt" type="text" name="message" placeholder="Type Message ..." class="form-control">
                   <span class="input-group-append">
-                    <button onclick="chat_start(<?php echo $_SESSION['user']['user_assign_role_id'];?>,<?php echo$user['user_assign_role_id'];?>)" type="button" class="btn btn-primary">Send</button>
+                    <button onclick="chat_start(<?php echo $_SESSION['user']['user_assign_role_id']; ?>,<?php echo $user['user_assign_role_id']; ?>)" type="button" class="btn btn-primary">Send</button>
                   </span>
                 </div>
                 <input type="hidden" id="category_id" value="<?php echo $_POST['category_id']; ?>">

@@ -302,11 +302,12 @@ function chat_start(u,c) {
 
   aj.onreadystatechange = function () {
     if (aj.readyState == 4 && aj.status == 200) {
-      document.getElementById("content").innerHTML = aj.responseText;
+      // document.getElementById("content").innerHTML = aj.responseText;
+      alert(aj.responseText);
     }
   };
 
-  aj.open("POST", "pages/consultant_chat.php");
+  aj.open("POST", "pages/consultant_process.php");
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  aj.send("action=consultant_chat&id=" + id + "&category_id=" + category_id);
+  aj.send("action=consultant_chat&user_id=" + u + "&consultant_id=" + consultant_id+ "&query=" + txt);
 }
