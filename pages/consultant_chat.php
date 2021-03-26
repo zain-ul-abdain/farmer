@@ -152,9 +152,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
                   <li>
                     <textarea id="rating_msg"></textarea>
                     <?php
-
+             
                     if (isset($_SESSION['user'])) { ?>
-                      <button onclick="_rating(<?php echo $_SESSION['user']['user_assign_role_id']; ?>,<?php echo $user['user_assign_role_id']; ?>)" class="w3-button w3-success">Rate</button>
+                      <button onclick="_rating(<?php echo $_SESSION['user']['user_assign_role_id']; ?>,<?php echo $user['user_assign_role_id'];?>)" class="w3-button w3-success">Rate</button>
                     <?php
                     } ?>
                   </li>
@@ -170,7 +170,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
                 <div class="input-group">
                   <input id="txt" type="text" name="message" placeholder="Type Message ..." class="form-control">
                   <span class="input-group-append">
-                    <button onclick="chat_start(<?php echo $_SESSION['user']['user_assign_role_id']; ?>,<?php echo $user['user_assign_role_id']; ?>)" type="button" class="btn btn-primary">Send</button>
+                    <button onclick="chat_start(<?php echo $_SESSION['user']['user_assign_role_id'];?>,<?php echo$user['user_assign_role_id'];?>)" type="button" class="btn btn-primary">Send</button>
                   </span>
                 </div>
                 <input type="hidden" id="category_id" value="<?php echo $_POST['category_id']; ?>">
