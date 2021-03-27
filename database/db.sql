@@ -143,12 +143,17 @@ CREATE TABLE `consultancy_service` (
   PRIMARY KEY (`consultancy_service_id`),
   KEY `category_id` (`category_id`),
   CONSTRAINT `consultancy_service_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `consultancy_service` */
 
 insert  into `consultancy_service`(`consultancy_service_id`,`consultant`,`client`,`category_id`,`query`,`discussion_start`,`discussion_end`,`status`,`rating`,`feedback`) values 
-(33,6,8,1,'hi','2021-03-27 13:06:23','2021-03-27 13:06:43','Complete',4,'nice');
+(33,6,8,1,'hi','2021-03-27 13:06:23','2021-03-27 13:06:43','Complete',4,'nice'),
+(34,6,8,1,'how to you reply','2021-03-27 13:15:29','2021-03-27 13:15:43','Complete',4,'thanks'),
+(35,6,1,1,'null','2021-03-27 13:24:15','2021-03-27 13:24:15','In-Process',NULL,NULL),
+(36,8,10,1,'Fertilizer','2021-03-27 15:09:54','2021-03-27 15:12:20','In-Process',0,''),
+(37,6,1,1,'how are you','2021-03-27 15:19:03','2021-03-27 15:19:41','Complete',3,''),
+(38,10,1,1,'ok','2021-03-27 15:20:30','2021-03-27 15:20:30','In-Process',NULL,NULL);
 
 /*Table structure for table `consultancy_service_chat` */
 
@@ -163,13 +168,23 @@ CREATE TABLE `consultancy_service_chat` (
   PRIMARY KEY (`consultancy_service_chat_id`),
   KEY `consultancy_service_id` (`consultancy_service_id`),
   CONSTRAINT `consultancy_service_chat_ibfk_1` FOREIGN KEY (`consultancy_service_id`) REFERENCES `consultancy_service` (`consultancy_service_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `consultancy_service_chat` */
 
 insert  into `consultancy_service_chat`(`consultancy_service_chat_id`,`consultancy_service_id`,`chat_message`,`user_assign_role_id`,`added_on`) values 
 (37,33,'hi',8,'2021-03-27 13:06:23'),
-(38,33,'Hello, how can i fertilize rice?',8,'2021-03-27 13:06:31');
+(38,33,'Hello, how can i fertilize rice?',8,'2021-03-27 13:06:31'),
+(39,34,'how to you reply',8,'2021-03-27 13:15:29'),
+(40,34,'Hello, how can i fertilize rice?',8,'2021-03-27 13:15:34'),
+(41,35,'null',1,'2021-03-27 13:24:15'),
+(42,36,'Fertilizer',10,'2021-03-27 15:09:54'),
+(43,36,'Hello, how can i fertilize rice?',10,'2021-03-27 15:10:13'),
+(44,37,'how are you',1,'2021-03-27 15:19:03'),
+(45,37,'Hello, how can i fertilize rice?',1,'2021-03-27 15:19:19'),
+(46,38,'ok',1,'2021-03-27 15:20:30'),
+(47,36,'Hello, how can i fertilize rice?',10,'2021-03-27 15:21:43'),
+(48,36,'Hello, how can i fertilize rice?',10,'2021-03-27 15:35:43');
 
 /*Table structure for table `country` */
 
@@ -253,7 +268,7 @@ CREATE TABLE `post` (
   KEY `user_id` (`user_assign_role_id`),
   KEY `category_id` (`category_id`),
   CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_assign_role_id`) REFERENCES `user_assign_role` (`user_assign_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `post` */
 
@@ -265,7 +280,9 @@ insert  into `post`(`post_id`,`category_id`,`user_assign_role_id`,`post_title`,`
 (58,1,3,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',0,'2021-03-20 15:37:24',NULL,NULL),
 (59,1,2,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',0,'2021-03-20 15:37:26',NULL,NULL),
 (60,3,10,'Fruit','In botany, a fruit is the seed-bearing structure in flowering plants formed from the ovary after flowering. Fruits are the means by which angiosperms disseminate seeds','Fruit, the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Thus, apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits','Knowledge Base',0,'2021-03-20 12:38:21',NULL,NULL),
-(61,6,3,'Where can I get some?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable. ','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn&#039;t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.','Discussion Forum',0,'2021-03-20 15:36:38',NULL,NULL);
+(61,6,3,'Where can I get some?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable. ','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn&#039;t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.','Discussion Forum',0,'2021-03-20 15:36:38',NULL,NULL),
+(62,1,1,'Where can I get some?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Where can I get some?Where can I get some?There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',0,'2021-03-27 13:20:23',NULL,NULL),
+(63,6,1,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?What is Lorem Ipsum What is Lorem Ipsum?What is Lorem Ipsum What is Lorem Ipsum?','Discussion Forum',0,'2021-03-27 13:23:36',NULL,NULL);
 
 /*Table structure for table `post_attachment` */
 
@@ -315,7 +332,7 @@ CREATE TABLE `post_like` (
   `added_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`post_like_id`),
   KEY `post_id` (`post_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `post_like` */
 
@@ -329,7 +346,8 @@ insert  into `post_like`(`post_like_id`,`post_id`,`user_assign_role_id`,`is_like
 (10,60,10,1,'2021-03-20 12:38:59'),
 (11,61,3,1,'2021-03-20 15:49:14'),
 (12,60,3,1,'2021-03-20 15:49:22'),
-(13,58,3,1,'2021-03-20 16:26:05');
+(13,58,3,1,'2021-03-20 16:26:05'),
+(14,56,1,1,'2021-03-27 15:25:07');
 
 /*Table structure for table `post_reply` */
 
@@ -345,7 +363,7 @@ CREATE TABLE `post_reply` (
   PRIMARY KEY (`post_reply_id`),
   KEY `post_id` (`post_id`),
   KEY `user_assigned_role_id` (`user_assign_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `post_reply` */
 
@@ -357,7 +375,12 @@ insert  into `post_reply`(`post_reply_id`,`message`,`user_assign_role_id`,`post_
 (18,'Lorem Ipsum available, but the majority have suffered alteration in some form,',3,61,'2021-03-20 15:58:35',0),
 (19,'All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary,',3,61,'2021-03-20 16:01:23',0),
 (20,'The generated Lorem Ipsum is therefore always free from repetition',3,61,'2021-03-20 16:03:59',0),
-(21,'The generated Lorem Ipsum is therefore always free from repetition',3,56,'2021-03-20 16:03:59',0);
+(21,'The generated Lorem Ipsum is therefore always free from repetition',3,56,'2021-03-20 16:03:59',0),
+(22,'asd',1,56,'2021-03-27 15:25:22',0),
+(23,'Lorem Ipsum available, but the majority have suffered alteration in some form,',1,56,'2021-03-27 15:25:24',0),
+(24,'cha hal aa',1,56,'2021-03-27 15:25:33',0),
+(25,'Lorem Ipsum available, Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,but the majority have suffered alteration in some form,',1,56,'2021-03-27 15:25:45',0),
+(26,'Lorem Ipsum available, Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,but the majority have suffered alteration in some form,Lorem Ipsum available, Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,but the majority have suffered alteration in some form,Lorem Ipsum available, Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,but the majority have suffered alteration in some form,Lorem Ipsum available, Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,but the majority have suffered alteration in some form,',1,56,'2021-03-27 15:25:59',0);
 
 /*Table structure for table `product` */
 
@@ -522,10 +545,10 @@ insert  into `user`(`user_id`,`first_name`,`last_name`,`gender`,`user_email`,`us
 (2,'Aliya','Qureshi','Female','user2@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar2.png',3,'Intermediate','0311-1231231','',1,1,'2021-03-25 10:26:15',NULL,1),
 (3,'Siraj','Baig','Male','user3@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar4.png',4,'Intermediate','0345-1231231','',1,1,'2021-03-25 10:26:17',NULL,1),
 (5,'Nisar','Shah','Male','user4@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar4.png',5,'Beginner','0331-1231231','',1,1,'2021-03-25 10:26:19',NULL,1),
-(6,'Abdullah','Shah','Male','user5@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar5.png',6,'Intermediate','0312-1231231','',0,0,'2021-03-25 10:26:21',NULL,1),
+(6,'Abdullah','Shah','Male','user5@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar5.png',6,'Intermediate','0312-1231231','',0,1,'2021-03-27 15:17:06',NULL,1),
 (10,'Noshad','Ali','Male','user6@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/123.jpg',2,'Intermediate','0300-1231231','H# c-1 citizen colony',1,1,'2021-03-25 10:26:23',NULL,1),
 (12,'Rehman','Brohi','Male','user7@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/user1-128x128.jpg',2,'Intermediate','0312-1233214','PH-2 SUECHS',1,1,'2021-03-25 10:26:25',NULL,1),
-(14,'Sajjad','Rajper','Male','user8@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-1.jpg',3,'Beginner','0300-1231231','PH-2 SUECHS',1,0,'2021-03-25 10:26:26',NULL,1),
+(14,'Sajjad','Rajper','Male','user8@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-1.jpg',3,'Beginner','0300-1231231','PH-2 SUECHS',0,0,'2021-03-27 15:18:44',NULL,1),
 (18,'Sarang','Ali','Male','user9@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-3.jpg',1,'Intermediate','0300-1231231','PH-1 SUECHS',1,0,'2021-03-25 10:26:29',NULL,1);
 
 /*Table structure for table `user_assign_role` */
