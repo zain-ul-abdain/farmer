@@ -34,7 +34,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant') {
             $db->result = mysqli_query($db->connection, $db->query);
             if ($db->result->num_rows) {
               while ($consultant = mysqli_fetch_assoc($db->result)) {
-                if ($consultant['user_assign_role_id'] == $_SESSION['user']['user_assign_role_id']) {
+                if (isset($_SESSION['user']) && $consultant['user_assign_role_id'] == $_SESSION['user']['user_assign_role_id']) {
                   continue;
                 }
             ?>
