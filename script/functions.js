@@ -270,35 +270,10 @@ function _star(stars) {
 }
 
 /* Rating Consultant*/
-function _rating(star, msg) {
-  // var star = document.getElementId("star").value;
-  // var msg = document.getElementId("rating_msg").value;
+function _rating() {
 
-  alert(star, msg);
-}
-
-/* Chat with Consultant*/
-function chat_open(a, b) {
-  var id = a;
-  var category_id = b;
-
-  aj.onreadystatechange = function () {
-    if (aj.readyState == 4 && aj.status == 200) {
-      document.getElementById("content").innerHTML = aj.responseText;
-    }
-  };
-
-  aj.open("POST", "pages/consultant_chat.php");
-  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  aj.send("action=consultant_chat&id=" + id + "&category_id=" + category_id);
-}
-
-function chat_start(u,c) {
-
-  let txt = document.getElementById("txt").value;
-  alert("User: "+u);
-  alert("Consultant: "+c);
-  alert("Query: "+txt);
+  var star = document.getElementById("star").value;
+  var msg = document.getElementById("rating_msg").value;
 
   aj.onreadystatechange = function () {
     if (aj.readyState == 4 && aj.status == 200) {
@@ -309,5 +284,62 @@ function chat_start(u,c) {
 
   aj.open("POST", "pages/consultant_process.php");
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  aj.send("action=consultant_chat&user_id=" + u + "&consultant_id=" + consultant_id+ "&query=" + txt);
+  aj.send("action=consultant_rate&star=" + star + "&feedback="+msg);
+
+}
+
+/* Chat with Consultant*/
+function chat_open(a, b) {
+  if (a != null) {
+    var flag = false;
+    var id = a;
+    var category_id = b;
+
+    var query = prompt("Ask Query");
+
+    if (query) {
+      // alert('if');
+    } else {
+      flag = true;
+    }
+  }
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      if (flag) {
+        _consultant();
+      } else {
+        document.getElementById("content").innerHTML = aj.responseText;
+      }
+    }
+  };
+
+  aj.open("POST", "pages/consultant_chat.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  if (a != null) {
+    aj.send(
+      "action=consultant_chat&id=" +
+        id +
+        "&category_id=" +
+        category_id +
+        "&query=" +
+        query
+    );
+  } else {
+    aj.send("action=consultant_chat_update");
+  }
+}
+
+function chat_start() {
+  let txt = document.getElementById("txt").value;
+
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      // document.getElementById("content").innerHTML = aj.responseText;
+      chat_open();
+    }
+  };
+
+  aj.open("POST", "pages/consultant_process.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=consultant_chat&chat_message=" + txt);
 }

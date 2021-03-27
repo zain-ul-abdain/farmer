@@ -1,5 +1,6 @@
 <?php
 if (isset($_POST['action']) && $_POST['action'] == 'consultant') {
+  session_start();
   require_once '../require/database.php';
 ?>
   <script type="text/javascript">
@@ -56,7 +57,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant') {
                     </div>
                     <div class="card-footer">
                       <div class="text-right">
-                        <a onclick="chat_open(<?php echo $consultant['user_assign_role_id']; ?>,<?php echo $consultant['category_id']; ?>)" href="#" class="btn btn-sm bg-teal">
+                        <a <?php if(isset($_SESSION['user'])){?> onclick="chat_open(<?php echo $consultant['user_assign_role_id']; ?>,<?php echo $consultant['category_id']; ?>)" <?php }else{?> onclick="alert('Login First')"  <?php } ?> href="#" class="btn btn-sm bg-teal">
                           <i class="fas fa-comments"></i>
                         </a>
                         <a href="#" class="btn btn-sm btn-primary">
