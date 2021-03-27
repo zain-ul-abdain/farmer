@@ -135,17 +135,20 @@ CREATE TABLE `consultancy_service` (
   `client` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `query` longtext NOT NULL,
-  `discussion_start` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `discussion_end` timestamp NULL DEFAULT NULL,
+  `discussion_start` timestamp NOT NULL DEFAULT current_timestamp(),
+  `discussion_end` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` enum('In-Process','Complete') DEFAULT 'In-Process',
   `rating` int(1) DEFAULT NULL,
   `feedback` longtext DEFAULT NULL,
   PRIMARY KEY (`consultancy_service_id`),
   KEY `category_id` (`category_id`),
   CONSTRAINT `consultancy_service_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `consultancy_service` */
+
+insert  into `consultancy_service`(`consultancy_service_id`,`consultant`,`client`,`category_id`,`query`,`discussion_start`,`discussion_end`,`status`,`rating`,`feedback`) values 
+(33,6,8,1,'hi','2021-03-27 13:06:23','2021-03-27 13:06:43','Complete',4,'nice');
 
 /*Table structure for table `consultancy_service_chat` */
 
@@ -155,16 +158,18 @@ CREATE TABLE `consultancy_service_chat` (
   `consultancy_service_chat_id` int(11) NOT NULL AUTO_INCREMENT,
   `consultancy_service_id` int(11) NOT NULL,
   `chat_message` longtext NOT NULL,
-  `user_assigned_role_id` int(11) NOT NULL,
+  `user_assign_role_id` int(11) NOT NULL,
   `added_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`consultancy_service_chat_id`),
   KEY `consultancy_service_id` (`consultancy_service_id`),
-  KEY `user_assigned_role_id` (`user_assigned_role_id`),
-  CONSTRAINT `consultancy_service_chat_ibfk_1` FOREIGN KEY (`consultancy_service_id`) REFERENCES `consultancy_service` (`consultancy_service_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `consultancy_service_chat_ibfk_2` FOREIGN KEY (`user_assigned_role_id`) REFERENCES `user_assigned_role` (`user_assigned_role_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  CONSTRAINT `consultancy_service_chat_ibfk_1` FOREIGN KEY (`consultancy_service_id`) REFERENCES `consultancy_service` (`consultancy_service_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `consultancy_service_chat` */
+
+insert  into `consultancy_service_chat`(`consultancy_service_chat_id`,`consultancy_service_id`,`chat_message`,`user_assign_role_id`,`added_on`) values 
+(37,33,'hi',8,'2021-03-27 13:06:23'),
+(38,33,'Hello, how can i fertilize rice?',8,'2021-03-27 13:06:31');
 
 /*Table structure for table `country` */
 
