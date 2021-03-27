@@ -34,6 +34,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant') {
             $db->result = mysqli_query($db->connection, $db->query);
             if ($db->result->num_rows) {
               while ($consultant = mysqli_fetch_assoc($db->result)) {
+                if ($consultant['user_assign_role_id'] == $_SESSION['user']['user_assign_role_id']) {
+                  continue;
+                }
             ?>
                 <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
                   <div class="card bg-light">

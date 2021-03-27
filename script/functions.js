@@ -271,21 +271,19 @@ function _star(stars) {
 
 /* Rating Consultant*/
 function _rating() {
-
   var star = document.getElementById("star").value;
   var msg = document.getElementById("rating_msg").value;
 
   aj.onreadystatechange = function () {
     if (aj.readyState == 4 && aj.status == 200) {
-      // document.getElementById("content").innerHTML = aj.responseText;
-      alert(aj.responseText);
+      alert('Rated Successfully');
+      _consultant();
     }
   };
 
   aj.open("POST", "pages/consultant_process.php");
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  aj.send("action=consultant_rate&star=" + star + "&feedback="+msg);
-
+  aj.send("action=consultant_rate&star=" + star + "&feedback=" + msg);
 }
 
 /* Chat with Consultant*/
@@ -297,9 +295,7 @@ function chat_open(a, b) {
 
     var query = prompt("Ask Query");
 
-    if (query) {
-      // alert('if');
-    } else {
+    if (!query) {
       flag = true;
     }
   }
@@ -316,14 +312,7 @@ function chat_open(a, b) {
   aj.open("POST", "pages/consultant_chat.php");
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   if (a != null) {
-    aj.send(
-      "action=consultant_chat&id=" +
-        id +
-        "&category_id=" +
-        category_id +
-        "&query=" +
-        query
-    );
+    aj.send("action=consultant_chat&id="+id+"&category_id="+category_id+"&query="+query);
   } else {
     aj.send("action=consultant_chat_update");
   }
@@ -334,7 +323,6 @@ function chat_start() {
 
   aj.onreadystatechange = function () {
     if (aj.readyState == 4 && aj.status == 200) {
-      // document.getElementById("content").innerHTML = aj.responseText;
       chat_open();
     }
   };

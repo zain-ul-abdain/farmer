@@ -82,96 +82,57 @@
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
+
+        <?php
+        require_once 'require/database.php';
+        if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] == 'Consultant') {
+          $db->_result("SELECT count(consultant) AS 'Total' FROM consultancy_service WHERE status='In-Process' AND consultant=" . $_SESSION['user']['user_assign_role_id']);
+          $result = mysqli_fetch_assoc($db->result);
+        }
+        if (isset($_SESSION['user'])) {
+          $db->_result("SELECT * FROM consultancy_service INNER JOIN user_assign_role ON user_assign_role.user_assign_role_id=consultancy_service.client INNER JOIN USER ON user.user_id=user_assign_role.user_id WHERE status='In-Process' AND consultant=" . $_SESSION['user']['user_assign_role_id']);
+
+          if ($db->result->num_rows) {
+            while ($client = mysqli_fetch_assoc($db->result)) {
+        ?>
+              <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                  <i class="far fa-comments"></i>
+                  <span class="badge badge-danger navbar-badge"><?php echo  $result['Total']; ?></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                  <a onclick="chat_open(<?php echo $client['user_assign_role_id'];?>)" href="#" class="dropdown-item">
+                    <!-- Message Start -->
+                    <div class="media">
+                      <img src="<?php echo  $client['user_image']; ?>" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                      <div class="media-body">
+                        <h3 class="dropdown-item-title">
+                          <?php echo $client['first_name']; ?>
+                        </h3>
+                        <p class="text-sm"><?php echo  $client['query']; ?></p>
+                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i><?php echo  $client['discussion_start']; ?></p>
+                      </div>
+                    </div>
+                    <!-- Message End -->
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                </div>
+              </li>
+        <?php
+            }
+          }
+        }
+        ?>
+
         <!-- Messages Dropdown Menu -->
-        <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-comments"></i>
-            <span class="badge badge-danger navbar-badge">3</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <a href="#" class="dropdown-item">
-              <!-- Message Start -->
-              <div class="media">
-                <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    Brad Diesel
-                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">Call me whenever you can...</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <!-- Message Start -->
-              <div class="media">
-                <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    John Pierce
-                    <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">I got your message bro</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <!-- Message Start -->
-              <div class="media">
-                <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                    Nora Silvester
-                    <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                  </h3>
-                  <p class="text-sm">The subject goes here</p>
-                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                </div>
-              </div>
-              <!-- Message End -->
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-          </div>
-        </li>
-        <!-- Notifications Dropdown Menu -->
-        <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-bell"></i>
-            <span class="badge badge-warning navbar-badge">15</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-item dropdown-header">15 Notifications</span>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-envelope mr-2"></i> 4 new messages
-              <span class="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-users mr-2"></i> 8 friend requests
-              <span class="float-right text-muted text-sm">12 hours</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-file mr-2"></i> 3 new reports
-              <span class="float-right text-muted text-sm">2 days</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-          </div>
-        </li>
+
+
         <?php
         if (!empty($_SESSION['user'])) {
         ?>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Welcome: <?php echo $_SESSION['user']['first_name']." (".$_SESSION['user']['user_role'].")"; ?></a>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Welcome: <?php echo $_SESSION['user']['first_name'] . " (" . $_SESSION['user']['user_role'] . ")"; ?></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
             <a href="forms/login.php?msg=logout" class="nav-link">Log out</a>
@@ -189,7 +150,7 @@
         <?php
         }
         ?>
-        
+
       </ul>
     </nav>
     <!-- /.navbar -->
@@ -226,8 +187,8 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-            <?php 
-              if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] != "Other") { ?>
+            <?php
+            if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] != "Other") { ?>
 
               <li class="nav-item">
                 <a onclick="_dashboard()" id="dashboard" href="#" class="nav-link">
@@ -238,15 +199,15 @@
             <?php } ?>
 
             <?php
-        if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] == "Admin") {
-        ?>
-            <li class="nav-item">
-              <a onclick="_manage()" id="manage" href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Manage Users</p>
-              </a>
-            </li>
-          <?php }?>
+            if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] == "Admin") {
+            ?>
+              <li class="nav-item">
+                <a onclick="_manage()" id="manage" href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Users</p>
+                </a>
+              </li>
+            <?php } ?>
 
             <li class="nav-item">
               <a onclick="_knowledge_base()" id="knowledge_base" href="#" class="nav-link">
