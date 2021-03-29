@@ -276,7 +276,7 @@ function _rating() {
 
   aj.onreadystatechange = function () {
     if (aj.readyState == 4 && aj.status == 200) {
-      alert('Rated Successfully');
+      alert("Rated Successfully");
       _consultant();
     }
   };
@@ -312,12 +312,20 @@ function chat_open(a, b) {
   aj.open("POST", "pages/consultant_chat.php");
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   if (a != null) {
-    aj.send("action=consultant_chat&id="+id+"&category_id="+category_id+"&query="+query);
+    aj.send(
+      "action=consultant_chat&id=" +
+        id +
+        "&category_id=" +
+        category_id +
+        "&query=" +
+        query
+    );
   } else {
     aj.send("action=consultant_chat_update");
   }
 }
 
+/* Chat Open*/
 function chat_start() {
   let txt = document.getElementById("txt").value;
 
@@ -330,4 +338,34 @@ function chat_start() {
   aj.open("POST", "pages/consultant_process.php");
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   aj.send("action=consultant_chat&chat_message=" + txt);
+}
+
+/* Consultant reply of new chat opened*/
+function _chat(chat_id, user_id) {
+  // alert(chat_id,user_id);
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      document.getElementById("content").innerHTML = aj.responseText;
+      // alert(aj.responseText);
+    }
+  };
+
+  aj.open("POST", "pages/consultant_process.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=chat_open&chat_id=" + chat_id + "&user_id=" + user_id);
+}
+
+/* Consultant reply of new chat opened add reply to database*/
+function _chat_start(c,u) {
+  let txt = document.getElementById("txt").value;
+
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      _chat(c,u);
+    }
+  };
+
+  aj.open("POST", "pages/consultant_process.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=add_consultant_reply&chat_message=" + txt);
 }

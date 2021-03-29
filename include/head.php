@@ -83,6 +83,12 @@
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
 
+        <li onclick="chat_open()" class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="far fa-bell"></i>
+          </a>
+
+        </li>
         <?php
         require_once 'require/database.php';
         if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] == 'Consultant') {
@@ -95,13 +101,15 @@
           if ($db->result->num_rows) {
             while ($client = mysqli_fetch_assoc($db->result)) {
         ?>
+
+
               <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
                   <i class="far fa-comments"></i>
                   <span class="badge badge-danger navbar-badge"><?php echo  $result['Total']; ?></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                  <a onclick="chat_open(<?php echo $client['user_assign_role_id'];?>)" href="#" class="dropdown-item">
+                  <a onclick="_chat(<?php echo $client['consultancy_service_id']; ?>,<?php echo $client['user_assign_role_id']; ?>)" href="#" class="dropdown-item">
                     <!-- Message Start -->
                     <div class="media">
                       <img src="<?php echo  $client['user_image']; ?>" alt="User Avatar" class="img-size-50 mr-3 img-circle">

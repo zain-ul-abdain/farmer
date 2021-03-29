@@ -100,55 +100,55 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
                 <!-- Message. Default to the left -->
 
                 <?php
-                  $msg_query = "SELECT * FROM consultancy_service_chat WHERE consultancy_service_id = '" . $_SESSION['consultant_chat_last_id'] . "'";
-                  $db->_result($msg_query);
-                  if ($db->result->num_rows) {
-                    while ($msg = mysqli_fetch_assoc($db->result)) {
-                      if ($msg['user_assign_role_id'] == $_SESSION['user']['user_assign_role_id']) {
-                        ?>
-                          <!-- Message to the right -->
-                          <div class="direct-chat-msg right">
-                            <div class="direct-chat-infos clearfix">
-                              <span class="direct-chat-name float-right"><?php echo $_SESSION['user']['first_name']; ?></span>
-                              <span class="direct-chat-timestamp float-left"><?php echo $msg['added_on']; ?></span>
-                            </div>
-                            <!-- /.direct-chat-infos -->
-                            <img class="direct-chat-img" src="<?php echo $_SESSION['user']['user_image']; ?>" alt="Message User Image">
-                            <!-- /.direct-chat-img -->
-                            <div class="direct-chat-text">
-                              <?php echo $msg['chat_message']; ?>
-                            </div>
-                            <!-- /.direct-chat-text -->
-                          </div>
-                          <!-- /.direct-chat-msg -->
-                      <?php
-                      }else {
-                        $c = "SELECT * FROM user,user_assign_role WHERE user_assign_role.user_id =user.user_id";
-                        $res = mysqli_query($db->connection,$c);
-                        if ($db->result->num_rows) {
-                          echo "num rows";
-                        }else{
-                          echo "empty";
-                        }
-                        ?>
-                          <div class="direct-chat-msg">
-                            <div class="direct-chat-infos clearfix">
-                              <span class="direct-chat-name float-left">Alexander Pierce</span>
-                              <span class="direct-chat-timestamp float-right"><?php echo $msg['added_on']; ?></span>
-                            </div>
-                            <!-- /.direct-chat-infos -->
-                            <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="Message User Image">
-                            <!-- /.direct-chat-img -->
-                            <div class="direct-chat-text">
-                            <?php echo $msg['chat_message']; ?>
-                            </div>
-                            <!-- /.direct-chat-text -->
-                          </div>
-                          <!-- /.direct-chat-msg -->
-                        <?php
+                $msg_query = "SELECT * FROM consultancy_service_chat WHERE consultancy_service_id = '" . $_SESSION['consultant_chat_last_id'] . "'";
+                $db->_result($msg_query);
+                if ($db->result->num_rows) {
+                  while ($msg = mysqli_fetch_assoc($db->result)) {
+                    if ($msg['user_assign_role_id'] == $_SESSION['user']['user_assign_role_id']) {
+                ?>
+                      <!-- Message to the right -->
+                      <div class="direct-chat-msg right">
+                        <div class="direct-chat-infos clearfix">
+                          <span class="direct-chat-name float-right"><?php echo $_SESSION['user']['first_name']; ?></span>
+                          <span class="direct-chat-timestamp float-left"><?php echo $msg['added_on']; ?></span>
+                        </div>
+                        <!-- /.direct-chat-infos -->
+                        <img class="direct-chat-img" src="<?php echo $_SESSION['user']['user_image']; ?>" alt="Message User Image">
+                        <!-- /.direct-chat-img -->
+                        <div class="direct-chat-text">
+                          <?php echo $msg['chat_message']; ?>
+                        </div>
+                        <!-- /.direct-chat-text -->
+                      </div>
+                      <!-- /.direct-chat-msg -->
+                    <?php
+                    } else {
+                      $c = "SELECT * FROM user,user_assign_role WHERE user_assign_role.user_id =user.user_id";
+                      $res = mysqli_query($db->connection, $c);
+                      if ($db->result->num_rows) {
+                        echo "num rows";
+                      } else {
+                        echo "empty";
                       }
+                    ?>
+                      <div class="direct-chat-msg">
+                        <div class="direct-chat-infos clearfix">
+                          <span class="direct-chat-name float-left">Alexander Pierce</span>
+                          <span class="direct-chat-timestamp float-right"><?php echo $msg['added_on']; ?></span>
+                        </div>
+                        <!-- /.direct-chat-infos -->
+                        <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="Message User Image">
+                        <!-- /.direct-chat-img -->
+                        <div class="direct-chat-text">
+                          <?php echo $msg['chat_message']; ?>
+                        </div>
+                        <!-- /.direct-chat-text -->
+                      </div>
+                      <!-- /.direct-chat-msg -->
+                <?php
                     }
                   }
+                }
                 ?>
 
               </div>
@@ -209,7 +209,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
                     <button onclick="chat_start()" type="button" class="btn btn-primary">Send</button>
                   </span>
                 </div>
-                <input type="hidden" id="category_id" value="<?php echo $_POST['category_id']??''; ?>">
+                <input type="hidden" id="category_id" value="<?php echo $_POST['category_id'] ?? ''; ?>">
               </form>
             </div>
             <!-- /.card-footer-->
@@ -244,7 +244,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat_update') {
   <div class="content-wrapper">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12">
+        <div class="col-8">
           <!-- DIRECT CHAT PRIMARY -->
           <div class="card card-primary card-outline direct-chat direct-chat-primary shadow-large">
             <div class="card-header">
@@ -270,55 +270,57 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat_update') {
                 <!-- Message. Default to the left -->
 
                 <?php
-                  $msg_query = "SELECT * FROM consultancy_service_chat WHERE consultancy_service_id = '" . $_SESSION['consultant_chat_last_id'] . "'";
-                  $db->_result($msg_query);
-                  if ($db->result->num_rows) {
-                    while ($msg = mysqli_fetch_assoc($db->result)) {
-                      if ($msg['user_assign_role_id'] == $_SESSION['user']['user_assign_role_id']) {
-                        ?>
-                          <!-- Message to the right -->
-                          <div class="direct-chat-msg right">
-                            <div class="direct-chat-infos clearfix">
-                              <span class="direct-chat-name float-right"><?php echo $_SESSION['user']['first_name']; ?></span>
-                              <span class="direct-chat-timestamp float-left"><?php echo $msg['added_on']; ?></span>
-                            </div>
-                            <!-- /.direct-chat-infos -->
-                            <img class="direct-chat-img" src="<?php echo $_SESSION['user']['user_image']; ?>" alt="Message User Image">
-                            <!-- /.direct-chat-img -->
-                            <div class="direct-chat-text">
-                              <?php echo $msg['chat_message']; ?>
-                            </div>
-                            <!-- /.direct-chat-text -->
-                          </div>
-                          <!-- /.direct-chat-msg -->
+                $msg_query = "SELECT * FROM consultancy_service_chat WHERE consultancy_service_id = '" . $_SESSION['consultant_chat_last_id'] . "'";
+                $db->_result($msg_query);
+                if ($db->result->num_rows) {
+                  while ($msg = mysqli_fetch_assoc($db->result)) {
+                    if ($msg['user_assign_role_id'] == $_SESSION['user']['user_assign_role_id']) {
+                ?>
+                      <!-- Message to the right -->
+                      <div class="direct-chat-msg right">
+                        <div class="direct-chat-infos clearfix">
+                          <span class="direct-chat-name float-right"><?php echo $_SESSION['user']['first_name']; ?></span>
+                          <span class="direct-chat-timestamp float-left"><?php echo $msg['added_on']; ?></span>
+                        </div>
+                        <!-- /.direct-chat-infos -->
+                        <img class="direct-chat-img" src="<?php echo $_SESSION['user']['user_image']; ?>" alt="Message User Image">
+                        <!-- /.direct-chat-img -->
+                        <div class="direct-chat-text">
+                          <?php echo $msg['chat_message']; ?>
+                        </div>
+                        <!-- /.direct-chat-text -->
+                      </div>
+                      <!-- /.direct-chat-msg -->
                       <?php
-                      }else {
-                        $c = "SELECT * FROM user,user_assign_role WHERE user_assign_role.user_id =user.user_id";
-                        $res = mysqli_query($db->connection,$c);
-                        if ($db->result->num_rows) {
-                          echo "num rows";
-                        }else{
-                          echo "empty";
-                        }
-                        ?>
-                          <div class="direct-chat-msg">
-                            <div class="direct-chat-infos clearfix">
-                              <span class="direct-chat-name float-left">Alexander Pierce</span>
-                              <span class="direct-chat-timestamp float-right"><?php echo $msg['added_on']; ?></span>
-                            </div>
-                            <!-- /.direct-chat-infos -->
-                            <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="Message User Image">
-                            <!-- /.direct-chat-img -->
-                            <div class="direct-chat-text">
-                            <?php echo $msg['chat_message']; ?>
-                            </div>
-                            <!-- /.direct-chat-text -->
+                    } else {
+                      $c = "SELECT * FROM user,user_assign_role WHERE user_assign_role.user_id =user.user_id";
+                      $res = mysqli_query($db->connection, $c);
+                      if ($db->result->num_rows) {
+                      ?>
+                        <div class="direct-chat-msg">
+                          <div class="direct-chat-infos clearfix">
+                            <span class="direct-chat-name float-left">Alexander Pierce</span>
+                            <span class="direct-chat-timestamp float-right"><?php echo $msg['added_on']; ?></span>
                           </div>
-                          <!-- /.direct-chat-msg -->
-                        <?php
+                          <!-- /.direct-chat-infos -->
+                          <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="Message User Image">
+                          <!-- /.direct-chat-img -->
+                          <div class="direct-chat-text">
+                            <?php echo $msg['chat_message']; ?>
+                          </div>
+                          <!-- /.direct-chat-text -->
+                        </div>
+
+                      <?php
+                      } else {
+                        echo "empty";
                       }
+                      ?>
+                      <!-- /.direct-chat-msg -->
+                <?php
                     }
                   }
+                }
                 ?>
 
               </div>
@@ -379,7 +381,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat_update') {
                     <button onclick="chat_start()" type="button" class="btn btn-primary">Send</button>
                   </span>
                 </div>
-                <input type="hidden" id="category_id" value="<?php echo $_POST['category_id']??''; ?>">
+                <input type="hidden" id="category_id" value="<?php echo $_POST['category_id'] ?? ''; ?>">
               </form>
             </div>
             <!-- /.card-footer-->
