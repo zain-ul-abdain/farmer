@@ -39,10 +39,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'discussion_forum') {
     <section class="content-header">
       <div class="container-fluid">
 
-        <h1 class="w3-teal w3-padding-16" align="center"> Discussion Forum</h1>
+      <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Discussion Forum</h1>
+          </div>
+
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
         <div class="row">
           <div class="col-12">
-            <div class="w3-bar w3-blue-gray w3-card w3-padding">
+            <div class="w3-bar w3-card w3-padding">
               <p>Categories</p>
               <?php
               $db->_result("SELECT * FROM category 
@@ -52,7 +61,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'discussion_forum') {
               if ($db->result->num_rows) {
                 while ($c = mysqli_fetch_assoc($db->result)) {
               ?>
-                  <a href="#" class="w3-bar-item w3-button w3-text-white" onclick="category_post(<?php echo $c['category_id']; ?>,2)"><?php echo $c['category']; ?></a>
+                  <a href="#" class="w3-bar-item w3-button" onclick="category_post(<?php echo $c['category_id']; ?>,2)"><?php echo $c['category']; ?></a>
               <?php
                 }
               }
@@ -65,7 +74,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'discussion_forum') {
         if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] != 'Other' && $_SESSION['user']['user_role'] != 'Consultant') {
         ?>
 
-          <div class="card card-danger direct-chat direct-chat-danger shadow-lg collapsed-card">
+          <div class="card direct-chat direct-chat-danger shadow-lg collapsed-card">
 
             <div class="card-header">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -131,7 +140,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'discussion_forum') {
         ?>
 
         <div class="row">
-          <div class="col-8">
+          <div class="col-9">
             <div class="card">
               <div class="card-body" id="filter">
 
