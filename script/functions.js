@@ -215,7 +215,6 @@ function add_product_form() {
 function change_product_image(obj) {
   document.getElementById("main").src = obj;
 }
-
 /* Show single category posts*/
 function category_post(a, n) {
   var id = a;

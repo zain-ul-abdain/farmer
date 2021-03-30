@@ -260,9 +260,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'detail') {
                     <div class="card-body">
                       <h4 class="mt-5 ">Post Attachments</h4>
                       <ul class="nav nav-tabs" id="custom-content-above-tab" role="tablist">
-                        <li class="nav-item">
+
+                      <li class="nav-item active">
                           <a class="nav-link active" id="custom-content-above-home-tab" data-toggle="pill" href="#custom-content-above-home" role="tab" aria-controls="custom-content-above-home" aria-selected="true">Images</a>
                         </li>
+
                         <li class="nav-item">
                           <a class="nav-link" id="custom-content-above-profile-tab" data-toggle="pill" href="#custom-content-above-profile" role="tab" aria-controls="custom-content-above-profile" aria-selected="false">Audio</a>
                         </li>
@@ -274,7 +276,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'detail') {
                         </li>
                       </ul>
                       <div class="tab-content" id="custom-content-above-tabContent">
-                        <div class="tab-pane fade show active" id="custom-content-above-home" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
+                        <div class="tab-pane fade active in show" id="custom-content-above-home" role="tabpanel" aria-labelledby="custom-content-above-home-tab">
                           <?php
                           $query1   = "SELECT * FROM post_attachment WHERE file_type='image' AND post_id = $id";
                           $result1  = mysqli_query($db->connection, $query1);

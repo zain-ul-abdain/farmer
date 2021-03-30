@@ -15,7 +15,7 @@ if ($db->result) {
 		$file = $_FILES['file'];
 		$count = 0;
 		echo "mkdir = " . mkdir("../products/$last_id");
-
+		$a = 0;
 		foreach ($_FILES['file']['name'] as $key => $value) {
 
 			$arr = explode("/", $file['type'][$key]);
@@ -25,9 +25,15 @@ if ($db->result) {
 
 			if (move_uploaded_file($tmp_name, "../" . $file_name)) {
 				$count++;
-				$insert = "INSERT INTO product_image(product_id,image_path) VALUES('$last_id','$file_name')";
+				if ($a == 0) {
+					$insert = "INSERT INTO product_image(product_id,image_path,is_main) VALUES('$last_id','$file_name',1)";
+				}else{
+
+					$insert = "INSERT INTO product_image(product_id,image_path) VALUES('$last_id','$file_name')";
+				}
 				$db->_result($insert);
 				echo "Image uploaded";
+				$a++;
 			}
 		}
 	}
