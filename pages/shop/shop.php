@@ -31,6 +31,35 @@ $res = $db->result;
 
   <section class="content-header">
     <div class="container-fluid">
+
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>Farmers Online Store</h1>
+            </div>
+
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+      <div class="row">
+        <div class="col-12">
+          <div class="w3-bar w3-card w3-padding">
+            <p>Categories</p>
+            <?php
+            $db->_result("SELECT * FROM category INNER JOIN category_assign ON category.category_id=category_assign.category_id WHERE category_assign.post_type='E-Commerce' AND parent_category IS NULL");
+            if ($db->result->num_rows) {
+              while ($c = mysqli_fetch_assoc($db->result)) {
+            ?>
+                <a href="#" class="w3-bar-item w3-button" onclick="category_post(<?php echo $c['category_id']; ?>)"><?php echo $c['category']; ?></a>
+            <?php
+              }
+            }
+            ?>
+          </div>
+        </div>
+
+      </div>
       <?php
       if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] != 'Other') {
       ?>
@@ -40,25 +69,6 @@ $res = $db->result;
           </div>
         </div>
       <?php } ?>
-      <h1 class="w3-teal w3-padding-16" align="center">Farmers Online Store</h1>
-      <div class="row">
-        <div class="col-12">
-          <div class="w3-bar w3-blue-gray w3-card w3-padding">
-            <p>Categories</p>
-            <?php
-            $db->_result("SELECT * FROM category INNER JOIN category_assign ON category.category_id=category_assign.category_id WHERE category_assign.post_type='E-Commerce' AND parent_category IS NULL");
-            if ($db->result->num_rows) {
-              while ($c = mysqli_fetch_assoc($db->result)) {
-            ?>
-                <a href="#" class="w3-bar-item w3-button w3-text-white" onclick="category_post(<?php echo $c['category_id']; ?>)"><?php echo $c['category']; ?></a>
-            <?php
-              }
-            }
-            ?>
-          </div>
-        </div>
-
-      </div>
     </div><!-- /.container-fluid -->
   </section>
   <!-- Start Products  -->

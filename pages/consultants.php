@@ -30,11 +30,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant') {
         <div class="card-body pb-0">
           <div class="row d-flex align-items-stretch">
             <?php
-            $db->query = "SELECT * FROM USER INNER JOIN category ON category.category_id=user.category_id INNER JOIN user_assign_role ON user.user_id=user_assign_role.user_id INNER JOIN user_role ON user_role.user_role_id=user_assign_role.user_role_id WHERE user_role.user_role='Consultant'";
+            $db->query = "SELECT * FROM USER INNER JOIN category ON category.category_id=user.category_id INNER JOIN user_assign_role ON user.user_id=user_assign_role.user_id INNER JOIN user_role ON user_role.user_role_id=user_assign_role.user_role_id WHERE user.is_approved=1 AND user.is_active=1 AND user_role.user_role='Consultant'";
             $db->result = mysqli_query($db->connection, $db->query);
             if ($db->result->num_rows) {
               while ($consultant = mysqli_fetch_assoc($db->result)) {
-                if (isset($_SESSION['user']) && $consultant['user_assign_role_id'] == $_SESSION['user']['user_assign_role_id']) {
+                if (isset($_SESSION['user']) && $consultant['user_id'] == $_SESSION['user']['user_id']) {
                   continue;
                 }
             ?>

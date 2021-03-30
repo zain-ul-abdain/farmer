@@ -91,63 +91,63 @@
 
         <?php
 
-          require_once 'require/database.php';
+        require_once 'require/database.php';
 
-          if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] == 'Consultant') {
-            $db->_result("SELECT count(consultant) AS 'Total' FROM consultancy_service WHERE status='In-Process' AND consultant=" . $_SESSION['user']['user_assign_role_id']);
-            $result = mysqli_fetch_assoc($db->result);
-          }
-          if (isset($_SESSION['user'])) {
+        if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] == 'Consultant') {
+          $db->_result("SELECT count(consultant) AS 'Total' FROM consultancy_service WHERE status='In-Process' AND consultant=" . $_SESSION['user']['user_assign_role_id']);
+          $result = mysqli_fetch_assoc($db->result);
+        }
+        if (isset($_SESSION['user'])) {
 
-            $db->_result("SELECT * FROM consultancy_service INNER JOIN user_assign_role ON user_assign_role.user_assign_role_id=consultancy_service.client INNER JOIN USER ON user.user_id=user_assign_role.user_id WHERE status='In-Process' AND consultant=" . $_SESSION['user']['user_assign_role_id']);
+          $db->_result("SELECT * FROM consultancy_service INNER JOIN user_assign_role ON user_assign_role.user_assign_role_id=consultancy_service.client INNER JOIN USER ON user.user_id=user_assign_role.user_id WHERE status='In-Process' AND consultant=" . $_SESSION['user']['user_assign_role_id']);
 
-            if ($db->result->num_rows) {
+          if ($db->result->num_rows) {
 
-              while ($client = mysqli_fetch_assoc($db->result)) { ?>
+            while ($client = mysqli_fetch_assoc($db->result)) { ?>
 
-                <li class="nav-item dropdown">
-                  <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="far fa-comments"></i>
-                    <span class="badge badge-danger navbar-badge"><?php echo  $result['Total']; ?></span>
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <a onclick="_chat(<?php echo $client['consultancy_service_id']; ?>,<?php echo $client['user_assign_role_id']; ?>)" href="#" class="dropdown-item">
-                      <!-- Message Start -->
-                      <div class="media">
-                        <img src="<?php echo  $client['user_image']; ?>" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-                        <div class="media-body">
-                          <h3 class="dropdown-item-title">
-                            <?php echo $client['first_name']; ?>
-                          </h3>
-                          <p class="text-sm"><?php echo  $client['query']; ?></p>
-                          <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i><?php echo  $client['discussion_start']; ?></p>
-                        </div>
+              <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                  <i class="far fa-comments"></i>
+                  <span class="badge badge-danger navbar-badge"><?php echo  $result['Total']; ?></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                  <a onclick="_chat(<?php echo $client['consultancy_service_id']; ?>,<?php echo $client['user_assign_role_id']; ?>)" href="#" class="dropdown-item">
+                    <!-- Message Start -->
+                    <div class="media">
+                      <img src="<?php echo  $client['user_image']; ?>" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                      <div class="media-body">
+                        <h3 class="dropdown-item-title">
+                          <?php echo $client['first_name']; ?>
+                        </h3>
+                        <p class="text-sm"><?php echo  $client['query']; ?></p>
+                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i><?php echo  $client['discussion_start']; ?></p>
                       </div>
-                      <!-- Message End -->
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                  </div>
-                </li>
-                <?php
-              }
+                    </div>
+                    <!-- Message End -->
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                </div>
+              </li>
+        <?php
             }
           }
+        }
         ?>
 
         <!-- Messages Dropdown Menu -->
 
 
         <?php
-        if (!empty($_SESSION['user'])) {?>
+        if (!empty($_SESSION['user'])) { ?>
           <li class="nav-item d-none d-sm-inline-block">
             <a href="#" class="nav-link">Welcome: <?php echo $_SESSION['user']['first_name'] . " (" . $_SESSION['user']['user_role'] . ")"; ?></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
             <a href="forms/login.php?msg=logout" class="nav-link">Log out</a>
           </li>
-          <?php
-        } else {?>
+        <?php
+        } else { ?>
 
           <li class="nav-item d-none d-sm-inline-block">
             <a href="forms/login.php" class="nav-link">login</a>
@@ -156,7 +156,7 @@
           <li class="nav-item d-none d-sm-inline-block">
             <a href="forms/register.php" class="nav-link">Register</a>
           </li>
-          <?php
+        <?php
         }
         ?>
 
@@ -202,64 +202,91 @@
               <li class="nav-item">
                 <a onclick="_dashboard()" id="dashboard" href="#" class="nav-link">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>Dashboard</p>
+                  <p>
+                    Dashboard
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
                 </a>
-              </li>
-            <?php } ?>
+                <ul class="nav nav-treeview" style="display: none;">
 
-            <?php
-            if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] == "Admin") {
-            ?>
-              <li class="nav-item">
-                <a onclick="_manage()" id="manage" href="#" class="nav-link">
-                  <i class="fa fa-users"></i>
-                  <p> Manage Users</p>
-                </a>
-              </li>
-            <?php } ?>
-
-            <li class="nav-item">
-            <a onclick="_knowledge_base()" id="knowledge_base" href="#" class="nav-link">
-              <i class="nav-icon fas fa-book"></i>
-              <p>
-              Knowledge Base
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
-            <?php
-              $db->_result("SELECT * FROM category INNER JOIN category_assign ON category.category_id=category_assign.category_id WHERE category_assign.post_type='Knowledge_Base' AND parent_category IS NULL");
-              if ($db->result->num_rows) {
-                while ($c = mysqli_fetch_assoc($db->result)) {
-              ?>
                   <li class="nav-item">
-                    <a onclick="category_post(<?php echo $c['category_id']; ?>,1)" href="#" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p><?php echo $c['category']; ?></p>
+                    <a onclick="_manage()" href="#" class="nav-link">
+                      <i class="fa fa-users"></i>
+                      <p> Manage Users</p>
                     </a>
                   </li>
-              <?php
+                  <li class="nav-item">
+                    <a onclick="_products()" href="#" class="nav-link">
+                      <i class="fa fa-bag"></i>
+                      <p> Manage Products</p>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+
+            <?php
+            } ?>
+
+            <li class="nav-item">
+              <a onclick="_knowledge_base()" id="knowledge_base" href="#" class="nav-link">
+                <i class="nav-icon fas fa-book"></i>
+                <p>
+                  Knowledge Base
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview" style="display: none;">
+                <?php
+                $db->_result("SELECT * FROM category INNER JOIN category_assign ON category.category_id=category_assign.category_id WHERE category_assign.post_type='Knowledge_Base' AND parent_category IS NULL");
+                if ($db->result->num_rows) {
+                  while ($c = mysqli_fetch_assoc($db->result)) {
+                ?>
+                    <li class="nav-item">
+                      <a onclick="category_post(<?php echo $c['category_id']; ?>,1)" href="#" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p><?php echo $c['category']; ?></p>
+                      </a>
+                    </li>
+                <?php
+                  }
                 }
-              }
-              ?>
-            </ul>
-          </li>
+                ?>
+              </ul>
+            </li>
 
-
-
+            <li class="nav-item">
+              <a onclick="_discussion_forum()" id="forum" href="#" class="nav-link">
+                <i class="fab fa-rocketchat"></i>
+                <p>
+                  Discussion Forum
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview" style="display: none;">
+                <?php
+                $db->_result("SELECT * FROM category INNER JOIN category_assign ON category.category_id=category_assign.category_id WHERE category_assign.post_type='discussion_forum' AND parent_category IS NULL");
+                if ($db->result->num_rows) {
+                  while ($c = mysqli_fetch_assoc($db->result)) {
+                ?>
+                    <li class="nav-item">
+                      <a onclick="category_post(<?php echo $c['category_id']; ?>,2)" href="#" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p><?php echo $c['category']; ?></p>
+                      </a>
+                    </li>
+                <?php
+                  }
+                }
+                ?>
+              </ul>
+            </li>
 
 
             <li class="nav-item">
               <a onclick="_consultant()" id="consultant" href="#" class="nav-link">
                 <i class="fa fa-user-md"></i>
                 <p>Consultancy Service</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a onclick="_discussion_forum()" id="forum" href="#" class="nav-link">
-                <i class="fab fa-rocketchat"></i>
-                <p>Discussion Forum</p>
               </a>
             </li>
 

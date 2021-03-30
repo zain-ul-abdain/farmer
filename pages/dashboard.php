@@ -82,12 +82,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'dashboard') {
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
+      <section class="content-header">
+      <div class="container-fluid">
+        <div class="row">
           <div class="col-12">
-            <h1 class="w3-teal w3-padding-16" align="center">Dashboard</h1>
-          </div><!-- /.col -->
+            <h1>Dashboard</h1>
+          </div>
 
-        </div><!-- /.row -->
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
@@ -99,7 +103,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'dashboard') {
           <?php
           if ($_SESSION['user']['user_role'] == "Admin") {
           ?>
-        <h1>Users Statistics</h1>
+        <h3>Users Statistics</h3>
         <div class="row">
             <!-- ./col -->
             <div class="col-lg-3 col-6">
@@ -271,7 +275,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'dashboard') {
           }?>
           <?php
          if ($_SESSION['user']['user_role'] != "Other") {?>
-        <h1>Personal Statistics</h1>
+        <h3>Personal Statistics</h3>
         <div class="row">
           <?php
             $q = "SELECT count(customer_order_id) AS count FROM customer_order WHERE status='On The Way' AND user_assign_role_id=" . $_SESSION['user']['user_assign_role_id'];

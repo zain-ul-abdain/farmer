@@ -110,6 +110,20 @@ function _manage() {
   aj.send("action=manage_users");
 }
 
+/* Manage Products*/
+function _products() {
+
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      document.getElementById("content").innerHTML = aj.responseText;
+    }
+  };
+
+  aj.open("POST", "pages/manage_products.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=manage_products");
+}
+
 /* Add Post*/
 function add_post() {
   aj.onreadystatechange = function () {
@@ -151,6 +165,21 @@ function active(s, id) {
   aj.open("POST", "pages/manage_users.php");
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   aj.send("action=active_user&id=" + id + "&status=" + status);
+}
+
+/* Active/Inactive User*/
+function active_p(s, id) {
+  var status = s.name;
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      // _products();
+      alert(aj.responseText);
+    }
+  };
+
+  aj.open("POST", "pages/manage_products.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=active_product&id=" + id + "&status=" + status);
 }
 
 /* Rating Consultant*/
@@ -358,14 +387,18 @@ function _chat(chat_id, user_id) {
 /* Consultant reply of new chat opened add reply to database*/
 function _chat_start(c,u) {
   let txt = document.getElementById("txt").value;
-
+  
   aj.onreadystatechange = function () {
     if (aj.readyState == 4 && aj.status == 200) {
       _chat(c,u);
     }
   };
-
+  
   aj.open("POST", "pages/consultant_process.php");
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   aj.send("action=add_consultant_reply&chat_message=" + txt);
 }
+
+  var elmnt = document.getElementById("chat_div").value;
+  elmnt.scrollTop = elmnt.scrollHeight;
+

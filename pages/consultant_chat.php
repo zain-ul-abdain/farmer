@@ -266,7 +266,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat_update') {
 
             <div class="card-body">
               <!-- Conversations are loaded here -->
-              <div class="direct-chat-messages">
+              <div id="chat_div" class="direct-chat-messages">
                 <!-- Message. Default to the left -->
 
                 <?php
