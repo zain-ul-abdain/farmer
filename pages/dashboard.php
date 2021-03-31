@@ -82,29 +82,37 @@ if (isset($_POST['action']) && $_POST['action'] == 'dashboard') {
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-      <section class="content-header">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <h1>Dashboard</h1>
-          </div>
-
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <h1>Dashboard</h1>
+              </div>
+            </div>
+            <br>
+    <div class="row">
+      <div class="col-12">
+        <a href="#" onclick="_manage()">Manage Users</a>
+        |
+        <a href="#" onclick="_products()">Manage Products</a>
+      </div>
+    </div>
+          </div><!-- /.container-fluid -->
+        </section>
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+
 
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
-          <?php
-          if ($_SESSION['user']['user_role'] == "Admin") {
-          ?>
-        <h3>Users Statistics</h3>
-        <div class="row">
+        <?php
+        if ($_SESSION['user']['user_role'] == "Admin") {
+        ?>
+          <h3>Users Statistics</h3>
+          <div class="row">
             <!-- ./col -->
             <div class="col-lg-3 col-6">
               <!-- small box -->
@@ -269,54 +277,54 @@ if (isset($_POST['action']) && $_POST['action'] == 'dashboard') {
               </div>
               <!-- /.info-box -->
             </div>
-        </div>
-        <!-- /.row -->
+          </div>
+          <!-- /.row -->
         <?php
-          }?>
-          <?php
-         if ($_SESSION['user']['user_role'] != "Other") {?>
-        <h3>Personal Statistics</h3>
-        <div class="row">
-          <?php
+        } ?>
+        <?php
+        if ($_SESSION['user']['user_role'] != "Other") { ?>
+          <h3>Personal Statistics</h3>
+          <div class="row">
+            <?php
             $q = "SELECT count(customer_order_id) AS count FROM customer_order WHERE status='On The Way' AND user_assign_role_id=" . $_SESSION['user']['user_assign_role_id'];
             $db->_result($q);
             $rec = mysqli_fetch_assoc($db->result);
-        ?>
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3><?php echo $rec['count'] ?? 0; ?></h3>
+            ?>
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3><?php echo $rec['count'] ?? 0; ?></h3>
 
-                <p>Pending orders</p>
+                  <p>Pending orders</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-          </div>
 
 
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3><?php echo $my_product_orders['count(customer_order_id)'] ?? 0; ?></h3>
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-danger">
+                <div class="inner">
+                  <h3><?php echo $my_product_orders['count(customer_order_id)'] ?? 0; ?></h3>
 
-                <p>My Product Orders</p>
+                  <p>My Product Orders</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-          </div>
 
-        <?php
-          }
-        ?>
-        </div>
+          <?php
+        }
+          ?>
+          </div>
 
       </div><!-- /.container-fluid -->
     </section>

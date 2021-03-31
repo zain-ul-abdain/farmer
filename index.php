@@ -9,7 +9,6 @@ include 'include/head.php';
   <div class="content-wrapper">
     <div class="container-fluid">
 
-
       <div class="row">
 
         <div class="col-12">
@@ -37,11 +36,10 @@ include 'include/head.php';
           <div class="w3-card w3-margin w3-padding">
 
             <?php include 'slider/main.php'; ?>
+
           </div>
         </div>
       </div>
-
-
 
     </div>
   </div>
@@ -55,10 +53,7 @@ include 'include/head.php';
     <?php include 'pages/df.php'; ?>
   </div>
 
-
 </div>
-
-
 
 <?php
 include 'include/footer.php';

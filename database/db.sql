@@ -263,7 +263,7 @@ CREATE TABLE `post` (
   KEY `user_id` (`user_assign_role_id`),
   KEY `category_id` (`category_id`),
   CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_assign_role_id`) REFERENCES `user_assign_role` (`user_assign_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `post` */
 
@@ -277,7 +277,8 @@ insert  into `post`(`post_id`,`category_id`,`user_assign_role_id`,`post_title`,`
 (60,3,10,'Fruit','In botany, a fruit is the seed-bearing structure in flowering plants formed from the ovary after flowering. Fruits are the means by which angiosperms disseminate seeds','Fruit, the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Thus, apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits','Knowledge Base',0,'2021-03-20 12:38:21',NULL,NULL),
 (61,6,3,'Where can I get some?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable. ','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn&#039;t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.','Discussion Forum',0,'2021-03-20 15:36:38',NULL,NULL),
 (62,1,1,'Where can I get some?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Where can I get some?Where can I get some?There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',0,'2021-03-27 13:20:23',NULL,NULL),
-(63,6,1,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?What is Lorem Ipsum What is Lorem Ipsum?What is Lorem Ipsum What is Lorem Ipsum?','Discussion Forum',0,'2021-03-27 13:23:36',NULL,NULL);
+(63,6,1,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?What is Lorem Ipsum What is Lorem Ipsum?What is Lorem Ipsum What is Lorem Ipsum?','Discussion Forum',0,'2021-03-27 13:23:36',NULL,NULL),
+(64,3,1,'Mango','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit.','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.','Knowledge Base',0,'2021-03-31 13:59:34',NULL,NULL);
 
 /*Table structure for table `post_attachment` */
 
@@ -291,7 +292,7 @@ CREATE TABLE `post_attachment` (
   PRIMARY KEY (`attachment_id`),
   KEY `blog_id` (`post_id`),
   CONSTRAINT `post_attachment_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `post_attachment` */
 
@@ -313,7 +314,9 @@ insert  into `post_attachment`(`attachment_id`,`post_id`,`file_name`,`file_type`
 (112,56,'uploads/56/file_example_MP3_700KB.mp3','audio'),
 (113,56,'uploads/56/big_buck_bunny_720p_1mb.mp4','video'),
 (120,60,'uploads/60/fruit.jpg','image'),
-(121,56,'uploads/56/Capture2.PNG','image');
+(121,56,'uploads/56/Capture2.PNG','image'),
+(122,64,'uploads/64/mango.jpg','image'),
+(123,64,'uploads/64/mangoes-chopped-and-fresh.jpg','image');
 
 /*Table structure for table `post_like` */
 
@@ -359,7 +362,7 @@ CREATE TABLE `post_reply` (
   PRIMARY KEY (`post_reply_id`),
   KEY `post_id` (`post_id`),
   KEY `user_assigned_role_id` (`user_assign_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `post_reply` */
 
@@ -378,7 +381,8 @@ insert  into `post_reply`(`post_reply_id`,`message`,`user_assign_role_id`,`post_
 (25,'Lorem Ipsum available, Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,but the majority have suffered alteration in some form,',1,56,'2021-03-27 15:25:45',0),
 (26,'Lorem Ipsum available, Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,but the majority have suffered alteration in some form,Lorem Ipsum available, Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,but the majority have suffered alteration in some form,Lorem Ipsum available, Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,but the majority have suffered alteration in some form,Lorem Ipsum available, Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,but the majority have suffered alteration in some form,',1,56,'2021-03-27 15:25:59',0),
 (27,'Very nice',1,61,'2021-03-30 09:00:10',0),
-(28,'ok',1,56,'2021-03-30 16:12:56',0);
+(28,'ok',1,56,'2021-03-30 16:12:56',0),
+(29,'Lorem Ipsum available, but the majority have suffered alteration in some form,',10,60,'2021-03-30 18:32:22',0);
 
 /*Table structure for table `product` */
 

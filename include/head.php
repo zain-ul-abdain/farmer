@@ -217,7 +217,7 @@
                   </li>
                   <li class="nav-item">
                     <a onclick="_products()" href="#" class="nav-link">
-                      <i class="fa fa-bag"></i>
+                      <i class="fas fa-shopping-bag"></i>
                       <p> Manage Products</p>
                     </a>
                   </li>
