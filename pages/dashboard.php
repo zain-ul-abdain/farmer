@@ -90,13 +90,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'dashboard') {
               </div>
             </div>
             <br>
-    <div class="row">
-      <div class="col-12">
-        <a href="#" onclick="_manage()">Manage Users</a>
-        |
-        <a href="#" onclick="_products()">Manage Products</a>
-      </div>
-    </div>
+            <div class="row">
+              <div class="col-12">
+                <a href="#" onclick="_manage()">Manage Users</a>
+                |
+                <a href="#" onclick="_products()">Manage Products</a>
+                |
+                <a href="#" onclick="_comments()">Manage Post</a>
+              </div>
+            </div>
           </div><!-- /.container-fluid -->
         </section>
       </div><!-- /.container-fluid -->

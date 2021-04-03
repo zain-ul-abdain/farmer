@@ -124,6 +124,20 @@ function _products() {
   aj.send("action=manage_products");
 }
 
+/* Manage _comments*/
+function _comments() {
+
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      document.getElementById("content").innerHTML = aj.responseText;
+    }
+  };
+
+  aj.open("POST", "pages/manage_comments.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=manage_comments");
+}
+
 /* Add Post*/
 function add_post() {
   aj.onreadystatechange = function () {

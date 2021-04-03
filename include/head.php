@@ -211,14 +211,20 @@
 
                   <li class="nav-item">
                     <a onclick="_manage()" href="#" class="nav-link">
-                      <i class="fa fa-users"></i>
+                      <i class="fa fa-users nav-icon"></i>
                       <p> Manage Users</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a onclick="_products()" href="#" class="nav-link">
-                      <i class="fas fa-shopping-bag"></i>
+                      <i class="fas fa-shopping-bag nav-icon"></i>
                       <p> Manage Products</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a onclick="_comments()" href="#" class="nav-link">
+                      <i class="fas fa-clone nav-icon"></i>
+                      <p> Manage Post</p>
                     </a>
                   </li>
 
