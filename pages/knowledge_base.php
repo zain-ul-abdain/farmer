@@ -15,7 +15,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'knowledge_base') {
   $next_page = $page_no + 1;
   $adjacents = "2";
 
-  $result_count = mysqli_query($con, "SELECT COUNT(*) As total_records FROM post WHERE post_type='Knowledge Base'");
+  $result_count = mysqli_query($con, "SELECT COUNT(*) As total_records FROM post WHERE is_active=1 && post_type='Knowledge Base'");
   $total_records = mysqli_fetch_array($result_count);
   $total_records = $total_records['total_records'];
   $total_no_of_pages = $total_records;
@@ -27,7 +27,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'knowledge_base') {
 				INNER JOIN user_role ON user_role.user_role_id=user_assign_role.user_role_id 
 				INNER JOIN category ON category.category_id=post.category_id 
 				INNER JOIN USER ON user.user_id=user_assign_role.user_id 
-				WHERE post_type='Knowledge Base' 
+				WHERE post_type='Knowledge Base'
+        AND post.is_active=1
 				ORDER BY post.post_id DESC 
 				LIMIT $offset, $total_records_per_page";
   $db->_result($q);
@@ -157,8 +158,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'knowledge_base') {
                     $db->_result("SELECT added_on FROM post WHERE post_id=" . $post['post_id']);
                     $time = mysqli_fetch_assoc($db->result);
 
-
-
                 ?>
                     <div class="post">
                       <div class="user-block">
@@ -274,7 +273,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'knowledge_base') {
                               INNER JOIN user_role ON user_role.user_role_id=user_assign_role.user_role_id 
                               INNER JOIN category ON category.category_id=post.category_id 
                               INNER JOIN USER ON user.user_id=user_assign_role.user_id 
-                                                WHERE post_type='Knowledge Base' 
+                                                WHERE post_type='Knowledge Base'
+                                                AND post.is_active=1
                                                 ORDER BY post.post_id DESC LIMIT 4";
                 $result = mysqli_query($db->connection, $query);
                 if ($result->num_rows) {
