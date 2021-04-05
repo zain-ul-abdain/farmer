@@ -1,9 +1,16 @@
 <?php
 require_once '../require/database.php';
-
+session_start();
 if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
 
   $db->_select("product");
+  if ($_SESSION['user']['user_role'] == 'Admin') {
+    echo 'Admin';
+    $db->_result("SELECT * FROM product ORDER BY product_id DESC");
+  } else {
+    echo 'Other';
+    $db->_result("SELECT * FROM product WHERE user_assign_role_id=" . $_SESSION['user']['user_assign_role_id'] . " ORDER BY product_id DESC");
+  }
 
   if ($db->result->num_rows) {
 ?>
@@ -133,7 +140,7 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
                             if ($product['is_featured'] == 1) {
                             ?>
 
-                              <input disabled onclick="is_approved_p(this,<?php echo $product['product_id']; ?>)" checked type="checkbox" name="<?php echo "Approved"; ?>">
+                              <input onclick="is_approved_p(this,<?php echo $product['product_id']; ?>)" checked type="checkbox" name="<?php echo "Approved"; ?>">
                             <?php
                             } else {
                             ?>
@@ -183,4 +190,27 @@ if (isset($_POST['action']) && $_POST['action'] == "active_product") {
     echo "Status not updated";
   }
 }
+
+/* Featured Products*/
+if (isset($_POST['action']) && $_POST['action'] == "featured") {
+
+  $id = $_POST['id'];
+  $status = $_POST['status'];
+
+  if ($status == 'Approved') {
+    $q = "UPDATE product SET is_featured=0 WHERE product_id=" . $id;
+  }
+  if ($status == 'Inapproved') {
+    $q = "UPDATE product SET is_featured=1 WHERE product_id=" . $id;
+  }
+
+  $db->_result($q);
+  if ($db->result) {
+    echo "Status updated";
+  } else {
+    echo "Status not updated";
+  }
+}
+
+
 ?>

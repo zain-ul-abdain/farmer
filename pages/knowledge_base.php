@@ -39,16 +39,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'knowledge_base') {
     <section class="content-header">
       <div class="container-fluid">
 
-      <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Knowledge Base</h1>
-          </div>
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1>Knowledge Base</h1>
+              </div>
 
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
+            </div>
+          </div><!-- /.container-fluid -->
+        </section>
         <div class="row">
           <div class="col-12">
             <div class="w3-bar w3-card w3-padding">
@@ -146,7 +146,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'knowledge_base') {
         ?>
 
         <div class="row">
-          <div class="col-9">
+          <div class="col-8">
             <div class="card">
               <div class="card-body" id="filter">
 
@@ -263,7 +263,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'knowledge_base') {
           <!-- Latest posts -->
 
 
-          <div class="col-3">
+          <div class="col-4">
             <div class="card">
               <div class="card-body">
                 <h2>Latest posts</h2>
@@ -287,7 +287,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'knowledge_base') {
                 ?>
                     <div class="card mb-2 bg-gradient-dark">
 
-                      <img style="width: auto;height: 300px; opacity: 0.5;" class="card-img-top" src="<?php echo $rec2['file_name']; ?>" alt="Dist">
+                      <img style="width: auto;height: 280px; opacity: 0.2;" class="card-img-top" src="<?php echo $rec2['file_name']; ?>" alt="Dist">
 
                       <div class="card-img-overlay d-flex flex-column justify-content-end">
 

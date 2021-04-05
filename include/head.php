@@ -209,12 +209,18 @@
                 </a>
                 <ul class="nav nav-treeview" style="display: none;">
 
-                  <li class="nav-item">
-                    <a onclick="_manage()" href="#" class="nav-link">
-                      <i class="fa fa-users nav-icon"></i>
-                      <p> Manage Users</p>
-                    </a>
-                  </li>
+                  <?php
+                  if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] == 'Admin') {
+                  ?>
+                    <li class="nav-item">
+                      <a onclick="_manage()" href="#" class="nav-link">
+                        <i class="fa fa-users nav-icon"></i>
+                        <p> Manage Users</p>
+                      </a>
+                    </li>
+                  <?php
+                  }
+                  ?>
                   <li class="nav-item">
                     <a onclick="_products()" href="#" class="nav-link">
                       <i class="fas fa-shopping-bag nav-icon"></i>

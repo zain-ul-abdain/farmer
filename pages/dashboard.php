@@ -92,8 +92,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'dashboard') {
             <br>
             <div class="row">
               <div class="col-12">
-                <a href="#" onclick="_manage()">Manage Users</a>
-                |
+                <?php if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] == 'Admin') { ?>
+                  <a href="#" onclick="_manage()">Manage Users</a>
+                  |
+                <?php
+                } ?>
                 <a href="#" onclick="_products()">Manage Products</a>
                 |
                 <a href="#" onclick="_comments()">Manage Post</a>

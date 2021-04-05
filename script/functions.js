@@ -196,6 +196,35 @@ function active_p(s, id) {
   aj.send("action=active_product&id=" + id + "&status=" + status);
 }
 
+/* Featured Product*/
+function is_approved_p(s, id) {
+  var status = s.name;
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      alert(aj.responseText);
+    }
+  };
+
+  aj.open("POST", "pages/manage_products.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=featured&id=" + id + "&status=" + status);
+}
+
+/* Post active/inactive*/
+function active_post(s, id) {
+  var status = s.name;
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      alert(aj.responseText);
+      _comments();
+    }
+  };
+
+  aj.open("POST", "pages/manage_comments.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=active_post&id=" + id + "&status=" + status);
+}
+
 /* Rating Consultant*/
 function _detail(a, b) {
   var id = a;

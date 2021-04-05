@@ -273,9 +273,9 @@ insert  into `post`(`post_id`,`category_id`,`user_assign_role_id`,`post_title`,`
 (56,1,1,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Knowledge Base',0,'2021-03-17 14:55:37',NULL,NULL),
 (57,1,1,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',0,'2021-03-20 12:10:06',NULL,NULL),
 (58,1,3,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',0,'2021-03-20 15:37:24',NULL,NULL),
-(59,1,2,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',0,'2021-03-20 15:37:26',NULL,NULL),
-(60,3,10,'Fruit','In botany, a fruit is the seed-bearing structure in flowering plants formed from the ovary after flowering. Fruits are the means by which angiosperms disseminate seeds','Fruit, the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Thus, apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits','Knowledge Base',0,'2021-03-20 12:38:21',NULL,NULL),
-(61,6,3,'Where can I get some?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable. ','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn&#039;t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.','Discussion Forum',0,'2021-03-20 15:36:38',NULL,NULL),
+(59,1,2,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',1,'2021-04-05 17:54:06',NULL,NULL),
+(60,3,10,'Fruit','In botany, a fruit is the seed-bearing structure in flowering plants formed from the ovary after flowering. Fruits are the means by which angiosperms disseminate seeds','Fruit, the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Thus, apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits','Knowledge Base',1,'2021-04-05 17:46:11',NULL,NULL),
+(61,6,3,'Where can I get some?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable. ','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn&#039;t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.','Discussion Forum',0,'2021-04-05 17:54:10',NULL,NULL),
 (62,1,1,'Where can I get some?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Where can I get some?Where can I get some?There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',0,'2021-03-27 13:20:23',NULL,NULL),
 (63,6,1,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?What is Lorem Ipsum What is Lorem Ipsum?What is Lorem Ipsum What is Lorem Ipsum?','Discussion Forum',0,'2021-03-27 13:23:36',NULL,NULL),
 (64,3,1,'Mango','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit.','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.','Knowledge Base',0,'2021-03-31 13:59:34',NULL,NULL);
@@ -358,7 +358,7 @@ CREATE TABLE `post_reply` (
   `user_assign_role_id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
   `added_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `is_approved` tinyint(1) NOT NULL DEFAULT 0,
+  `is_approved_reply` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`post_reply_id`),
   KEY `post_id` (`post_id`),
   KEY `user_assigned_role_id` (`user_assign_role_id`)
@@ -366,7 +366,7 @@ CREATE TABLE `post_reply` (
 
 /*Data for the table `post_reply` */
 
-insert  into `post_reply`(`post_reply_id`,`message`,`user_assign_role_id`,`post_id`,`added_on`,`is_approved`) values 
+insert  into `post_reply`(`post_reply_id`,`message`,`user_assign_role_id`,`post_id`,`added_on`,`is_approved_reply`) values 
 (8,'In publishing and graphic design',3,53,'2021-03-19 17:04:48',0),
 (13,'In publishing and graphic design',8,53,'2021-03-20 12:14:17',0),
 (14,'Very nice',8,52,'2021-03-20 12:15:43',0),
@@ -414,11 +414,11 @@ CREATE TABLE `product` (
 /*Data for the table `product` */
 
 insert  into `product`(`product_id`,`category_id`,`user_assign_role_id`,`product_title`,`product_description`,`price`,`quantity`,`low_inventory`,`added_on`,`updated_on`,`updated_by`,`is_active`,`is_featured`,`is_free_shipping`,`shipping_charges`,`is_rating_allowed`,`is_comment_allowed`) values 
-(1,7,1,'Carrot','The carrot is a root vegetable, usually orange in color, though purple, black, red, white, and yellow cultivars exist. They are a domesticated form of the wild carrot, Daucus carota, native to Europe and Southwestern Asia. The plant probably originated in Persia and was originally cultivated for its leaves and seeds.',100,50,5,'2021-03-10 18:09:22',NULL,NULL,1,1,1,0,1,1),
-(2,1,2,'Rice','Rice is the seed of the grass species Oryza sativa (Asian rice) or less commonly Oryza glaberrima (African rice). As a cereal grain, it is the most widely consumed staple food for a large part of the world\'s human population, especially in Asia and Africa.',150,100,10,'2021-03-30 16:10:52',NULL,NULL,1,0,1,NULL,1,1),
-(10,3,1,'Apple','An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found today. ',150,1000,0,'2021-03-25 09:09:53',NULL,NULL,1,0,1,NULL,1,1),
-(11,16,8,'Fertiliser','A fertilizer or fertiliser is any material of natural or synthetic origin that is applied to soil or to plant tissues to supply plant nutrients. Fertilizers may be distinct from liming materials or other non-nutrient soil amendments. Many sources of fertilizer exist, both natural and industrially produced.',500,30,0,'2021-03-25 09:40:08',NULL,NULL,1,0,1,NULL,1,1),
-(14,3,10,'Mango','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.',100,30,0,'2021-03-30 18:25:21',NULL,NULL,1,0,1,NULL,1,1);
+(1,7,1,'Carrot','The carrot is a root vegetable, usually orange in color, though purple, black, red, white, and yellow cultivars exist. They are a domesticated form of the wild carrot, Daucus carota, native to Europe and Southwestern Asia. The plant probably originated in Persia and was originally cultivated for its leaves and seeds.',100,50,5,'2021-04-05 17:06:51',NULL,NULL,1,1,1,0,1,1),
+(2,1,2,'Rice','Rice is the seed of the grass species Oryza sativa (Asian rice) or less commonly Oryza glaberrima (African rice). As a cereal grain, it is the most widely consumed staple food for a large part of the world\'s human population, especially in Asia and Africa.',150,100,10,'2021-04-05 17:06:50',NULL,NULL,1,1,1,NULL,1,1),
+(10,3,1,'Apple','An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found today. ',150,1000,0,'2021-04-05 17:02:26',NULL,NULL,1,1,1,NULL,1,1),
+(11,16,8,'Fertiliser','A fertilizer or fertiliser is any material of natural or synthetic origin that is applied to soil or to plant tissues to supply plant nutrients. Fertilizers may be distinct from liming materials or other non-nutrient soil amendments. Many sources of fertilizer exist, both natural and industrially produced.',500,30,0,'2021-04-05 17:06:48',NULL,NULL,1,1,1,NULL,1,1),
+(14,3,10,'Mango','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.',100,30,0,'2021-04-05 17:20:40',NULL,NULL,1,1,1,NULL,1,1);
 
 /*Table structure for table `product_comment` */
 
@@ -542,19 +542,19 @@ CREATE TABLE `user` (
   PRIMARY KEY (`user_id`),
   KEY `city_id` (`city_id`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city` (`city_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `user` */
 
 insert  into `user`(`user_id`,`first_name`,`last_name`,`gender`,`user_email`,`user_password`,`user_image`,`city_id`,`expert_level`,`phone_number`,`address`,`is_active`,`is_approved`,`added_on`,`updated_on`,`category_id`) values 
-(1,'Ahmed','Shah','Male','user1@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar5.png',1,'Expert','0321-1231231','',1,1,'2021-03-25 10:26:12',NULL,1),
+(1,'Ahmed','Shah','Male','user1@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar5.png',1,'Expert','0321-1231231','',1,1,'2021-04-02 17:04:32',NULL,1),
 (2,'Aliya','Qureshi','Female','user2@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar2.png',3,'Intermediate','0311-1231231','',1,1,'2021-03-30 15:09:41',NULL,3),
 (3,'Siraj','Baig','Male','user3@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar4.png',4,'Intermediate','0345-1231231','',1,1,'2021-03-30 15:09:43',NULL,6),
 (5,'Nisar','Shah','Male','user4@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar4.png',5,'Beginner','0331-1231231','',1,1,'2021-03-30 15:09:44',NULL,7),
-(6,'Abdullah','Shah','Male','user5@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar5.png',6,'Intermediate','0312-1231231','',0,1,'2021-03-30 15:09:47',NULL,3),
+(6,'Abdullah','Shah','Male','user5@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar5.png',6,'Intermediate','0312-1231231','',0,1,'2021-04-05 16:42:35',NULL,3),
 (10,'Noshad','Ali','Male','user6@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/123.jpg',2,'Intermediate','0300-1231231','H# c-1 citizen colony',1,1,'2021-03-30 15:09:49',NULL,6),
 (12,'Rehman','Brohi','Male','user7@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/user1-128x128.jpg',2,'Intermediate','0312-1233214','PH-2 SUECHS',1,1,'2021-03-30 15:09:50',NULL,7),
-(14,'Sajjad','Rajper','Male','user8@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-1.jpg',3,'Beginner','0300-1231231','PH-2 SUECHS',0,0,'2021-03-30 15:09:52',NULL,3),
+(14,'Sajjad','Rajper','Male','user8@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-1.jpg',3,'Beginner','0300-1231231','PH-2 SUECHS',1,0,'2021-04-05 16:42:30',NULL,3),
 (18,'Sarang','Ali','Male','user9@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-3.jpg',1,'Intermediate','0300-1231231','PH-1 SUECHS',1,0,'2021-03-30 15:09:55',NULL,6);
 
 /*Table structure for table `user_assign_role` */
@@ -570,7 +570,7 @@ CREATE TABLE `user_assign_role` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `user_assign_role_ibfk_1` FOREIGN KEY (`user_role_id`) REFERENCES `user_role` (`user_role_id`),
   CONSTRAINT `user_assign_role_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `user_assign_role` */
 

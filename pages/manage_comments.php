@@ -1,9 +1,18 @@
 <?php
 require_once '../require/database.php';
-
+session_start();
 if (isset($_POST['action']) && $_POST['action'] == "manage_comments") {
 
-  $db->_result("SELECT * FROM post INNER JOIN post_reply ON post_reply.post_id = post.post_id");
+  if ($_SESSION['user']['user_role'] == 'Admin') {
+    echo 'Admin';
+    $db->_result("SELECT * FROM post ORDER BY post.post_id DESC");
+  } elseif ($_SESSION['user']['user_role'] == 'Consultant') {
+    echo 'Consultant';
+    $db->_result("SELECT * FROM post WHERE post_type='Knowledge Base' AND user_assign_role_id=" . $_SESSION['user']['user_assign_role_id'] . " ORDER BY post_id DESC");
+  } else {
+    echo 'Else';
+    $db->_result("SELECT * FROM post WHERE post.user_assign_role_id=" . $_SESSION['user']['user_assign_role_id'] . " ORDER BY post.post_id DESC");
+  }
 
   if ($db->result->num_rows) {
 ?>
@@ -90,7 +99,6 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_comments") {
                       <th>Title</th>
                       <th>Post Type</th>
                       <th>Is Active</th>
-                      <th>Is Comment Allowed</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -111,34 +119,17 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_comments") {
                             <?php
                             if ($product['is_active'] == 1) {
                             ?>
-                              <input onclick="active_p(this,<?php echo $product['post_id']; ?>)" checked type="checkbox" name="<?php echo "Active"; ?>">
+                              <input onclick="active_post(this,<?php echo $product['post_id']; ?>)" checked type="checkbox" name="<?php echo "Active"; ?>">
                             <?php
                             } else {
                             ?>
-                              <input onclick="active_p(this,<?php echo $product['post_id']; ?>)" type="checkbox" name="<?php echo "Inactive"; ?>">
+                              <input onclick="active_post(this,<?php echo $product['post_id']; ?>)" type="checkbox" name="<?php echo "Inactive"; ?>">
                             <?php
                             }
                             ?>
                             <span class="slider round"></span>
                           </label>
                         </td>
-                        <td>
-                          <label class="switch">
-                            <?php
-                            if ($product['is_active'] == 1) {
-                            ?>
-                              <input onclick="active_r(this,<?php echo $product['is_approved_reply']; ?>)" checked type="checkbox" name="<?php echo "Active"; ?>">
-                            <?php
-                            } else {
-                            ?>
-                              <input onclick="active_r(this,<?php echo $product['is_approved_reply']; ?>)" type="checkbox" name="<?php echo "Inactive"; ?>">
-                            <?php
-                            }
-                            ?>
-                            <span class="slider round"></span>
-                          </label>
-                        </td>
-
                       </tr>
                     <?php
                     }
@@ -159,23 +150,23 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_comments") {
 
 
 /* USer status active/inactive*/
-if (isset($_POST['action']) && $_POST['action'] == "active_product") {
+if (isset($_POST['action']) && $_POST['action'] == "active_post") {
 
   $id = $_POST['id'];
   $status = $_POST['status'];
 
   if ($status == 'Active') {
-    $q = "UPDATE product SET is_active=0 WHERE product_id=" . $id;
+    $q = "UPDATE post SET is_active=0 WHERE post_id=" . $id;
   }
   if ($status == 'Inactive') {
-    $q = "UPDATE product SET is_active=1 WHERE product_id=" . $id;
+    $q = "UPDATE post SET is_active=1 WHERE post_id=" . $id;
   }
 
   $db->_result($q);
   if ($db->result) {
-    echo "Status updated";
+    echo "Post Status updated";
   } else {
-    echo "Status not updated";
+    echo "Post Status not updated";
   }
 }
 ?>
