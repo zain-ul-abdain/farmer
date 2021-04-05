@@ -5,8 +5,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>.::Farmer Connection::.</title>
-  <link href="logo.jpg">
+  <title>.:: Farmer Connection ::.</title>
+  <link rel="icon" href="logo.jpg" type="image/x-icon" />
 
 
   <!-- Bootstrap for pagination -->
