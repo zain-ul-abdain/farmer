@@ -444,3 +444,35 @@ function _chat_start(c,u) {
   var elmnt = document.getElementById("chat_div").value;
   elmnt.scrollTop = elmnt.scrollHeight;
 
+  //  Comments Show particular
+  function  _comments_permission(id) {
+
+    aj.onreadystatechange = function () {
+      if (aj.readyState == 4 && aj.status == 200) {
+        document.getElementById("for_comment").innerHTML = aj.responseText;
+      }
+    };
+    
+    aj.open("POST", "pages/manage_comments.php");
+    aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    aj.send("action=comment&id=" + id);
+  }
+
+
+  //  Comments Allow/Disallow
+  function  active_comment(s,id,p_id) {
+
+    var status = s.name;
+
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      alert(aj.responseText);
+      _comments_permission(p_id);
+    }
+  };
+
+  aj.open("POST", "pages/manage_comments.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=comment_allow&id=" + id + "&status=" + status+ "&p_id=" + p_id);
+  }
+

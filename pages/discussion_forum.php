@@ -28,6 +28,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'discussion_forum') {
 				INNER JOIN category ON category.category_id=post.category_id 
 				INNER JOIN USER ON user.user_id=user_assign_role.user_id 
 				WHERE post_type='Discussion Forum' 
+        AND post.is_active=1
 				ORDER BY post.post_id DESC 
 				LIMIT $offset, $total_records_per_page";
   $db->_result($q);
@@ -39,16 +40,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'discussion_forum') {
     <section class="content-header">
       <div class="container-fluid">
 
-      <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Discussion Forum</h1>
-          </div>
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1>Discussion Forum</h1>
+              </div>
 
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
+            </div>
+          </div><!-- /.container-fluid -->
+        </section>
         <div class="row">
           <div class="col-12">
             <div class="w3-bar w3-card w3-padding">
@@ -260,6 +261,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'discussion_forum') {
                               INNER JOIN category ON category.category_id=post.category_id 
                               INNER JOIN USER ON user.user_id=user_assign_role.user_id 
                               WHERE post_type='Discussion Forum' 
+                              AND post.is_active=1
                               ORDER BY post.post_id DESC LIMIT 4";
                 $result = mysqli_query($db->connection, $query);
                 if ($result->num_rows) {

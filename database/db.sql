@@ -269,16 +269,16 @@ CREATE TABLE `post` (
 
 insert  into `post`(`post_id`,`category_id`,`user_assign_role_id`,`post_title`,`post_summary`,`post_description`,`post_type`,`is_active`,`added_on`,`updated_on`,`tag`) values 
 (52,1,4,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Knowledge Base',0,'2021-03-17 12:30:36',NULL,NULL),
-(53,3,8,'What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Knowledge Base',0,'2021-03-17 13:03:05',NULL,NULL),
-(56,1,1,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Knowledge Base',0,'2021-03-17 14:55:37',NULL,NULL),
-(57,1,1,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',0,'2021-03-20 12:10:06',NULL,NULL),
+(53,3,8,'What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Knowledge Base',1,'2021-04-05 18:16:17',NULL,NULL),
+(56,1,1,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Knowledge Base',1,'2021-04-05 18:08:55',NULL,NULL),
+(57,1,1,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',1,'2021-04-06 11:57:29',NULL,NULL),
 (58,1,3,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',0,'2021-03-20 15:37:24',NULL,NULL),
 (59,1,2,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',1,'2021-04-05 17:54:06',NULL,NULL),
 (60,3,10,'Fruit','In botany, a fruit is the seed-bearing structure in flowering plants formed from the ovary after flowering. Fruits are the means by which angiosperms disseminate seeds','Fruit, the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Thus, apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits','Knowledge Base',1,'2021-04-05 17:46:11',NULL,NULL),
 (61,6,3,'Where can I get some?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable. ','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn&#039;t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.','Discussion Forum',0,'2021-04-05 17:54:10',NULL,NULL),
 (62,1,1,'Where can I get some?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Where can I get some?Where can I get some?There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',0,'2021-03-27 13:20:23',NULL,NULL),
 (63,6,1,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?What is Lorem Ipsum What is Lorem Ipsum?What is Lorem Ipsum What is Lorem Ipsum?','Discussion Forum',0,'2021-03-27 13:23:36',NULL,NULL),
-(64,3,1,'Mango','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit.','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.','Knowledge Base',0,'2021-03-31 13:59:34',NULL,NULL);
+(64,3,1,'Mango','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit.','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.','Knowledge Base',1,'2021-04-05 18:08:45',NULL,NULL);
 
 /*Table structure for table `post_attachment` */
 
@@ -330,7 +330,7 @@ CREATE TABLE `post_like` (
   `added_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`post_like_id`),
   KEY `post_id` (`post_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `post_like` */
 
@@ -346,7 +346,8 @@ insert  into `post_like`(`post_like_id`,`post_id`,`user_assign_role_id`,`is_like
 (12,60,3,1,'2021-03-20 15:49:22'),
 (13,58,3,1,'2021-03-20 16:26:05'),
 (14,56,1,1,'2021-03-27 15:25:07'),
-(15,61,1,1,'2021-03-30 08:59:32');
+(15,61,1,1,'2021-03-30 08:59:32'),
+(16,64,1,1,'2021-04-06 14:53:04');
 
 /*Table structure for table `post_reply` */
 
@@ -358,15 +359,15 @@ CREATE TABLE `post_reply` (
   `user_assign_role_id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
   `added_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `is_approved_reply` tinyint(1) NOT NULL DEFAULT 0,
+  `is_approved` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`post_reply_id`),
   KEY `post_id` (`post_id`),
   KEY `user_assigned_role_id` (`user_assign_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `post_reply` */
 
-insert  into `post_reply`(`post_reply_id`,`message`,`user_assign_role_id`,`post_id`,`added_on`,`is_approved_reply`) values 
+insert  into `post_reply`(`post_reply_id`,`message`,`user_assign_role_id`,`post_id`,`added_on`,`is_approved`) values 
 (8,'In publishing and graphic design',3,53,'2021-03-19 17:04:48',0),
 (13,'In publishing and graphic design',8,53,'2021-03-20 12:14:17',0),
 (14,'Very nice',8,52,'2021-03-20 12:15:43',0),
@@ -382,7 +383,9 @@ insert  into `post_reply`(`post_reply_id`,`message`,`user_assign_role_id`,`post_
 (26,'Lorem Ipsum available, Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,but the majority have suffered alteration in some form,Lorem Ipsum available, Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,but the majority have suffered alteration in some form,Lorem Ipsum available, Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,but the majority have suffered alteration in some form,Lorem Ipsum available, Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,Lorem Ipsum available, but the majority have suffered alteration in some form,but the majority have suffered alteration in some form,',1,56,'2021-03-27 15:25:59',0),
 (27,'Very nice',1,61,'2021-03-30 09:00:10',0),
 (28,'ok',1,56,'2021-03-30 16:12:56',0),
-(29,'Lorem Ipsum available, but the majority have suffered alteration in some form,',10,60,'2021-03-30 18:32:22',0);
+(29,'Lorem Ipsum available, but the majority have suffered alteration in some form,',10,60,'2021-03-30 18:32:22',0),
+(30,'hello',1,64,'2021-04-06 16:34:38',0),
+(31,'hello 2',2,64,'2021-04-06 16:28:02',0);
 
 /*Table structure for table `product` */
 
@@ -551,10 +554,10 @@ insert  into `user`(`user_id`,`first_name`,`last_name`,`gender`,`user_email`,`us
 (2,'Aliya','Qureshi','Female','user2@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar2.png',3,'Intermediate','0311-1231231','',1,1,'2021-03-30 15:09:41',NULL,3),
 (3,'Siraj','Baig','Male','user3@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar4.png',4,'Intermediate','0345-1231231','',1,1,'2021-03-30 15:09:43',NULL,6),
 (5,'Nisar','Shah','Male','user4@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar4.png',5,'Beginner','0331-1231231','',1,1,'2021-03-30 15:09:44',NULL,7),
-(6,'Abdullah','Shah','Male','user5@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar5.png',6,'Intermediate','0312-1231231','',0,1,'2021-04-05 16:42:35',NULL,3),
+(6,'Abdullah','Shah','Male','user5@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar5.png',6,'Intermediate','0312-1231231','',1,1,'2021-04-05 18:19:35',NULL,3),
 (10,'Noshad','Ali','Male','user6@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/123.jpg',2,'Intermediate','0300-1231231','H# c-1 citizen colony',1,1,'2021-03-30 15:09:49',NULL,6),
 (12,'Rehman','Brohi','Male','user7@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/user1-128x128.jpg',2,'Intermediate','0312-1233214','PH-2 SUECHS',1,1,'2021-03-30 15:09:50',NULL,7),
-(14,'Sajjad','Rajper','Male','user8@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-1.jpg',3,'Beginner','0300-1231231','PH-2 SUECHS',1,0,'2021-04-05 16:42:30',NULL,3),
+(14,'Sajjad','Rajper','Male','user8@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-1.jpg',3,'Beginner','0300-1231231','PH-2 SUECHS',1,1,'2021-04-05 18:20:02',NULL,3),
 (18,'Sarang','Ali','Male','user9@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-3.jpg',1,'Intermediate','0300-1231231','PH-1 SUECHS',1,0,'2021-03-30 15:09:55',NULL,6);
 
 /*Table structure for table `user_assign_role` */

@@ -89,60 +89,63 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_comments") {
               <div id="users" class="col-12">
                 <h2>Manage Post</h2>
                 <span id="manage_user_msg"></span>
-
-                <table class="w3-table-all w3-hoverable" style="width: 100%;">
-                  <thead>
-                    <tr>
-                      <th>Post ID</th>
-                      <th>Category Id</th>
-                      <th>User Id</th>
-                      <th>Title</th>
-                      <th>Post Type</th>
-                      <th>Is Active</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                    <?php
-
-                    while ($product = mysqli_fetch_assoc($db->result)) {
-                    ?>
+                <div id="for_comment">
+                  <table class="w3-table-all w3-hoverable" style="width: 100%;">
+                    <thead>
                       <tr>
-                        <td><?php echo $product['post_id']; ?></td>
-                        <td><?php echo $product['category_id']; ?></td>
-                        <td><?php echo $product['user_assign_role_id']; ?></td>
-                        <td><?php echo $product['post_title']; ?></td>
-                        <td><?php echo $product['post_type']; ?></td>
-
-                        <td>
-                          <label class="switch">
-                            <?php
-                            if ($product['is_active'] == 1) {
-                            ?>
-                              <input onclick="active_post(this,<?php echo $product['post_id']; ?>)" checked type="checkbox" name="<?php echo "Active"; ?>">
-                            <?php
-                            } else {
-                            ?>
-                              <input onclick="active_post(this,<?php echo $product['post_id']; ?>)" type="checkbox" name="<?php echo "Inactive"; ?>">
-                            <?php
-                            }
-                            ?>
-                            <span class="slider round"></span>
-                          </label>
-                        </td>
+                        <th>Post ID</th>
+                        <th>Category Id</th>
+                        <th>User Id</th>
+                        <th>Title</th>
+                        <th>Post Type</th>
+                        <th>Is Active</th>
+                        <th>Comments</th>
                       </tr>
-                    <?php
-                    }
-                    ?>
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+
+                      <?php
+
+                      while ($product = mysqli_fetch_assoc($db->result)) {
+                      ?>
+                        <tr>
+                          <td><?php echo $product['post_id']; ?></td>
+                          <td><?php echo $product['category_id']; ?></td>
+                          <td><?php echo $product['user_assign_role_id']; ?></td>
+                          <td><?php echo $product['post_title']; ?></td>
+                          <td><?php echo $product['post_type']; ?></td>
+
+                          <td>
+                            <label class="switch">
+                              <?php
+                              if ($product['is_active'] == 1) {
+                              ?>
+                                <input onclick="active_post(this,<?php echo $product['post_id']; ?>)" checked type="checkbox" name="<?php echo "Active"; ?>">
+                              <?php
+                              } else {
+                              ?>
+                                <input onclick="active_post(this,<?php echo $product['post_id']; ?>)" type="checkbox" name="<?php echo "Inactive"; ?>">
+                              <?php
+                              }
+                              ?>
+                              <span class="slider round"></span>
+                            </label>
+                          </td>
+                          <td><button class="w3-button w3-circle w3-orange" onclick="_comments_permission(<?php echo $product['post_id']; ?>)">Edit</button></td>
+                        </tr>
+                      <?php
+                      }
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-<?php
+  <?php
   } else {
     echo "not ok";
   }
@@ -167,6 +170,86 @@ if (isset($_POST['action']) && $_POST['action'] == "active_post") {
     echo "Post Status updated";
   } else {
     echo "Post Status not updated";
+  }
+}
+
+/* Comment status active/inactive*/
+if (isset($_POST['action']) && $_POST['action'] == "comment_allow") {
+
+  $id = $_POST['id'];
+  $p_id = $_POST['p_id'];
+  $status = $_POST['status'];
+
+  if ($status == 'Active') {
+    $q = "UPDATE post_reply SET is_approved=0 WHERE post_reply_id=" . $id;
+  }
+  if ($status == 'Inactive') {
+    $q = "UPDATE post_reply SET is_approved=1 WHERE post_reply_id=" . $id;
+  }
+
+  $db->_result($q);
+  if ($db->result) {
+    echo "Post ID = $p_id Comment Status updated";
+  } else {
+    echo "Post Comment Status not updated";
+  }
+}
+
+/* Post Comment status active/inactive*/
+if (isset($_POST['action']) && $_POST['action'] == "comment") {
+
+  $id = $_POST['id'];
+
+  $db->_result("SELECT * FROM post_reply WHERE post_id=$id ORDER BY post_reply_id DESC");
+
+  if ($db->result->num_rows) {
+
+  ?>
+    <table class="w3-table-all w3-hoverable" style="width: 100%;">
+      <thead>
+        <tr>
+          <th>Post ID</th>
+          <th>Comment ID</th>
+          <th>Message</th>
+          <th>User Id</th>
+          <th>Added On</th>
+          <th>Is Approved</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        while ($comment = mysqli_fetch_assoc($db->result)) {
+        ?>
+          <tr>
+            <td><?php echo $comment['post_id']; ?></td>
+            <td><?php echo $comment['post_reply_id']; ?></td>
+            <td><?php echo $comment['message']; ?></td>
+            <td><?php echo $comment['user_assign_role_id']; ?></td>
+            <td><?php echo $comment['added_on']; ?></td>
+            <td>
+              <label class="switch">
+                <?php
+                if ($comment['is_approved'] == 1) {
+                ?>
+                  <input onclick="active_comment(this,<?php echo $comment['post_reply_id']; ?>,<?php echo $comment['post_id']; ?>)" checked type="checkbox" name="<?php echo "Active"; ?>">
+                <?php
+                } else {
+                ?>
+                  <input onclick="active_comment(this,<?php echo $comment['post_reply_id']; ?>,<?php echo $comment['post_id']; ?>)" type="checkbox" name="<?php echo "Inactive"; ?>">
+                <?php
+                }
+                ?>
+                <span class="slider round"></span>
+              </label>
+            </td>
+          </tr>
+        <?php
+        }
+        ?>
+      </tbody>
+    </table>
+
+<?php
   }
 }
 ?>

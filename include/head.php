@@ -8,7 +8,6 @@
   <title>.:: Farmer Connection ::.</title>
   <link rel="icon" href="logo.jpg" type="image/x-icon" />
 
-
   <!-- Bootstrap for pagination -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -63,9 +62,6 @@
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" onclick="_e_commerce()" class="nav-link">E-Commerce</a>
         </li>
-
-
-
       </ul>
 
       <!-- SEARCH FORM -->

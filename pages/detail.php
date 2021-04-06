@@ -205,7 +205,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'detail') {
                   <!-- /.card-body -->
                   <div class="card-footer card-comments">
                     <?php
-                    $db->_result("SELECT * FROM post_reply INNER JOIN user_assign_role ON user_assign_role.user_assign_role_id=post_reply.user_assign_role_id INNER JOIN user ON user.user_id=user_assign_role.user_id WHERE post_reply.post_id=$id");
+                    $db->_result("SELECT * FROM post_reply INNER JOIN user_assign_role ON user_assign_role.user_assign_role_id=post_reply.user_assign_role_id INNER JOIN user ON user.user_id=user_assign_role.user_id WHERE post_reply.is_approved=1 AND post_reply.post_id=$id");
                     if ($db->result->num_rows) {
                       while ($comment = mysqli_fetch_assoc($db->result)) {
                     ?>
@@ -261,7 +261,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'detail') {
                       <h4 class="mt-5 ">Post Attachments</h4>
                       <ul class="nav nav-tabs" id="custom-content-above-tab" role="tablist">
 
-                      <li class="nav-item active">
+                        <li class="nav-item active">
                           <a class="nav-link active" id="custom-content-above-home-tab" data-toggle="pill" href="#custom-content-above-home" role="tab" aria-controls="custom-content-above-home" aria-selected="true">Images</a>
                         </li>
 
