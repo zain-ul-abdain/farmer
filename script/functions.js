@@ -83,7 +83,7 @@ function _e_commerce() {
     }
   };
 
-  aj.open("POST", "pages/shop/shop.php");
+  aj.open("POST", "pages/shop.php");
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   aj.send();
 }

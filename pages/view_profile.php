@@ -91,12 +91,12 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'view_profile') {
                   <div class="card-header p-2">
                     <ul class="nav nav-pills">
 
-                      <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Settings</a></li>
+                      <li class="nav-item active"><a class="nav-link active" href="#settings" data-toggle="tab" aria-expanded="true">Settings</a></li>
                     </ul>
                   </div><!-- /.card-header -->
                   <div class="card-body">
                     <div class="tab-content">
-                      <div class="tab-pane" id="settings">
+                      <div class="tab-pane active" id="settings">
                         <form class="form-horizontal">
                           <div class="form-group row">
                             <label for="inputName" class="col-sm-2 col-form-label">First Name</label>
