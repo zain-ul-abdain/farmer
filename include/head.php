@@ -43,6 +43,7 @@
           <li class="nav-item d-none d-sm-inline-block">
             <a href="#" onclick="_dashboard()" class="nav-link">Dashboard</a>
           </li>
+
         <?php
         }
         ?>
@@ -177,7 +178,7 @@
               <img src="<?php echo $_SESSION['user']['user_image']; ?>" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="#" class="d-block">
+              <a onclick="view_profile(<?php echo $_SESSION['user']['user_assign_role_id']; ?>)" href="#" class="d-block">
                 <?php
                 echo $_SESSION['user']['first_name'] ?? '';
                 echo " (" . $_SESSION['user']['user_role'] . ")";

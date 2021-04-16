@@ -60,10 +60,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant') {
                     </div>
                     <div class="card-footer">
                       <div class="text-right">
-                        <a <?php if(isset($_SESSION['user'])){?> onclick="chat_open(<?php echo $consultant['user_assign_role_id']; ?>,<?php echo $consultant['category_id']; ?>)" <?php }else{?> onclick="alert('Login First')"  <?php } ?> href="#" class="btn btn-sm bg-teal">
+                        <a <?php if (isset($_SESSION['user'])) { ?> onclick="chat_open(<?php echo $consultant['user_assign_role_id']; ?>,<?php echo $consultant['category_id']; ?>)" <?php } else { ?> onclick="alert('Login First')" <?php } ?> href="#" class="btn btn-sm bg-teal">
                           <i class="fas fa-comments"></i>
                         </a>
-                        <a href="#" class="btn btn-sm btn-primary">
+                        <a onclick="view_profile(<?php echo $consultant['user_assign_role_id']; ?>)" href="#" class="btn btn-sm btn-primary">
                           <i class="fas fa-user"></i> View Profile
                         </a>
                       </div>

@@ -476,3 +476,16 @@ function _chat_start(c,u) {
   aj.send("action=comment_allow&id=" + id + "&status=" + status+ "&p_id=" + p_id);
   }
 
+  //  Comments Allow/Disallow
+  function  view_profile(id) {
+
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      document.getElementById("content").innerHTML = aj.responseText;
+    }
+  };
+
+  aj.open("POST", "pages/view_profile.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=view_profile&id=" + id);
+  }
