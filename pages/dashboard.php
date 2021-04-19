@@ -243,45 +243,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'dashboard') {
             </div>
 
 
-            <div class="col-lg-3 col-6">
-              <div class="info-box bg-success">
-                <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
-
-                <div class="info-box-content">
-                  <span class="info-box-text">Likes</span>
-                  <span class="info-box-number">41,410</span>
-
-                  <div class="progress">
-                    <div class="progress-bar" style="width: 70%"></div>
-                  </div>
-                  <span class="progress-description">
-                    70% Increase in 30 Days
-                  </span>
-                </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-
-            <div class="col-lg-3 col-6">
-              <div class="info-box bg-danger">
-                <span class="info-box-icon"><i class="fas fa-comments"></i></span>
-
-                <div class="info-box-content">
-                  <span class="info-box-text">Comments</span>
-                  <span class="info-box-number">41,410</span>
-
-                  <div class="progress">
-                    <div class="progress-bar" style="width: 70%"></div>
-                  </div>
-                  <span class="progress-description">
-                    70% Increase in 30 Days
-                  </span>
-                </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
           </div>
           <!-- /.row -->
         <?php

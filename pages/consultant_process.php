@@ -36,7 +36,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_rate') {
 
 if (isset($_POST['action']) && $_POST['action'] == 'chat_open') { ?>
 
-  
+  <!-- css for rating -->
   <style type="text/css">
     .rate {
       float: left;
@@ -80,19 +80,17 @@ if (isset($_POST['action']) && $_POST['action'] == 'chat_open') { ?>
       color: #c59b08;
     }
   </style>
- 
-<?php
-    $user_id = $_POST['user_id'];
-    $_SESSION['consultant_chat_last_id'] = $chat_id = $_POST['chat_id'];
 
-    $db->_result("SELECT * FROM user_assign_role INNER JOIN user ON user.user_id=user_assign_role.user_id  WHERE user_assign_role.user_assign_role_id=" . $user_id);
 
-    if ($db->result->num_rows) {
+  <?php
+  $user_id = $_POST['user_id'];
+  $_SESSION['consultant_chat_last_id'] = $chat_id = $_POST['chat_id'];
 
-      $user = mysqli_fetch_assoc($db->result);
-    } else {
-      echo "not ok";
-    }
+  $db->_result("SELECT * FROM user_assign_role INNER JOIN user ON user.user_id=user_assign_role.user_id  WHERE user_assign_role.user_assign_role_id=" . $user_id);
+
+  if ($db->result->num_rows) {
+
+    $user = mysqli_fetch_assoc($db->result);
   ?>
     <div class="content-wrapper">
       <div class="container-fluid">
@@ -101,7 +99,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'chat_open') { ?>
             <!-- DIRECT CHAT PRIMARY -->
             <div class="card card-primary card-outline direct-chat direct-chat-primary shadow-large">
               <div class="card-header">
-                <h3 class="card-title">Chat with <?php echo $_SESSION['user']['first_name']; ?></h3>
+                <h3 class="card-title">Chat with <?php echo ($_SESSION['user']['user_role'] == 'Consultant') ? 'Client' : 'Consultant'; ?></h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -144,13 +142,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'chat_open') { ?>
                           <!-- /.direct-chat-text -->
                         </div>
                         <!-- /.direct-chat-msg -->
-                      <?php
+                        <?php
                       } else {
                         $c = "SELECT * FROM user,user_assign_role WHERE user_assign_role.user_id =user.user_id AND user_assign_role_id=$user_id";
                         $res = mysqli_query($db->connection, $c);
                         if ($db->result->num_rows) {
                           $res = mysqli_fetch_assoc($res);
-                          ?>
+                        ?>
                           <div class="direct-chat-msg">
                             <div class="direct-chat-infos clearfix">
                               <span class="direct-chat-name float-left"><?php echo $user['first_name']; ?></span>
@@ -164,12 +162,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'chat_open') { ?>
                             </div>
                             <!-- /.direct-chat-text -->
                           </div>
-                          
-                          <?php
+
+                        <?php
                         } else {
                           echo "empty";
                         }
-                      ?>
+                        ?>
                         <!-- /.direct-chat-msg -->
                   <?php
                       }
@@ -185,7 +183,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'chat_open') { ?>
                   <div class="input-group">
                     <input id="txt" type="text" name="message" placeholder="Type Message ..." class="form-control">
                     <span class="input-group-append">
-                      <button onclick="_chat_start(<?php echo $_SESSION['consultant_chat_last_id']; ?>,<?php echo $user_id;?>)" type="button" class="btn btn-primary">Send</button>
+                      <button onclick="_chat_start(<?php echo $_SESSION['consultant_chat_last_id']; ?>,<?php echo $user_id; ?>)" type="button" class="btn btn-primary">Send</button>
                     </span>
                   </div>
                   <input type="hidden" id="category_id" value="<?php echo $_POST['category_id'] ?? ''; ?>">
@@ -202,7 +200,12 @@ if (isset($_POST['action']) && $_POST['action'] == 'chat_open') { ?>
         </div>
       </div>
     </div>
-    <!-- /.col -->
+  <?php
+  } else {
+    echo "not ok";
+  }
+  ?>
+  <!-- /.col -->
 
 <?php
 }

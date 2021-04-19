@@ -38,7 +38,7 @@
           <a href="index.php" class="nav-link">Home</a>
         </li>
         <?php
-        if (isset($_SESSION['user'])) {
+        if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] != 'Other') {
         ?>
           <li class="nav-item d-none d-sm-inline-block">
             <a href="#" onclick="_dashboard()" class="nav-link">Dashboard</a>
@@ -80,11 +80,6 @@
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
 
-        <li onclick="chat_open()" class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-bell"></i>
-          </a>
-        </li>
 
         <?php
 
@@ -94,40 +89,60 @@
           $db->_result("SELECT count(consultant) AS 'Total' FROM consultancy_service WHERE status='In-Process' AND consultant=" . $_SESSION['user']['user_assign_role_id']);
           $result = mysqli_fetch_assoc($db->result);
         }
+        if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] != 'Consultant') {
+          $db->_result("SELECT count(client) AS 'Total' FROM consultancy_service WHERE status='In-Process' AND client=" . $_SESSION['user']['user_assign_role_id']);
+          $result = mysqli_fetch_assoc($db->result);
+        }
         if (isset($_SESSION['user'])) {
 
-          $db->_result("SELECT * FROM consultancy_service INNER JOIN user_assign_role ON user_assign_role.user_assign_role_id=consultancy_service.client INNER JOIN USER ON user.user_id=user_assign_role.user_id WHERE status='In-Process' AND consultant=" . $_SESSION['user']['user_assign_role_id']);
+          if ($_SESSION['user']['user_role'] == 'Consultant') {
+            $db->_result("SELECT * FROM consultancy_service INNER JOIN user_assign_role ON user_assign_role.user_assign_role_id=consultancy_service.client INNER JOIN USER ON user.user_id=user_assign_role.user_id WHERE status='In-Process' AND consultant=" . $_SESSION['user']['user_assign_role_id']);
+          } else {
+            $db->_result("SELECT * FROM consultancy_service INNER JOIN user_assign_role ON user_assign_role.user_assign_role_id=consultancy_service.client INNER JOIN USER ON user.user_id=user_assign_role.user_id WHERE status='In-Process' AND client=" . $_SESSION['user']['user_assign_role_id']);
+          }
 
           if ($db->result->num_rows) {
+        ?>
+            <li class="nav-item dropdown">
+              <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="far fa-comments"></i>
+                <span class="badge badge-danger navbar-badge"><?php echo  $result['Total']; ?></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <?php
+                while ($client = mysqli_fetch_assoc($db->result)) {
 
-            while ($client = mysqli_fetch_assoc($db->result)) { ?>
-
-              <li class="nav-item dropdown">
-                <a class="nav-link" data-toggle="dropdown" href="#">
-                  <i class="far fa-comments"></i>
-                  <span class="badge badge-danger navbar-badge"><?php echo  $result['Total']; ?></span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                  <a onclick="_chat(<?php echo $client['consultancy_service_id']; ?>,<?php echo $client['user_assign_role_id']; ?>)" href="#" class="dropdown-item">
-                    <!-- Message Start -->
-                    <div class="media">
-                      <img src="<?php echo  $client['user_image']; ?>" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-                      <div class="media-body">
-                        <h3 class="dropdown-item-title">
-                          <?php echo $client['first_name']; ?>
-                        </h3>
-                        <p class="text-sm"><?php echo  $client['query']; ?></p>
-                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i><?php echo  $client['discussion_start']; ?></p>
+                  if ($_SESSION['user']['user_role'] == 'Consultant') { ?>
+                    <a onclick="_chat(<?php echo $client['consultancy_service_id']; ?>,<?php echo $client['user_assign_role_id']; ?>)" href="#" class="dropdown-item">
+                    <?php
+                  } else {
+                    ?>
+                      <a onclick="_chat(<?php echo $client['consultancy_service_id']; ?>,<?php echo $client['consultant']; ?>)" href="#" class="dropdown-item">
+                      <?php
+                    }
+                      ?>
+                      <!-- Message Start -->
+                      <div class="media">
+                        <img src="<?php echo  $client['user_image']; ?>" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                        <div class="media-body">
+                          <h3 class="dropdown-item-title">
+                            <?php echo $client['first_name']; ?>
+                          </h3>
+                          <p class="text-sm"><?php echo  $client['query']; ?></p>
+                          <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i><?php echo  date("h:i a - d/m/y", strtotime($client['discussion_start'])); ?></p>
+                        </div>
                       </div>
-                    </div>
-                    <!-- Message End -->
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                </div>
-              </li>
+                      <!-- Message End -->
+                      </a>
+                    <?php
+                  }
+                    ?>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+              </div>
+            </li>
+
         <?php
-            }
           }
         }
         ?>

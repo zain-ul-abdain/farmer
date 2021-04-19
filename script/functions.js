@@ -413,11 +413,10 @@ function chat_start() {
 
 /* Consultant reply of new chat opened*/
 function _chat(chat_id, user_id) {
-  // alert(chat_id,user_id);
+
   aj.onreadystatechange = function () {
     if (aj.readyState == 4 && aj.status == 200) {
       document.getElementById("content").innerHTML = aj.responseText;
-      // alert(aj.responseText);
     }
   };
 
