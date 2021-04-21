@@ -67,8 +67,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat') {
   if ($db->result->num_rows) {
 
     $user = mysqli_fetch_assoc($db->result);
-  } else {
-    echo "not ok";
   }
 ?>
   <div class="content-wrapper">
@@ -241,26 +239,28 @@ if (isset($_POST['action']) && $_POST['action'] == 'consultant_chat_update') {
   if ($db->result->num_rows) {
 
     $user = mysqli_fetch_assoc($db->result);
-  } else {
-    echo "not ok";
   }
 ?>
   <div class="content-wrapper">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-8">
+        <div class="col-2">
           <!-- DIRECT CHAT PRIMARY -->
           <div class="card card-primary card-outline direct-chat direct-chat-primary shadow-large">
             <div class="card-header">
               <h3 class="card-title">Chat with <?php echo $user['first_name']; ?></h3>
 
               <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
-                  <i class="fas fa-comments"></i>
-                </button>
+                <?php
+                if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] != 'Consultant') { ?>
+
+                  <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
+                    Close Chat & Rate <i class="fas fa-comments"></i>
+                  </button>
+                <?php
+                }
+                ?>
+
                 <button onclick="_consultant()" type="button" class="btn btn-tool" data-card-widget="remove">
                   <i class="fas fa-times"></i>
                 </button>
