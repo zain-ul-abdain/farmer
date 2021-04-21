@@ -1,15 +1,17 @@
 <?php
 require_once '../require/database.php';
 session_start();
-if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
+if (isset($_POST['action']) && $_POST['action'] == "manage_chat_history") {
+
   $db->_select("product");
   if ($_SESSION['user']['user_role'] == 'Admin') {
-    $db->_result("SELECT * FROM product INNER JOIN product_image ON product_image.product_id=product.product_id AND product_image.is_main=1 ORDER BY product.product_id DESC");
+    $db->_result("SELECT * FROM consultancy_service INNER JOIN consultancy_service_chat ON consultancy_service.consultancy_service_id=consultancy_service_chat.consultancy_service_id ORDER BY product.product_id DESC");
   } else {
-    $db->_result("SELECT * FROM product INNER JOIN product_image ON product_image.product_id=product.product_id AND product_image.is_main=1 WHERE user_assign_role_id=" . $_SESSION['user']['user_assign_role_id'] . " ORDER BY product.product_id DESC");
+    $db->_result("SELECT * FROM product INNER JOIN product_image ON product_image.product_id=product.product_id  WHERE user_assign_role_id=" . $_SESSION['user']['user_assign_role_id'] . " ORDER BY product.product_id DESC");
   }
 
   if ($db->result->num_rows) {
+
 ?>
 
     <style type="text/css">
@@ -84,7 +86,7 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
             <div class="card">
               <!-- /.card -->
               <div id="users" class="col-12">
-                <h2>Manage Products</h2>
+                <h2>Manage Chat History</h2>
                 <span id="manage_user_msg"></span>
 
                 <table class="w3-table-all w3-hoverable" style="width: 100%;">
@@ -106,6 +108,7 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
                     <?php
 
                     while ($product = mysqli_fetch_assoc($db->result)) {
+                      // print_r($product);
                     ?>
                       <tr>
                         <td><?php echo $product['product_id']; ?></td>

@@ -86,28 +86,42 @@ if (isset($_POST['action']) && $_POST['action'] == 'chat_open') { ?>
   $user_id = $_POST['user_id'];
   $_SESSION['consultant_chat_last_id'] = $chat_id = $_POST['chat_id'];
 
-  $db->_result("SELECT * FROM user_assign_role INNER JOIN user ON user.user_id=user_assign_role.user_id  WHERE user_assign_role.user_assign_role_id=" . $user_id);
+  $db->_result("SELECT * FROM user_assign_role INNER JOIN user ON user.user_id=user_assign_role.user_id  
+                WHERE user_assign_role.user_assign_role_id=" . $user_id);
 
   if ($db->result->num_rows) {
 
     $user = mysqli_fetch_assoc($db->result);
   ?>
+
     <div class="content-wrapper">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
+
+
             <!-- DIRECT CHAT PRIMARY -->
-            <div class="card card-primary card-outline direct-chat direct-chat-primary shadow-large">
+
+
+
+            <div class="card card-primary card-outline direct-chat direct-chat-primary shadow-none">
               <div class="card-header">
                 <h3 class="card-title">Chat with <?php echo ($_SESSION['user']['user_role'] == 'Consultant') ? 'Client' : 'Consultant'; ?></h3>
 
                 <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
-                    <i class="fas fa-comments"></i>
-                  </button>
+
+
+
+                  <?php
+                  if (isset($_SESSION['user']) && $_SESSION['user']['user_role'] != 'Consultant') { ?>
+
+                    <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
+                      Close Chat & Rate <i class="fas fa-comments"></i>
+                    </button>
+                  <?php
+                  }
+                  ?>
+
                   <button onclick="_consultant()" type="button" class="btn btn-tool" data-card-widget="remove">
                     <i class="fas fa-times"></i>
                   </button>
@@ -117,7 +131,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'chat_open') { ?>
 
               <div class="card-body">
                 <!-- Conversations are loaded here -->
-                <div class="direct-chat-messages">
+                <div id='show_new_messages' class="direct-chat-messages">
                   <!-- Message. Default to the left -->
 
                   <?php
@@ -176,8 +190,49 @@ if (isset($_POST['action']) && $_POST['action'] == 'chat_open') { ?>
                   ?>
 
                 </div>
+                <div class="direct-chat-contacts">
+                  <ul class="contacts-list">
+                    <li>
+                      <a href="#">
+                        <img class="contacts-list-img" src="<?php echo $user['user_image']; ?>" alt="User Avatar">
+
+                        <div class="contacts-list-info">
+                          <span class="contacts-list-name">
+                            <?php echo $user['first_name']; ?>
+                            <small class="contacts-list-date float-right"><?php echo date("h:i a d/m/y", time()); ?></small>
+                          </span>
+                          <span class="contacts-list-msg">How was your experience? Please rate...</span>
+                        </div>
+
+                        <textarea name="rating_msg" id="rating_msg" cols="30" rows="5"></textarea>
+                        <div class="comment-form-rating">
+                          <div class="rate">
+                            <input onclick="_star(this.value)" type="radio" id="star5" name="rate" value="5" />
+                            <label for="star5" title="text">5 stars</label>
+                            <input onclick="_star(this.value)" type="radio" id="star4" name="rate" value="4" />
+                            <label for="star4" title="text">4 stars</label>
+                            <input onclick="_star(this.value)" type="radio" id="star3" name="rate" value="3" />
+                            <label for="star3" title="text">3 stars</label>
+                            <input onclick="_star(this.value)" type="radio" id="star2" name="rate" value="2" />
+                            <label for="star2" title="text">2 stars</label>
+                            <input onclick="_star(this.value)" type="radio" id="star1" name="rate" value="1" />
+                            <label for="star1" title="text">1 star</label>
+                          </div>
+                        </div>
+                        <input id="stars" type="hidden" value="0">
+                        <button onclick="_rating()">Rate</button>
+                        <!-- /.contacts-list-info -->
+                      </a>
+                    </li>
+                    <!-- End Contact Item -->
+                  </ul>
+                  <!-- /.contatcts-list -->
+                </div>
               </div>
               <!-- /.card-body -->
+
+
+
               <div class="card-footer">
                 <form action="#" method="post">
                   <div class="input-group">
@@ -196,33 +251,91 @@ if (isset($_POST['action']) && $_POST['action'] == 'chat_open') { ?>
 
 
 
-
         </div>
       </div>
-    </div>
+      <?php
+    }
+  }
+
+  if (isset($_POST['action']) && $_POST['action'] == 'add_consultant_reply') {
+
+    $query = $_POST['chat_message'];
+    $user_id = $_SESSION['user']['user_assign_role_id'];
+    $last_id = $_SESSION['consultant_chat_last_id'];
+
+    $insert = "INSERT INTO consultancy_service_chat (consultancy_service_id,chat_message,user_assign_role_id) VALUES ('$last_id','" . htmlspecialchars($query, true) . "','$user_id')";
+    $db->_result($insert);
+
+    if ($db->result) {
+      echo "ok";
+    } else {
+      echo "not ok";
+    }
+  }
+
+
+  if (isset($_POST['action']) && $_POST['action'] == 'show_new_messages') {
+
+    $user_id = $_POST['user_id'];
+    $_SESSION['consultant_chat_last_id'] = $chat_id = $_POST['chat_id'];
+
+    $db->_result("SELECT * FROM user_assign_role INNER JOIN user ON user.user_id=user_assign_role.user_id  
+                WHERE user_assign_role.user_assign_role_id=" . $user_id);
+
+    if ($db->result->num_rows) {
+
+      $user = mysqli_fetch_assoc($db->result);
+
+      $msg_query = "SELECT * FROM consultancy_service_chat WHERE consultancy_service_id = '$chat_id'";
+      $db->_result($msg_query);
+      if ($db->result->num_rows) {
+        while ($msg = mysqli_fetch_assoc($db->result)) {
+          if ($msg['user_assign_role_id'] == $_SESSION['user']['user_assign_role_id']) {
+      ?>
+            <!-- Message to the right -->
+            <div class="direct-chat-msg right">
+              <div class="direct-chat-infos clearfix">
+                <span class="direct-chat-name float-right"><?php echo $_SESSION['user']['first_name']; ?></span>
+                <span class="direct-chat-timestamp float-left"><?php echo $msg['added_on']; ?></span>
+              </div>
+              <!-- /.direct-chat-infos -->
+              <img class="direct-chat-img" src="<?php echo $_SESSION['user']['user_image']; ?>" alt="Message User Image">
+              <!-- /.direct-chat-img -->
+              <div class="direct-chat-text">
+                <?php echo $msg['chat_message']; ?>
+              </div>
+              <!-- /.direct-chat-text -->
+            </div>
+            <!-- /.direct-chat-msg -->
+            <?php
+          } else {
+            $c = "SELECT * FROM user,user_assign_role WHERE user_assign_role.user_id =user.user_id AND user_assign_role_id=$user_id";
+            $res = mysqli_query($db->connection, $c);
+            if ($db->result->num_rows) {
+              $res = mysqli_fetch_assoc($res);
+            ?>
+              <div class="direct-chat-msg">
+                <div class="direct-chat-infos clearfix">
+                  <span class="direct-chat-name float-left"><?php echo $user['first_name']; ?></span>
+                  <span class="direct-chat-timestamp float-right"><?php echo $msg['added_on']; ?></span>
+                </div>
+                <!-- /.direct-chat-infos -->
+                <img class="direct-chat-img" src="<?php echo $user['user_image']; ?>" alt="Message User Image">
+                <!-- /.direct-chat-img -->
+                <div class="direct-chat-text">
+                  <?php echo $msg['chat_message']; ?>
+                </div>
+                <!-- /.direct-chat-text -->
+              </div>
   <?php
-  } else {
-    echo "not ok";
+            }
+          }
+        }
+      }
+    }
   }
+
+
+
+
   ?>
-  <!-- /.col -->
-
-<?php
-}
-
-if (isset($_POST['action']) && $_POST['action'] == 'add_consultant_reply') {
-
-  $query = $_POST['chat_message'];
-  $user_id = $_SESSION['user']['user_assign_role_id'];
-  $last_id = $_SESSION['consultant_chat_last_id'];
-
-  $insert = "INSERT INTO consultancy_service_chat (consultancy_service_id,chat_message,user_assign_role_id) VALUES ('$last_id','" . htmlspecialchars($query, true) . "','$user_id')";
-  $db->_result($insert);
-
-  if ($db->result) {
-    echo "ok";
-  } else {
-    echo "not ok";
-  }
-}
-?>
