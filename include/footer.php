@@ -1,15 +1,18 @@
 <!-- Main Footer -->
 <footer class="main-footer">
-    <strong>Copyright &copy; 2014-<?php echo date("Y",time()); ?><a href="#"> Farmer Connection</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.1.0-rc
-    </div>
-  </footer>
+  <strong>Copyright &copy; 2014-<?php echo date("Y", time()); ?><a href="#"> Farmer Connection</a>.</strong>
+  All rights reserved.
+  <div class="float-right d-none d-sm-inline-block">
+    <b>Version</b> 3.1.0-rc
+  </div>
+</footer>
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
+<!-- Bootstrap 5 Js -->
+
+<script src="bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap -->
@@ -33,4 +36,5 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="dist/js/pages/dashboard2.js"></script>
 </body>
+
 </html>

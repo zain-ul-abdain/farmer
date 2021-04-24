@@ -52,45 +52,34 @@ $res = $db->result;
       <?php } ?>
     </div><!-- /.container-fluid -->
   </section>
-  <!-- Start Products  -->
-  <div class="products-box">
-    <div class="container">
-      <div class="row special-list">
+  <div class="container">
+    <div class="row">
+      <?php
+      while ($product = mysqli_fetch_assoc($res)) {
+        $db->_result("SELECT * FROM product_image WHERE product_id='" . $product['product_id'] . "' AND is_main=1");
+        $img = mysqli_fetch_assoc($db->result);
+      ?>
+        <div class="col-sm-3">
 
+          <div class="card" style="width: 18rem;">
 
-        <?php
-        while ($product = mysqli_fetch_assoc($res)) {
-          $db->_result("SELECT * FROM product_image WHERE product_id='" . $product['product_id'] . "' AND is_main=1");
-          $img = mysqli_fetch_assoc($db->result);
-        ?>
+            <img style="width: 300px; height:200px" src="<?php echo $img['image_path']; ?>" class="card-img-top img-thumbnail" alt="...">
 
-          <div class="col-lg-3 col-md-6 special-grid best-seller">
-            <div class="products-single fix">
-              <div class="box-img-hover">
-                <div class="type-lb">
-                  <p class="sale"><?php echo $product['category']; ?></p>
-                </div>
-                <img style="width: 100%; height: 200px;" src="<?php echo $img['image_path']; ?>" class="img-fluid" alt="Image">
-                <div class="mask-icon">
-                  <ul>
-                    <li onclick="product_details(<?php echo $product['product_id']; ?>)"><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye">View Details</i></a></li>
-                  </ul>
-                  <a class="cart" href="#">Add to Cart</a>
-                </div>
-              </div>
-              <div class="why-text">
-                <h4><?php echo $product['product_title']; ?></h4>
-                <p><?php echo substr($product['product_description'], 0, 80); ?><a href="#" onclick="product_details(<?php echo $product['product_id']; ?>)">...show details</a></p>
-                <p>Seller: <?php echo $product['first_name']; ?></p>
-                <h5>PKR <?php echo $product['price']; ?></h5>
-              </div>
+            <div class="card-body">
+
+              <h5 class="card-title"><?php echo $product['product_title']; ?></h5>
+
+              <p class="card-text"><?php echo substr($product['product_description'], 0, 80); ?></p>
+
+              <a onclick="product_details(<?php echo $product['product_id']; ?>)" href="#" class="btn btn-primary">Details</a>
+
             </div>
           </div>
-
-        <?php   } ?>
-      </div>
+        </div>
+      <?php } ?>
     </div>
   </div>
+  <!-- Start Products  -->
   <div class="products-box">
     <div class="container">
       <div class="row special-list">
