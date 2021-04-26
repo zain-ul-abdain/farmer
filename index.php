@@ -1,9 +1,16 @@
 <?php
 include 'include/head.php';
+
 ?>
 
 <!-- JS functions on click -->
 <script type="text/javascript" src="script/functions.js"></script>
+
+<script>
+  if (window.location == "http://localhost/11100/Farmer/farmer/index.php?action=shop") {
+    _e_commerce();
+  }
+</script>
 
 <div id="content">
   <div class="content-wrapper">

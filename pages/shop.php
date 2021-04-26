@@ -13,6 +13,7 @@ $res = $db->result;
   <section class="content-header">
     <div class="container-fluid">
 
+
       <section class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
@@ -38,6 +39,7 @@ $res = $db->result;
             }
             ?>
           </div>
+
         </div>
 
       </div>
@@ -53,6 +55,85 @@ $res = $db->result;
     </div><!-- /.container-fluid -->
   </section>
   <div class="container">
+
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="mt-4">
+          <a href="pages/cart.php" class="btn btn-primary btn-lg btn-flat">
+            <i class="fas fa-cart-plus fa-lg mr-2"></i>
+            Show Cart
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row p-4">
+      <div class="col-sm-3">
+      </div>
+      <div class="col-sm-6">
+
+        <div id="carouselExampleDark" class="carousel slide" data-bs-ride="carousel">
+
+          <div class="carousel-inner">
+
+            <?php
+            $db->_result("SELECT * FROM product,product_image WHERE product.product_id=product_image.product_id AND product.is_featured=1 AND product_image.is_main=1 AND product.is_active=1");
+            if ($db->result->num_rows) {
+              $a = 1;
+              while ($product = mysqli_fetch_assoc($db->result)) {
+
+                if ($a == 1) {
+            ?>
+                  <div class="carousel-item active" data-bs-interval="10000" onclick="product_details(<?php echo $product['product_id']; ?>)">
+                    <img style="width: 400px;height:250px;" src="<?php echo $product['image_path']; ?>" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5><?php echo $product['product_title']; ?></h5>
+                      <p><?php echo $product['product_description']; ?></p>
+                    </div>
+                  </div>
+
+                <?php
+                } else {
+                ?>
+                  <div class="carousel-item" data-bs-interval="2000" onclick="product_details(<?php echo $product['product_id']; ?>)">
+                    <img style="width: 400px;height:250px;" src="<?php echo $product['image_path']; ?>" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5><?php echo $product['product_title']; ?></h5>
+                      <p><?php echo $product['product_description']; ?></p>
+                    </div>
+                  </div>
+              <?php
+                }
+                $a++;
+              }
+            } else {
+              ?>
+              <div class="carousel-item active" data-bs-interval="10000">
+                <img style="width: 400px;height:250px;" src="https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>No Featured Products Available</h5>
+                  <p></p>
+                </div>
+              </div>
+            <?php
+            }
+            ?>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+      <div class="col-sm-3">
+      </div>
+    </div>
+
     <div class="row">
       <?php
       while ($product = mysqli_fetch_assoc($res)) {
@@ -61,7 +142,7 @@ $res = $db->result;
       ?>
         <div class="col-sm-3">
 
-          <div class="card" style="width: 18rem;">
+          <div class="card" style="width: 18rem; height:400px;">
 
             <img style="width: 300px; height:200px" src="<?php echo $img['image_path']; ?>" class="card-img-top img-thumbnail" alt="...">
 
@@ -70,51 +151,13 @@ $res = $db->result;
               <h5 class="card-title"><?php echo $product['product_title']; ?></h5>
 
               <p class="card-text"><?php echo substr($product['product_description'], 0, 80); ?></p>
-
+              <hr>
               <a onclick="product_details(<?php echo $product['product_id']; ?>)" href="#" class="btn btn-primary">Details</a>
+              <a onclick="add_to_cart(<?php echo $product['product_id']; ?>,1)" href="#" class="btn btn-secondary">Add to Cart</a>
 
             </div>
           </div>
         </div>
       <?php } ?>
-    </div>
-  </div>
-  <!-- Start Products  -->
-  <div class="products-box">
-    <div class="container">
-      <div class="row special-list">
-
-
-        <?php
-        while ($product = mysqli_fetch_assoc($res)) {
-          $db->_result("SELECT * FROM product_image WHERE product_id='" . $product['product_id'] . "' AND is_main=1");
-          $img = mysqli_fetch_assoc($db->result);
-        ?>
-
-          <div class="col-lg-3 col-md-6 special-grid best-seller">
-            <div class="products-single fix">
-              <div class="box-img-hover">
-                <div class="type-lb">
-                  <p class="sale"><?php echo $product['category']; ?></p>
-                </div>
-                <img style="width: 100%; height: 200px;" src="<?php echo $img['image_path']; ?>" class="img-fluid" alt="Image">
-                <div class="mask-icon">
-                  <ul>
-                    <li onclick="product_details(<?php echo $product['product_id']; ?>)"><a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye">View Details</i></a></li>
-                  </ul>
-                  <a class="cart" href="#">Add to Cart</a>
-                </div>
-              </div>
-              <div class="why-text">
-                <h4><?php echo $product['product_title']; ?></h4>
-                <p><?php echo substr($product['product_description'], 0, 80); ?><a href="#" onclick="product_details(<?php echo $product['product_id']; ?>)">...show details</a></p>
-                <p>Seller: <?php echo $product['first_name']; ?></p>
-                <h5>PKR <?php echo $product['price']; ?></h5>
-              </div>
-            </div>
-          </div>
-
-        <?php   } ?>
-      </div>
     </div>
   </div>

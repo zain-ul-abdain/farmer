@@ -1,4 +1,3 @@
-
 <?php
 
 session_start();
@@ -21,13 +20,23 @@ $item = mysqli_fetch_assoc($res);
   <!-- Main content -->
   <section class="content">
 
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="mt-4">
+          <a href="pages/cart.php" class="btn btn-primary btn-lg btn-flat">
+            <i class="fas fa-cart-plus fa-lg mr-2"></i>
+            Show Cart
+          </a>
+        </div>
+      </div>
+    </div>
     <!-- Default box -->
     <div class="card card-solid">
       <div class="card-body">
         <div class="row">
           <div class="col-12 col-sm-6">
             <div class="col-12">
-              <img style="width: 100%;height: 600px;" id="main" src="<?php echo $item['image_path']; ?>" class="product-image" alt="Product Image">
+              <img style="width: 500px;height:400px;" id="main" src="<?php echo $item['image_path']; ?>" class="product-image" alt="Product Image">
             </div>
             <div class="col-12 product-image-thumbs">
               <?php
@@ -50,33 +59,32 @@ $item = mysqli_fetch_assoc($res);
 
             <div class="bg-gray py-2 px-3 mt-4">
               <h2 class="mb-0">
-              PKR <?php echo $item['price']; ?>
+                PKR <?php echo $item['price']; ?>
               </h2>
 
             </div>
 
             <div class="mt-4">
-              <div class="btn btn-primary btn-lg btn-flat">
+
+              <label for="quantity">Quantity</label>
+              <input id="quantity" class="form-control" style="width:60px;" type="number" min="1" max="10" value="1">
+              <div class="btn btn-primary btn-lg btn-flat" onclick="add_to_cart(<?php echo $item['product_id']; ?>,0)">
                 <i class="fas fa-cart-plus fa-lg mr-2"></i>
                 Add to Cart
               </div>
             </div>
           </div>
+
           <div class="row mt-4">
             <nav class="w-100">
               <div class="nav nav-tabs" id="product-tab" role="tablist">
-                <a class="nav-item nav-link active" id="product-desc-tab" data-toggle="tab" href="#product-desc" role="tab" aria-controls="product-desc" aria-selected="true">Description</a>
-                <a class="nav-item nav-link" id="product-comments-tab" data-toggle="tab" href="#product-comments" role="tab" aria-controls="product-comments" aria-selected="false">Comments</a>
+                <a class="nav-item nav-link active" id="product-comments-tab" data-toggle="tab" href="#product-comments" role="tab" aria-controls="product-comments" aria-selected="true">Comments</a>
                 <a class="nav-item nav-link" id="product-rating-tab" data-toggle="tab" href="#product-rating" role="tab" aria-controls="product-rating" aria-selected="false">Rating</a>
               </div>
             </nav>
             <div class="tab-content p-3" id="nav-tabContent">
 
-              <div class="tab-pane fade show active" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab">
-                <?php echo $item['product_description']; ?>
-              </div>
-
-              <div class="tab-pane fade" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab">
+              <div class="tab-pane fade active in show" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab">
                 unavailable
               </div>
               <div class="tab-pane fade" id="product-rating" role="tabpanel" aria-labelledby="product-rating-tab">
@@ -84,6 +92,7 @@ $item = mysqli_fetch_assoc($res);
               </div>
             </div>
           </div>
+
         </div>
         <!-- /.card-body -->
       </div>
@@ -93,4 +102,3 @@ $item = mysqli_fetch_assoc($res);
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-

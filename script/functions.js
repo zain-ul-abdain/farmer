@@ -520,3 +520,22 @@ function chat_history() {
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   aj.send("action=manage_chat_history");
 }
+
+/* Add to Cart*/
+function add_to_cart(id,qty) {
+
+  if (qty == 0) {
+    qty = document.getElementById("quantity").value;
+  }
+
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      alert(aj.responseText);
+      // document.getElementById("content").innerHTML = aj.responseText;
+    }
+  };
+
+  aj.open("POST", "pages/cart_process.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=add_to_cart&id="+id+"&qty="+qty);
+}
