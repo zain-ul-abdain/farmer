@@ -137,7 +137,7 @@ if (isset($_SESSION['cart'])) {
             <a href="<?php if (isset($_SESSION['user'])) {
                         echo 'checkout.php';
                       } else {
-                        echo 'forms/login.php';
+                        echo '../forms/login.php';
                       }
                       ?>" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a>
           </td>
