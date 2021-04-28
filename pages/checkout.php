@@ -1,5 +1,13 @@
 <?php
 session_start();
+$s_address = $_REQUEST['s_address'] ?? 'same as billing address';
+require_once '../require/database.php';
+$db->_result("INSERT INTO customer_order ( user_assign_role_id,billing_address, shipping_address)  VALUES('" . $_SESSION['user']['user_assign_role_id'] . "','" . $_REQUEST['address'] . "','" . $s_address . "')");
+
+if ($db->result) {
+  $last_id = mysqli_insert_id($db->connection);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -322,192 +330,202 @@ session_start();
       </div>
       <!-- /.sidebar -->
     </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1>Invoice</h1>
+    <div id="content">
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1>Invoice</h1>
+              </div>
             </div>
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="../#">Home</a></li>
-                <li class="breadcrumb-item active">Invoice</li>
-              </ol>
-            </div>
-          </div>
-        </div><!-- /.container-fluid -->
-      </section>
+          </div><!-- /.container-fluid -->
+        </section>
 
-      <section class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-12">
+        <section class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
 
 
 
-              <!-- Main content -->
-              <div class="invoice p-3 mb-3">
-                <!-- title row -->
-                <div class="row">
-                  <div class="col-12">
-                    <h4>
-                      <i class="fas fa-globe"></i> Farmer Connection
-                      <small class="float-right"><?php echo "Date: " . date("d/m/Y", time()); ?></small>
-                      </h2>
+                <!-- Main content -->
+                <div class="invoice p-3 mb-3">
+                  <!-- title row -->
+                  <div class="row">
+                    <div class="col-12">
+                      <h4>
+                        <i class="fas fa-globe"></i> Farmer Connection
+                        <small class="float-right"><?php echo "Date: " . date("d/m/Y", time()); ?></small>
+                        </h2>
+                    </div>
+                    <!-- /.col -->
                   </div>
-                  <!-- /.col -->
-                </div>
-                <!-- info row -->
-                <div class="row invoice-info">
-                  <div class="col-sm-4 invoice-col">
-                    From
-                    <address>
-                      <strong>Farmer Connection</strong><br>
-                      795 Folsom Ave, Suite 600<br>
-                      San Francisco, CA 94107<br>
-                      Phone: (123) 123-5432<br>
-                      Email: info@farmerconnection.com
-                    </address>
+                  <!-- info row -->
+                  <div class="row invoice-info">
+                    <div class="col-sm-3 invoice-col">
+                      From
+                      <address>
+                        <strong>Farmer Connection</strong><br>
+                        795 Folsom Ave, Suite 600<br>
+                        San Francisco, CA 94107<br>
+                        Phone: (123) 123-5432<br>
+                        Email: info@farmerconnection.com
+                      </address>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-3 invoice-col">
+                      Billing Address
+                      <address>
+                        <strong><?php echo $_REQUEST['firstname'] ?? ''; ?></strong><br>
+                        <?php echo $_REQUEST['address'] ?? ''; ?><br>
+                        Phone: <?php echo $_REQUEST['phone_number'] ?? ''; ?><br>
+                        Email: <?php echo $_REQUEST['email'] ?? ''; ?>
+                      </address>
+                    </div>
+                    <!-- /.col -->
+                    <?php
+                    if (isset($_REQUEST['sameadr']) && $_REQUEST['sameadr'] == 'on') {
+                    ?>
+                      <div class="col-sm-3 invoice-col">
+                        Shipping Address
+                        <address>
+                          <strong> Same as Billing Address </strong><br>
+                        </address>
+                      </div>
+                    <?php
+                    } else {
+                    ?>
+                      <div class="col-sm-3 invoice-col">
+                        Shipping Address
+                        <address>
+                          <strong><?php echo $_REQUEST['s_firstname'] ?? ''; ?></strong><br>
+                          <?php echo $_REQUEST['s_address'] ?? ''; ?><br>
+                          Phone: <?php echo $_REQUEST['s_phone_number'] ?? ''; ?><br>
+                          Email: <?php echo $_REQUEST['s_email'] ?? ''; ?>
+                        </address>
+                      </div>
+                    <?php
+                    }
+                    ?>
+                    <!-- /.col -->
+                    <div class="col-sm-3 invoice-col">
+                      <b>Invoice #<?php echo rand(); ?></b><br>
+                      <br>
+                      <b>Order ID:</b> <?php echo $last_id; ?><br>
+                      <b>Payment Due:</b> <?php echo "Date: " . date("d/m/Y", time() + (24 * 60 * 60)); ?><br>
+                    </div>
+                    <!-- /.col -->
                   </div>
-                  <!-- /.col -->
-                  <div class="col-sm-4 invoice-col">
-                    To
-                    <address>
-                      <strong><?php echo $_SESSION['user']['first_name']; ?></strong><br>
-                      795 Folsom Ave, Suite 600<br>
-                      San Francisco, CA 94107<br>
-                      Phone: (555) 539-1037<br>
-                      Email: <?php echo $_SESSION['user']['user_email']; ?>
-                    </address>
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-sm-4 invoice-col">
-                    <b>Invoice #007612</b><br>
-                    <br>
-                    <b>Order ID:</b> 4F3S8J<br>
-                    <b>Payment Due:</b> 2/22/2014<br>
-                    <b>Account:</b> 968-34567
-                  </div>
-                  <!-- /.col -->
-                </div>
-                <!-- /.row -->
+                  <!-- /.row -->
 
-                <!-- Table row -->
-                <div class="row">
-                  <div class="col-12 table-responsive">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th>Qty</th>
-                          <th>Product</th>
-                          <th>Serial #</th>
-                          <th>Description</th>
-                          <th>Subtotal</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Call of Duty</td>
-                          <td>455-981-221</td>
-                          <td>El snort testosterone trophy driving gloves handsome</td>
-                          <td>$64.50</td>
-                        </tr>
-                        <tr>
-                          <td>1</td>
-                          <td>Need for Speed IV</td>
-                          <td>247-925-726</td>
-                          <td>Wes Anderson umami biodiesel</td>
-                          <td>$50.00</td>
-                        </tr>
-                        <tr>
-                          <td>1</td>
-                          <td>Monsters DVD</td>
-                          <td>735-845-642</td>
-                          <td>Terry Richardson helvetica tousled street art master</td>
-                          <td>$10.70</td>
-                        </tr>
-                        <tr>
-                          <td>1</td>
-                          <td>Grown Ups Blue Ray</td>
-                          <td>422-568-642</td>
-                          <td>Tousled lomo letterpress</td>
-                          <td>$25.99</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <!-- /.col -->
-                </div>
-                <!-- /.row -->
+                  <!-- Table row -->
+                  <div class="row">
+                    <div class="col-12 table-responsive">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Item #</th>
+                            <th>Product Name</th>
+                            <th>Description</th>
+                            <th>Qty</th>
+                            <th>Subtotal</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php
 
-                <div class="row">
-                  <!-- accepted payments column -->
-                  <div class="col-6">
-                    <p class="lead">Payment Methods:</p>
-                    <img src="../../../dist/img/credit/visa.png" alt="Visa">
-                    <img src="../../../dist/img/credit/mastercard.png" alt="Mastercard">
-                    <img src="../../../dist/img/credit/american-express.png" alt="American Express">
-                    <img src="../../../dist/img/credit/paypal2.png" alt="Paypal">
+                          $total = 0;
+                          $a = 1;
 
-                    <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                      Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
-                      plugg
-                      dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-                    </p>
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-6">
-                    <p class="lead">Amount Due 2/22/2014</p>
+                          foreach ($_SESSION['cart'] as $key => $value) {
 
-                    <div class="table-responsive">
-                      <table class="table">
-                        <tr>
-                          <th style="width:50%">Subtotal:</th>
-                          <td>$250.30</td>
-                        </tr>
-                        <tr>
-                          <th>Tax (9.3%)</th>
-                          <td>$10.34</td>
-                        </tr>
-                        <tr>
-                          <th>Shipping:</th>
-                          <td>$5.80</td>
-                        </tr>
-                        <tr>
-                          <th>Total:</th>
-                          <td>$265.24</td>
-                        </tr>
+                            $db->_result("SELECT * FROM product,product_image WHERE product.product_id=product_image.product_id AND product.is_featured=1 AND product_image.is_main=1 AND product.is_active=1 AND product.product_id=" . $key);
+                            $cart = mysqli_fetch_assoc($db->result);
+                          ?>
+                            <tr>
+                              <td><?php echo $a++; ?></td>
+                              <td><?php echo $cart['product_title']; ?></td>
+                              <td><?php echo $cart['product_description']; ?></td>
+                              <td><?php echo $_SESSION['cart'][$key]['quantity']; ?></td>
+                              <td>Rs. <?php echo ($cart['price'] * $_SESSION['cart'][$key]['quantity']);
+                                      $total += ($cart['price'] * $_SESSION['cart'][$key]['quantity']); ?></td>
+                            </tr>
+                          <?php }
+                          ?>
+                        </tbody>
                       </table>
                     </div>
+                    <!-- /.col -->
                   </div>
-                  <!-- /.col -->
-                </div>
-                <!-- /.row -->
+                  <!-- /.row -->
 
-                <!-- this row will not appear when printing -->
-                <div class="row no-print">
-                  <div class="col-12">
-                    <a href="invoice-print.php" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-                    <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
-                      Payment
-                    </button>
-                    <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                      <i class="fas fa-download"></i> Generate PDF
-                    </button>
+                  <div class="row">
+                    <!-- accepted payments column -->
+                    <div class="col-6">
+                      <p class="lead">Payment Methods:</p>
+                      <img src="../dist/img/credit/visa.png" alt="Visa">
+                      <img src="../dist/img/credit/mastercard.png" alt="Mastercard">
+                      <img src="../dist/img/credit/american-express.png" alt="American Express">
+                      <img src="../dist/img/credit/paypal2.png" alt="Paypal">
+                      <img src="../dist/img/credit/cod2.jpg" alt="Cash on Delivery">
+
+                      <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                        Currently Available Payment Methods is : <br>
+                        1. Cash on delivery. <input checked disabled type="checkbox" name="cash" id="cash">
+                      </p>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-6">
+                      <p class="lead">Amount Due <?php echo "Date: " . date("d/m/Y", time() + (24 * 60 * 60)); ?></p>
+
+                      <div class="table-responsive">
+                        <table class="table">
+                          <tr>
+                            <th style="width:50%">Subtotal:</th>
+                            <td>Rs. <?php echo $total; ?></td>
+                          </tr>
+                          <tr>
+                            <th>Tax (<?php echo $tax_rate = 6; ?>%)</th>
+                            <td>Rs. <?php
+                                    echo  $tax = $total * $tax_rate / 100;
+                                    $total = $total + $tax;
+                                    $calculatedTaxRate = (($total - $total) / $total) * 100;  ?></td>
+                          </tr>
+                          <tr>
+                            <th>Shipping:</th>
+                            <td>Rs. <?php echo $shipping = 10; ?></td>
+                          </tr>
+                          <tr>
+                            <th>Total:</th>
+                            <td>Rs. <?php echo ($shipping + $total); ?></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
+
+                  <!-- this row will not appear when printing -->
+                  <div class="row no-print">
+                    <div class="col-12">
+                      <a href="#" onclick="print_invoice()" class="btn btn-default"><i class="fas fa-print"></i> Print / Generate PDF</a>
+                      <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
+                        Payment
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <!-- /.invoice -->
-            </div><!-- /.col -->
-          </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-      </section>
-      <!-- /.content -->
+                <!-- /.invoice -->
+              </div><!-- /.col -->
+            </div><!-- /.row -->
+          </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+      </div>
     </div>
 
 
@@ -522,7 +540,15 @@ session_start();
   </div>
   <!-- ./wrapper -->
 
+  <script>
+    function print_invoice() {
+
+      window.addEventListener("load", window.print());
+    }
+  </script>
+
   <!-- REQUIRED SCRIPTS -->
+  <script type="text/javascript" src="../script/functions.js"></script>
   <!-- Bootstrap 5 Js -->
 
   <script src="../bootstrap/js/bootstrap.bundle.min.js"></script>

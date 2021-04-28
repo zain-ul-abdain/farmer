@@ -13,5 +13,4 @@ if (isset($_REQUEST['action'])) {
 
 
   echo "Product: " . $_REQUEST['id'] . " added to cart";
-  print_r($_SESSION);
 }
