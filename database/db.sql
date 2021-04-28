@@ -12,10 +12,6 @@ MySQL - 10.4.17-MariaDB : Database - farmer
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`farmer` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-
-USE `farmer`;
-
 /*Table structure for table `category` */
 
 DROP TABLE IF EXISTS `category`;
@@ -146,12 +142,19 @@ CREATE TABLE `consultancy_service` (
   PRIMARY KEY (`consultancy_service_id`),
   KEY `category_id` (`category_id`),
   CONSTRAINT `consultancy_service_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `consultancy_service` */
 
 insert  into `consultancy_service`(`consultancy_service_id`,`consultant`,`client`,`category_id`,`query`,`discussion_start`,`discussion_end`,`status`,`rating`,`feedback`) values 
-(42,8,10,1,'How to fertilize','2021-03-29 17:08:28','2021-03-29 17:22:44','Complete',4,'Good');
+(46,8,1,6,'Rice','2021-04-19 11:29:00','2021-04-21 10:31:25','Complete',4,'It was very nice'),
+(47,8,2,6,'Fertilizer','2021-04-19 12:05:46','2021-04-21 10:33:13','Complete',5,'i got what i wanted thanks'),
+(49,6,2,7,'hello','2021-04-21 10:34:46','2021-04-21 10:56:21','Complete',4,''),
+(50,10,2,7,'Rice','2021-04-21 10:37:43','2021-04-21 10:56:33','Complete',5,'ok'),
+(51,8,2,6,'fertiziler','2021-04-21 12:06:29','2021-04-21 12:08:51','Complete',5,'it helped me alot thanks'),
+(52,8,2,6,'flour','2021-04-21 13:01:01','2021-04-21 13:04:34','Complete',1,'im not satisfied'),
+(53,4,2,1,'hi','2021-04-21 13:44:12','2021-04-21 14:41:05','Complete',3,'nice'),
+(54,10,2,7,'hello','2021-04-21 14:41:17','2021-04-21 14:41:17','In-Process',NULL,NULL);
 
 /*Table structure for table `consultancy_service_chat` */
 
@@ -166,20 +169,47 @@ CREATE TABLE `consultancy_service_chat` (
   PRIMARY KEY (`consultancy_service_chat_id`),
   KEY `consultancy_service_id` (`consultancy_service_id`),
   CONSTRAINT `consultancy_service_chat_ibfk_1` FOREIGN KEY (`consultancy_service_id`) REFERENCES `consultancy_service` (`consultancy_service_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `consultancy_service_chat` */
 
 insert  into `consultancy_service_chat`(`consultancy_service_chat_id`,`consultancy_service_id`,`chat_message`,`user_assign_role_id`,`added_on`) values 
-(59,42,'How to fertilize',10,'2021-03-29 17:08:28'),
-(60,42,'The increasing trend in the production of rice will have to be continued to meet the requirements of the projected global population. Fertilizer use is one of the major factors for the continuous increase in rice production since the Green Revolution era',8,'2021-03-29 17:09:04'),
-(61,42,'hi',8,'2021-03-29 17:12:02'),
-(62,42,'',10,'2021-03-29 17:12:15'),
-(63,42,'',10,'2021-03-29 17:12:17'),
-(64,42,'Hello, how can i fertilize rice?',10,'2021-03-29 17:18:28'),
-(65,42,'Simple',8,'2021-03-29 17:18:41'),
-(66,42,'alright',10,'2021-03-29 17:20:52'),
-(67,42,'anything else',8,'2021-03-29 17:21:13');
+(1,46,'Rice',1,'2021-04-19 11:29:00'),
+(2,46,'?',1,'2021-04-19 11:47:45'),
+(3,47,'Fertilizer',2,'2021-04-19 12:05:46'),
+(5,47,'??',2,'2021-04-19 12:13:30'),
+(7,46,'hi ahmed',8,'2021-04-19 12:36:31'),
+(8,47,'hi aliya',8,'2021-04-19 12:49:48'),
+(10,46,'Hi noshad',1,'2021-04-19 14:57:26'),
+(11,47,'hey how is',8,'2021-04-19 14:59:30'),
+(12,47,'the day is fine',2,'2021-04-19 15:00:25'),
+(13,46,'hi',1,'2021-04-20 13:18:42'),
+(14,46,'hello 3',1,'2021-04-20 13:18:51'),
+(15,46,'fgh',1,'2021-04-20 13:20:50'),
+(16,46,'hey how is the day',1,'2021-04-20 13:22:43'),
+(17,46,'good',1,'2021-04-20 13:24:32'),
+(18,46,'hi',8,'2021-04-20 13:28:33'),
+(19,46,'hello 55',1,'2021-04-20 13:28:53'),
+(20,46,'hello 56',8,'2021-04-20 13:29:02'),
+(21,46,'how are you',8,'2021-04-20 13:50:49'),
+(22,46,'im fine',1,'2021-04-20 13:51:02'),
+(23,49,'hello',2,'2021-04-21 10:34:46'),
+(24,50,'Rice',2,'2021-04-21 10:37:43'),
+(25,51,'fertiziler',2,'2021-04-21 12:06:29'),
+(26,51,'use the good one',8,'2021-04-21 12:06:47'),
+(27,51,'where can i get one',2,'2021-04-21 12:07:15'),
+(28,51,'you can get from any near store',8,'2021-04-21 12:07:36'),
+(29,51,'alright thanks alot',2,'2021-04-21 12:08:07'),
+(30,51,'my pleasure',8,'2021-04-21 12:08:24'),
+(31,52,'flour',2,'2021-04-21 13:01:01'),
+(32,52,'yes',8,'2021-04-21 13:01:17'),
+(33,52,'what to do',2,'2021-04-21 13:01:36'),
+(34,52,'i dont know',8,'2021-04-21 13:01:47'),
+(35,52,'so why are u a consultant',2,'2021-04-21 13:02:03'),
+(36,53,'hi',2,'2021-04-21 13:44:12'),
+(37,53,'hello',4,'2021-04-21 13:45:04'),
+(38,53,'how are you',2,'2021-04-21 14:39:36'),
+(39,54,'hello',2,'2021-04-21 14:41:17');
 
 /*Table structure for table `country` */
 
@@ -215,15 +245,9 @@ CREATE TABLE `customer_order` (
   PRIMARY KEY (`customer_order_id`),
   KEY `user_assign_role_id` (`user_assign_role_id`),
   CONSTRAINT `customer_order_ibfk_1` FOREIGN KEY (`user_assign_role_id`) REFERENCES `user_assign_role` (`user_assign_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `customer_order` */
-
-insert  into `customer_order`(`customer_order_id`,`user_assign_role_id`,`added_on`,`payment_method`,`billing_address`,`shipping_address`,`status`,`delivered_on`) values 
-(1,3,'2021-03-06 17:09:04','Cash On Delivery','Jamshoro','Hyderabad','New Order',NULL),
-(2,2,'2021-03-06 09:49:27','Cash On Delivery','Jamshoro','Hyderabad','Delivered',NULL),
-(3,1,'2021-03-06 15:21:35','Cash On Delivery','Jamshoro','Hyderabad','Cancel',NULL),
-(4,1,'2021-03-06 15:21:38','Cash On Delivery','Jamshoro','Hyderabad','On The Way',NULL);
 
 /*Table structure for table `customer_order_detail` */
 
@@ -269,7 +293,7 @@ CREATE TABLE `post` (
 
 insert  into `post`(`post_id`,`category_id`,`user_assign_role_id`,`post_title`,`post_summary`,`post_description`,`post_type`,`is_active`,`added_on`,`updated_on`,`tag`) values 
 (52,1,4,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Knowledge Base',0,'2021-03-17 12:30:36',NULL,NULL),
-(53,3,8,'What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Knowledge Base',1,'2021-04-05 18:16:17',NULL,NULL),
+(53,3,8,'What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Knowledge Base',1,'2021-04-14 13:01:12',NULL,NULL),
 (56,1,1,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Knowledge Base',1,'2021-04-05 18:08:55',NULL,NULL),
 (57,1,1,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',1,'2021-04-06 11:57:29',NULL,NULL),
 (58,1,3,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',0,'2021-03-20 15:37:24',NULL,NULL),
@@ -369,7 +393,7 @@ CREATE TABLE `post_reply` (
 
 insert  into `post_reply`(`post_reply_id`,`message`,`user_assign_role_id`,`post_id`,`added_on`,`is_approved`) values 
 (8,'In publishing and graphic design',3,53,'2021-03-19 17:04:48',0),
-(13,'In publishing and graphic design',8,53,'2021-03-20 12:14:17',0),
+(13,'In publishing and graphic design',8,53,'2021-04-14 13:01:23',1),
 (14,'Very nice',8,52,'2021-03-20 12:15:43',0),
 (15,'Very nice',8,59,'2021-03-20 12:19:35',0),
 (18,'Lorem Ipsum available, but the majority have suffered alteration in some form,',3,61,'2021-03-20 15:58:35',0),
@@ -406,22 +430,23 @@ CREATE TABLE `product` (
   `is_active` tinyint(1) NOT NULL DEFAULT 0,
   `is_featured` tinyint(1) NOT NULL DEFAULT 0,
   `is_free_shipping` tinyint(1) NOT NULL DEFAULT 1,
-  `shipping_charges` int(11) DEFAULT NULL,
+  `shipping_charges` int(11) DEFAULT 0,
   `is_rating_allowed` tinyint(1) NOT NULL DEFAULT 1,
   `is_comment_allowed` tinyint(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`product_id`),
   KEY `category_id` (`category_id`),
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `product` */
 
 insert  into `product`(`product_id`,`category_id`,`user_assign_role_id`,`product_title`,`product_description`,`price`,`quantity`,`low_inventory`,`added_on`,`updated_on`,`updated_by`,`is_active`,`is_featured`,`is_free_shipping`,`shipping_charges`,`is_rating_allowed`,`is_comment_allowed`) values 
-(1,7,1,'Carrot','The carrot is a root vegetable, usually orange in color, though purple, black, red, white, and yellow cultivars exist. They are a domesticated form of the wild carrot, Daucus carota, native to Europe and Southwestern Asia. The plant probably originated in Persia and was originally cultivated for its leaves and seeds.',100,50,5,'2021-04-05 17:06:51',NULL,NULL,1,1,1,0,1,1),
-(2,1,2,'Rice','Rice is the seed of the grass species Oryza sativa (Asian rice) or less commonly Oryza glaberrima (African rice). As a cereal grain, it is the most widely consumed staple food for a large part of the world\'s human population, especially in Asia and Africa.',150,100,10,'2021-04-05 17:06:50',NULL,NULL,1,1,1,NULL,1,1),
-(10,3,1,'Apple','An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found today. ',150,1000,0,'2021-04-05 17:02:26',NULL,NULL,1,1,1,NULL,1,1),
-(11,16,8,'Fertiliser','A fertilizer or fertiliser is any material of natural or synthetic origin that is applied to soil or to plant tissues to supply plant nutrients. Fertilizers may be distinct from liming materials or other non-nutrient soil amendments. Many sources of fertilizer exist, both natural and industrially produced.',500,30,0,'2021-04-05 17:06:48',NULL,NULL,1,1,1,NULL,1,1),
-(14,3,10,'Mango','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.',100,30,0,'2021-04-05 17:20:40',NULL,NULL,1,1,1,NULL,1,1);
+(1,7,1,'Carrot','The carrot is a root vegetable, usually orange in color, though purple, black, red, white, and yellow cultivars exist. They are a domesticated form of the wild carrot, Daucus carota, native to Europe and Southwestern Asia. The plant probably originated in Persia and was originally cultivated for its leaves and seeds.',100,50,5,'2021-04-26 14:49:37',NULL,NULL,1,0,1,0,1,1),
+(2,1,2,'Rice','Rice is the seed of the grass species Oryza sativa (Asian rice) or less commonly Oryza glaberrima (African rice). As a cereal grain, it is the most widely consumed staple food for a large part of the world\'s human population, especially in Asia and Africa.',150,100,10,'2021-04-28 10:46:52',NULL,NULL,1,1,1,0,1,1),
+(10,3,1,'Apple','An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found today. ',150,1000,0,'2021-04-28 10:46:53',NULL,NULL,1,1,1,0,1,1),
+(11,16,8,'Fertiliser','A fertilizer or fertiliser is any material of natural or synthetic origin that is applied to soil or to plant tissues to supply plant nutrients. Fertilizers may be distinct from liming materials or other non-nutrient soil amendments. Many sources of fertilizer exist, both natural and industrially produced.',500,30,0,'2021-04-28 10:46:53',NULL,NULL,1,1,1,0,1,1),
+(14,3,10,'Mango','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.',100,30,0,'2021-04-28 10:46:54',NULL,NULL,1,1,1,0,1,1),
+(15,3,1,'Banana','A banana is an elongated, edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa. In some countries, bananas used for cooking may be called \"plantains\", distinguishing them from dessert bananas.',50,1000,0,'2021-04-28 10:46:56',NULL,NULL,1,1,1,0,1,1);
 
 /*Table structure for table `product_comment` */
 
@@ -454,7 +479,7 @@ CREATE TABLE `product_image` (
   PRIMARY KEY (`product_image_id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `product_image_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `product_image` */
 
@@ -473,7 +498,10 @@ insert  into `product_image`(`product_image_id`,`product_id`,`image_path`,`is_ma
 (12,11,'products/11/outlook-for-the-global-fertilizer-market.jpg',1,'2021-03-25 09:40:39'),
 (19,14,'products/14/707021_3090737_mangoes_akhbar.jpg',1,'2021-03-30 18:24:59'),
 (20,14,'products/14/mango.jpg',0,'2021-03-30 18:24:59'),
-(21,14,'products/14/mangoes-chopped-and-fresh.jpg',0,'2021-03-30 18:24:59');
+(21,14,'products/14/mangoes-chopped-and-fresh.jpg',0,'2021-03-30 18:24:59'),
+(22,15,'products/15/42E9as7NaTaAi4A6JcuFwG-1200-80.jpg',1,'2021-04-26 14:35:55'),
+(23,15,'products/15/190902_banannas_full-1440x813.jpg',0,'2021-04-26 14:35:55'),
+(24,15,'products/15/271157_2200-732x549.jpg',0,'2021-04-26 14:35:55');
 
 /*Table structure for table `product_rating` */
 
@@ -550,11 +578,11 @@ CREATE TABLE `user` (
 /*Data for the table `user` */
 
 insert  into `user`(`user_id`,`first_name`,`last_name`,`gender`,`user_email`,`user_password`,`user_image`,`city_id`,`expert_level`,`phone_number`,`address`,`is_active`,`is_approved`,`added_on`,`updated_on`,`category_id`) values 
-(1,'Ahmed','Shah','Male','user1@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar5.png',1,'Expert','0321-1231231','',1,1,'2021-04-02 17:04:32',NULL,1),
-(2,'Aliya','Qureshi','Female','user2@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar2.png',3,'Intermediate','0311-1231231','',1,1,'2021-03-30 15:09:41',NULL,3),
-(3,'Siraj','Baig','Male','user3@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar4.png',4,'Intermediate','0345-1231231','',1,1,'2021-03-30 15:09:43',NULL,6),
-(5,'Nisar','Shah','Male','user4@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar4.png',5,'Beginner','0331-1231231','',1,1,'2021-03-30 15:09:44',NULL,7),
-(6,'Abdullah','Shah','Male','user5@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar5.png',6,'Intermediate','0312-1231231','',1,1,'2021-04-05 18:19:35',NULL,3),
+(1,'Ahmed','Shah','Male','user1@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar5.png',1,'Expert','0321-1231231','H# c-1 citizen colony',1,1,'2021-04-28 10:12:29',NULL,1),
+(2,'Aliya','Qureshi','Female','user2@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar2.png',3,'Intermediate','0311-1231231','H# c-1 citizen colony',1,1,'2021-04-28 10:12:30',NULL,3),
+(3,'Siraj','Baig','Male','user3@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar4.png',4,'Intermediate','0345-1231231','H# c-1 citizen colony',1,1,'2021-04-28 10:12:31',NULL,6),
+(5,'Nisar','Shah','Male','user4@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar4.png',5,'Beginner','0331-1231231','H# c-1 citizen colony',1,1,'2021-04-28 10:12:31',NULL,7),
+(6,'Abdullah','Shah','Male','user5@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar5.png',6,'Intermediate','0312-1231231','H# c-1 citizen colony',1,1,'2021-04-28 10:12:34',NULL,3),
 (10,'Noshad','Ali','Male','user6@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/123.jpg',2,'Intermediate','0300-1231231','H# c-1 citizen colony',1,1,'2021-03-30 15:09:49',NULL,6),
 (12,'Rehman','Brohi','Male','user7@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/user1-128x128.jpg',2,'Intermediate','0312-1233214','PH-2 SUECHS',1,1,'2021-03-30 15:09:50',NULL,7),
 (14,'Sajjad','Rajper','Male','user8@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-1.jpg',3,'Beginner','0300-1231231','PH-2 SUECHS',1,1,'2021-04-05 18:20:02',NULL,3),
