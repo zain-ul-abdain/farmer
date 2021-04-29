@@ -278,7 +278,7 @@ function category_post(a, n) {
 }
 
 /* Show single category posts*/
-function product_details(a) {
+function product_details(a,c_id) {
   var id = a;
 
   aj.onreadystatechange = function () {
@@ -289,7 +289,7 @@ function product_details(a) {
 
   aj.open("POST", "pages/e_commerce.php");
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  aj.send("id=" + id);
+  aj.send("id=" + id + "&c_id="+c_id);
 }
 
 /* Light Box*/
@@ -538,4 +538,22 @@ function add_to_cart(id,qty) {
   aj.open("POST", "pages/cart_process.php");
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   aj.send("action=add_to_cart&id="+id+"&qty="+qty);
+}
+
+/* Rating Consultant*/
+function _rating_p(p_id) {
+
+  var star = document.getElementById("stars").value;
+  var msg = document.getElementById("rating_msg").value;
+
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      alert(aj.responseText);
+      window.location("index.php");
+    }
+  };
+
+  aj.open("POST", "pages/e_commerce_process.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=product_rate&star=" + star + "&feedback=" + msg+"&p_id="+p_id);
 }

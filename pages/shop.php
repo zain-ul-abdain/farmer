@@ -3,7 +3,7 @@
 session_start();
 require_once '../require/database.php';
 
-$q = "SELECT * FROM product INNER JOIN user_assign_role ON product.user_assign_role_id=user_assign_role.user_assign_role_id INNER JOIN user_role ON user_role.user_role_id=user_assign_role.user_role_id INNER JOIN category ON category.category_id=product.category_id INNER JOIN USER ON user.user_id=user_assign_role.user_id WHERE product.is_active=1 ORDER BY product.product_id DESC";
+$q = "SELECT *,product.category_id AS 'c_id' FROM product INNER JOIN user_assign_role ON product.user_assign_role_id=user_assign_role.user_assign_role_id INNER JOIN user_role ON user_role.user_role_id=user_assign_role.user_role_id INNER JOIN category ON category.category_id=product.category_id INNER JOIN USER ON user.user_id=user_assign_role.user_id WHERE product.is_active=1 ORDER BY product.product_id DESC";
 $db->_result($q);
 $res = $db->result;
 ?>
@@ -85,7 +85,7 @@ $res = $db->result;
 
                 if ($a == 1) {
             ?>
-                  <div class="carousel-item active" data-bs-interval="10000" onclick="product_details(<?php echo $product['product_id']; ?>)">
+                  <div class="carousel-item active" data-bs-interval="3000" onclick="product_details(<?php echo $product['product_id']; ?>)">
                     <img style="width: 400px;height:250px;" src="<?php echo $product['image_path']; ?>" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
                       <h5><?php echo $product['product_title']; ?></h5>
@@ -96,7 +96,7 @@ $res = $db->result;
                 <?php
                 } else {
                 ?>
-                  <div class="carousel-item" data-bs-interval="2000" onclick="product_details(<?php echo $product['product_id']; ?>)">
+                  <div class="carousel-item" data-bs-interval="3000" onclick="product_details(<?php echo $product['product_id']; ?>)">
                     <img style="width: 400px;height:250px;" src="<?php echo $product['image_path']; ?>" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
                       <h5><?php echo $product['product_title']; ?></h5>
@@ -109,7 +109,7 @@ $res = $db->result;
               }
             } else {
               ?>
-              <div class="carousel-item active" data-bs-interval="10000">
+              <div class="carousel-item active" data-bs-interval="3000">
                 <img style="width: 400px;height:250px;" src="https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                   <h5>No Featured Products Available</h5>
@@ -151,8 +151,9 @@ $res = $db->result;
               <h5 class="card-title"><?php echo $product['product_title']; ?></h5>
 
               <p class="card-text"><?php echo substr($product['product_description'], 0, 80); ?></p>
+
               <hr>
-              <a onclick="product_details(<?php echo $product['product_id']; ?>)" href="#" class="btn btn-primary">Details</a>
+              <a onclick="product_details(<?php echo $product['product_id']; ?>,<?php echo $product['c_id']; ?>)" href="#" class="btn btn-primary">Details</a>
               <a onclick="add_to_cart(<?php echo $product['product_id']; ?>,1)" href="#" class="btn btn-secondary">Add to Cart</a>
 
             </div>
@@ -160,4 +161,5 @@ $res = $db->result;
         </div>
       <?php } ?>
     </div>
+
   </div>
