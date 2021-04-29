@@ -245,9 +245,13 @@ CREATE TABLE `customer_order` (
   PRIMARY KEY (`customer_order_id`),
   KEY `user_assign_role_id` (`user_assign_role_id`),
   CONSTRAINT `customer_order_ibfk_1` FOREIGN KEY (`user_assign_role_id`) REFERENCES `user_assign_role` (`user_assign_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `customer_order` */
+
+insert  into `customer_order`(`customer_order_id`,`user_assign_role_id`,`added_on`,`payment_method`,`billing_address`,`shipping_address`,`status`,`delivered_on`) values 
+(10,1,'2021-04-28 15:24:28','Cash On Delivery','h# A-29 SUECHS phase 2','','New Order',NULL),
+(11,1,'2021-04-29 13:52:41','Cash On Delivery','h# A-29 SUECHS phase 2','','New Order',NULL);
 
 /*Table structure for table `customer_order_detail` */
 
@@ -462,9 +466,15 @@ CREATE TABLE `product_comment` (
   PRIMARY KEY (`product_comment_id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `product_comment_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `product_comment` */
+
+insert  into `product_comment`(`product_comment_id`,`user_assign_role_id`,`product_id`,`comment`,`added_on`,`is_active`) values 
+(2,1,15,'banana very nice fruit','2021-04-29 14:53:02',0),
+(3,1,15,'banana very nice fruit','2021-04-29 14:53:36',0),
+(4,1,14,'Mango is a summer season fruit','2021-04-29 14:54:34',0),
+(5,1,11,'Fertilizer is good to grow production fast','2021-04-29 14:55:33',0);
 
 /*Table structure for table `product_image` */
 
@@ -516,9 +526,15 @@ CREATE TABLE `product_rating` (
   PRIMARY KEY (`product_rating_id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `product_rating_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `product_rating` */
+
+insert  into `product_rating`(`product_rating_id`,`user_assign_role_id`,`product_id`,`rating`,`added_on`) values 
+(1,1,15,3,'2021-04-29 14:53:02'),
+(2,1,15,3,'2021-04-29 14:53:36'),
+(3,1,14,4,'2021-04-29 14:54:34'),
+(4,1,11,4,'2021-04-29 14:55:33');
 
 /*Table structure for table `state` */
 
