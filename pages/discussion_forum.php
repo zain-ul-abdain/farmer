@@ -15,7 +15,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'discussion_forum') {
   $next_page = $page_no + 1;
   $adjacents = "2";
 
-  $result_count = mysqli_query($con, "SELECT COUNT(*) As total_records FROM post WHERE post_type='Discussion Forum'");
+  $result_count = mysqli_query($con, "SELECT COUNT(*) As total_records FROM post WHERE is_active=1 AND post_type='Discussion Forum'");
   $total_records = mysqli_fetch_array($result_count);
   $total_records = $total_records['total_records'];
   $total_no_of_pages = $total_records;
