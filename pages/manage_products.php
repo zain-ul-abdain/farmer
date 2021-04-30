@@ -13,6 +13,16 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
 ?>
 
     <style type="text/css">
+      @media print {
+        * {
+          display: none;
+        }
+
+        #printableTable {
+          display: block;
+        }
+      }
+
       /* The switch - the box around the slider */
       .switch {
         position: relative;
@@ -77,6 +87,20 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
       }
     </style>
 
+    <script>
+      function printData() {
+        var divToPrint = document.getElementById("printTable");
+        newWin = window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+      }
+
+      $('button').on('click', function() {
+        printData();
+      })
+    </script>
+
     <div class="content-wrapper">
       <div class="container-fluid">
         <div class="row">
@@ -87,7 +111,8 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
                 <h2>Manage Products</h2>
                 <span id="manage_user_msg"></span>
 
-                <table class="w3-table-all w3-hoverable" style="width: 100%;">
+
+                <table class="w3-table-all w3-hoverable" style="width: 100%;" id="printTable">
                   <thead>
                     <tr>
                       <th>Product ID</th>
@@ -97,8 +122,10 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
                       <th>Description</th>
                       <th>Price</th>
                       <th>Quantity</th>
+                      <th>Low Inventory</th>
                       <th>Is Active</th>
                       <th>Is Featured</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -115,6 +142,7 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
                         <td><?php echo $product['product_description']; ?></td>
                         <td><?php echo $product['price']; ?></td>
                         <td><?php echo $product['quantity']; ?></td>
+                        <td><?php echo $product['low_inventory']; ?></td>
 
                         <td>
                           <label class="switch">
@@ -150,6 +178,10 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
                             <span class="slider round"></span>
                           </label>
                         </td>
+                        <td class="actions" data-th="">
+                          <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
+                          <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                        </td>
                       </tr>
                     <?php
                     }
@@ -157,10 +189,13 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
                   </tbody>
                 </table>
               </div>
+
             </div>
+
           </div>
         </div>
       </div>
+    </div>
     </div>
 <?php
   } else {

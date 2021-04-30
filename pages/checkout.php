@@ -2,7 +2,19 @@
 session_start();
 $s_address = $_REQUEST['s_address'] ?? 'same as billing address';
 require_once '../require/database.php';
-$db->_result("INSERT INTO customer_order ( user_assign_role_id,billing_address, shipping_address)  VALUES('" . $_SESSION['user']['user_assign_role_id'] . "','" . $_REQUEST['address'] . "','" . $s_address . "')");
+
+foreach ($_SESSION['cart'] as $key => $value) {
+
+  $select = "SELECT quantity FROM product WHERE product_id=" . $key;
+  $db->_result($select);
+  $qty = mysqli_fetch_assoc($db->result);
+  $result = $qty['quantity'] - $value['quantity'];
+  $query = "UPDATE product SET quantity=$result WHERE product_id=" . $key;
+  $db->_result($query);
+}
+$sess = $db->result;
+
+$db->_result("INSERT INTO customer_order ( user_assign_role_id,billing_address, shipping_address )  VALUES('" . $_SESSION['user']['user_assign_role_id'] . "','" . $_REQUEST['address'] . "','" . $s_address . "')");
 
 if ($db->result) {
   $last_id = mysqli_insert_id($db->connection);
@@ -508,14 +520,17 @@ if ($db->result) {
                     <!-- /.col -->
                   </div>
                   <!-- /.row -->
+                  <?php
+                  if ($sess) {
+                    unset($_SESSION['cart']);
+                  }
 
+                  ?>
                   <!-- this row will not appear when printing -->
                   <div class="row no-print">
                     <div class="col-12">
                       <a href="#" onclick="print_invoice()" class="btn btn-default"><i class="fas fa-print"></i> Print / Generate PDF</a>
-                      <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
-                        Payment
-                      </button>
+                      <a href="../index.php" type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Return Home </a>
                     </div>
                   </div>
                 </div>

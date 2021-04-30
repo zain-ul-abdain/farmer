@@ -112,6 +112,12 @@ $item = mysqli_fetch_assoc($res);
 
             </div>
 
+
+            <div class="mt-4">
+              <label for="available">Available Quantity : <?php echo $item['quantity']; ?></label>
+            </div>
+
+
             <div class="mt-4">
 
               <label for="quantity">Quantity</label>
@@ -125,6 +131,8 @@ $item = mysqli_fetch_assoc($res);
                 $db->_result("SELECT AVG(rating) AS 'Stars' FROM product_rating WHERE product_id=" . $item['product_id']);
                 if ($db->result->num_rows) {
                   $stars = mysqli_fetch_assoc($db->result);
+                  $db->_result("SELECT count(rating) AS 'total' FROM product_rating WHERE product_id=" . $item['product_id']);
+                  $total = mysqli_fetch_assoc($db->result);
 
                 ?>
             <div class="rate">
@@ -149,6 +157,7 @@ $item = mysqli_fetch_assoc($res);
                                                                                                         } ?> disabled />
               <label for="star1" title="text">1 star</label>
             </div>
+            <h3><?php echo substr($stars['Stars'], 0, 3) . " / 5  Reviews  " . $total['total']; ?></h3>
           <?php
                 }
           ?>
@@ -169,11 +178,29 @@ $item = mysqli_fetch_assoc($res);
 
                 <div class="tab-pane fade active in show" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab">
                   <?php
-                  $db->_result("SELECT comment FROM product_comment WHERE product_id=" . $id);
+                  $db->_result("SELECT * FROM product_comment INNER JOIN user_assign_role ON user_assign_role.user_assign_role_id=product_comment.user_assign_role_id INNER JOIN user ON user.user_id=user_assign_role.user_id WHERE product_comment.product_id=" . $id);
                   if ($db->result->num_rows) {
                     while ($comments = mysqli_fetch_assoc($db->result)) {
-                      echo $comments['comment'];
-                      echo "<br>";
+                  ?>
+                      <div class="card-footer card-comments">
+                        <div class="card-comment">
+                          <!-- User image -->
+                          <img class="img-circle img-sm" src="<?php echo $comments['user_image']; ?>" alt="User Image">
+
+                          <div class="comment-text">
+                            <span class="username">
+                              <?php echo $comments['first_name']; ?>
+                              <span class="text-muted float-right"><?php echo $comments['added_on']; ?></span>
+                            </span><!-- /.username -->
+                            <?php echo $comments['comment']; ?>
+                          </div>
+                          <!-- /.comment-text -->
+                        </div>
+
+                        <!-- /.card-comment -->
+                      </div>
+                  <?php
+
                     }
                   }
                   ?>
@@ -217,46 +244,47 @@ $item = mysqli_fetch_assoc($res);
       </div>
       <!-- /.card-body -->
     </div>
-</div>
 
 
-<div class="row">
-  <h2>Related Products</h2>
-  <?php
-  $q = "SELECT * FROM product INNER JOIN category ON category.category_id=product.category_id WHERE category.category_id=$c_id AND product.product_id <> $id";
-  $db->_result($q);
-  $res2 = $db->result;
-  if ($res2->num_rows) {
-    while ($product = mysqli_fetch_assoc($res2)) {
-      $db->_result("SELECT * FROM product_image WHERE product_id='" . $product['product_id'] . "' AND is_main=1");
-      $img = mysqli_fetch_assoc($db->result);
-  ?>
-      <div class="col-sm-3">
 
-        <div class="card" style="width: 18rem; height:400px;">
+    <div class="row">
+      <h2>Related Products</h2>
+      <?php
+      $q = "SELECT * FROM product INNER JOIN category ON category.category_id=product.category_id WHERE category.category_id=$c_id AND product.product_id <> $id";
+      $db->_result($q);
+      $res2 = $db->result;
+      if ($res2->num_rows) {
+        while ($product = mysqli_fetch_assoc($res2)) {
+          $db->_result("SELECT * FROM product_image WHERE product_id='" . $product['product_id'] . "' AND is_main=1");
+          $img = mysqli_fetch_assoc($db->result);
+      ?>
+          <div class="col-sm-3">
 
-          <img style="width: 300px; height:200px" src="<?php echo $img['image_path']; ?>" class="card-img-top img-thumbnail" alt="...">
+            <div class="card" style="width: 18rem; height:400px;">
 
-          <div class="card-body">
+              <img style="width: 300px; height:200px" src="<?php echo $img['image_path']; ?>" class="card-img-top img-thumbnail" alt="...">
 
-            <h5 class="card-title"><?php echo $product['product_title']; ?></h5>
+              <div class="card-body">
 
-            <p class="card-text"><?php echo substr($product['product_description'], 0, 80); ?></p>
-            <hr>
+                <h5 class="card-title"><?php echo $product['product_title']; ?></h5>
 
-            <a onclick="product_details(<?php echo $product['product_id']; ?>,<?php echo $product['category_id']; ?>)" href="#" class="btn btn-primary">Details</a>
-            <a onclick="add_to_cart(<?php echo $product['product_id']; ?>,1)" href="#" class="btn btn-secondary">Add to Cart</a>
+                <p class="card-text"><?php echo substr($product['product_description'], 0, 80); ?></p>
+                <hr>
 
+                <a onclick="product_details(<?php echo $product['product_id']; ?>,<?php echo $product['category_id']; ?>)" href="#" class="btn btn-primary">Details</a>
+                <a onclick="add_to_cart(<?php echo $product['product_id']; ?>,1)" href="#" class="btn btn-secondary">Add to Cart</a>
+
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    <?php }
-  } else {
-    ?>
-    <p style="margin-left: 20px;">Currently not Available..!</p>
-  <?php
-  }
-  ?>
+        <?php }
+      } else {
+        ?>
+        <p style="margin-left: 20px;">Currently not Available..!</p>
+      <?php
+      }
+      ?>
+    </div>
 </div>
 <!-- /.card -->
 

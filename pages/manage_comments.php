@@ -80,6 +80,7 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_comments") {
         border-radius: 50%;
       }
     </style>
+
     <div class="content-wrapper">
       <div class="container-fluid">
         <div class="row">
