@@ -5,9 +5,8 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_chat_history") {
 
   $db->_select("product");
   if ($_SESSION['user']['user_role'] == 'Admin') {
-    $db->_result("SELECT * FROM consultancy_service INNER JOIN consultancy_service_chat ON consultancy_service.consultancy_service_id=consultancy_service_chat.consultancy_service_id ORDER BY product.product_id DESC");
-  } else {
-    $db->_result("SELECT * FROM product INNER JOIN product_image ON product_image.product_id=product.product_id  WHERE user_assign_role_id=" . $_SESSION['user']['user_assign_role_id'] . " ORDER BY product.product_id DESC");
+    echo $q = "SELECT * FROM consultancy_service INNER JOIN user_assign_role ON user_assign_role.user_assign_role_id=consultancy_service.consultant INNER JOIN user ON user.user_id=user_assign_role.user_id INNER JOIN category ON category.category_id=consultancy_service.category_id ORDER BY consultancy_service.consultancy_service_id DESC";
+    $db->_result($q);
   }
 
   if ($db->result->num_rows) {
@@ -92,15 +91,17 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_chat_history") {
                 <table class="w3-table-all w3-hoverable" style="width: 100%;">
                   <thead>
                     <tr>
-                      <th>Product ID</th>
-                      <th>Product Image</th>
-                      <th>Category Id</th>
-                      <th>Title</th>
-                      <th>Description</th>
-                      <th>Price</th>
-                      <th>Quantity</th>
-                      <th>Is Active</th>
-                      <th>Is Featured</th>
+                      <th>Chat ID</th>
+                      <th>Consultant</th>
+                      <th>Client</th>
+                      <th>Category</th>
+                      <th>Query</th>
+                      <th>Discussion Start</th>
+                      <th>Discussion End</th>
+                      <th>Status</th>
+                      <th>Stars</th>
+                      <th>Feedback</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -111,48 +112,17 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_chat_history") {
                       // print_r($product);
                     ?>
                       <tr>
-                        <td><?php echo $product['product_id']; ?></td>
-                        <td><img style="width: 100px;;" src="<?php echo $product['image_path']; ?>" alt=""></td>
-                        <td><?php echo $product['category_id']; ?></td>
-                        <td><?php echo $product['product_title']; ?></td>
-                        <td><?php echo $product['product_description']; ?></td>
-                        <td><?php echo $product['price']; ?></td>
-                        <td><?php echo $product['quantity']; ?></td>
-
-                        <td>
-                          <label class="switch">
-                            <?php
-                            if ($product['is_active'] == 1) {
-                            ?>
-                              <input onclick="active_p(this,<?php echo $product['product_id']; ?>)" checked type="checkbox" name="<?php echo "Active"; ?>">
-                            <?php
-                            } else {
-                            ?>
-                              <input onclick="active_p(this,<?php echo $product['product_id']; ?>)" type="checkbox" name="<?php echo "Inactive"; ?>">
-                            <?php
-                            }
-                            ?>
-                            <span class="slider round"></span>
-                          </label>
-                        </td>
-
-                        <td>
-                          <label class="switch">
-                            <?php
-                            if ($product['is_featured'] == 1) {
-                            ?>
-
-                              <input onclick="is_approved_p(this,<?php echo $product['product_id']; ?>)" checked type="checkbox" name="<?php echo "Approved"; ?>">
-                            <?php
-                            } else {
-                            ?>
-                              <input onclick="is_approved_p(this,<?php echo $product['product_id']; ?>)" type="checkbox" name="<?php echo "Inapproved"; ?>">
-                            <?php
-                            }
-                            ?>
-                            <span class="slider round"></span>
-                          </label>
-                        </td>
+                        <td><?php echo $product['consultancy_service_id']; ?></td>
+                        <td><?php echo $product['first_name']; ?></td>
+                        <td><?php echo $product['client']; ?></td>
+                        <td><?php echo $product['category']; ?></td>
+                        <td><?php echo $product['query']; ?></td>
+                        <td><?php echo $product['discussion_start']; ?></td>
+                        <td><?php echo ($product['status'] == 'In-Process') ? "-" : $product['discussion_end']; ?></td>
+                        <td><?php echo $product['status']; ?></td>
+                        <td><?php echo $product['rating']; ?></td>
+                        <td><?php echo $product['feedback']; ?></td>
+                        <td><button class="btn btn-primary">View Detail</button></td>
                       </tr>
                     <?php
                     }

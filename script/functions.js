@@ -511,7 +511,9 @@ function chat_history() {
 
   aj.onreadystatechange = function () {
     if (aj.readyState == 4 && aj.status == 200) {
-      alert(aj.responseText);
+      // alert(aj.responseText);
+      window.href=aj.responseText;
+      // console.log(aj.responseText);
       document.getElementById("content").innerHTML = aj.responseText;
     }
   };
