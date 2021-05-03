@@ -3,8 +3,8 @@ session_start();
 $s_address = $_REQUEST['s_address'] ?? 'same as billing address';
 require_once '../require/database.php';
 
-$q = "SELECT *,customer_order_detail.quantity AS 'qty' FROM customer_order INNER JOIN customer_order_detail ON customer_order_detail.customer_order_id=customer_order.customer_order_id INNER JOIN product ON product.product_id=customer_order_detail.product_id WHERE product.product_id=" . $_REQUEST['pro_id'];
-$db->_result($q);
+$db->_result("SELECT * FROM customer_order INNER JOIN customer_order_detail ON customer_order.customer_order_id=customer_order_detail.customer_order_id WHERE customer_order.customer_order_id=" . $_REQUEST['pro_id']);
+$order = mysqli_fetch_assoc($db->result);
 
 ?>
 <!DOCTYPE html>
@@ -401,11 +401,8 @@ $db->_result($q);
                       <b>Order ID:</b> <label id="order_id"><?php echo $_REQUEST['pro_id']; ?></label> <br>
                       <b>Order Status:</b>
                       <select disabled name="status" id="status">
-                        <?php
-                        $db->_result("SELECT status FROM customer_order WHERE customer_order_id=" . $_REQUEST['pro_id']);
-                        $status = mysqli_fetch_assoc($db->result);
-                        ?>
-                        <option><?php echo $status['status']; ?></option>
+
+                        <option><?php echo $order['status']; ?></option>
                       </select>
                       <br>
                     </div>
@@ -419,7 +416,7 @@ $db->_result($q);
                       <table class="table table-striped">
                         <thead>
                           <tr>
-                            <th>Item #</th>
+                            <th>Product Id</th>
                             <th>Product Name</th>
                             <th>Description</th>
                             <th>Qty</th>
@@ -427,16 +424,24 @@ $db->_result($q);
                           </tr>
                         </thead>
                         <tbody>
+                          <?php
+                          $total = 0;
 
-                          <tr>
-                            <td><?php /*echo $a++; ?></td>
-                              <td><?php echo $cart['product_title']; ?></td>
-                              <td><?php echo $cart['product_description']; ?></td>
-                              <td><?php echo $_SESSION['cart'][$key]['quantity']; ?></td>
-                              <td>Rs. <?php echo ($cart['price'] * $_SESSION['cart'][$key]['quantity']);
-                                      $total += ($cart['price'] * $_SESSION['cart'][$key]['quantity']); */ ?></td>
-                          </tr>
+                          $db->_result("SELECT *,customer_order_detail.quantity AS 'qty' FROM customer_order_detail INNER JOIN product ON product.product_id=customer_order_detail.product_id WHERE customer_order_detail.customer_order_id=" . $_REQUEST['pro_id']);
+                          while ($row = mysqli_fetch_assoc($db->result)) {
 
+                          ?>
+                            <tr>
+                              <td><?php echo $row['product_id']; ?></td>
+                              <td><?php echo $row['product_title']; ?></td>
+                              <td><?php echo $row['product_description']; ?></td>
+                              <td><?php echo $row['qty']; ?></td>
+                              <td>Rs. <?php echo ($row['price'] * $row['qty']);
+                                      $total += ($row['price'] * $row['qty']);  ?></td>
+                            </tr>
+                          <?php
+                          }
+                          ?>
                         </tbody>
                       </table>
                     </div>
@@ -468,26 +473,26 @@ $db->_result($q);
                         <table class="table">
                           <tr>
                             <th style="width:50%">Subtotal:</th>
-                            <td>Rs. <?php // echo $total; 
+                            <td>Rs. <?php echo $total;
                                     ?></td>
                           </tr>
                           <tr>
-                            <th>Tax (<?php //echo $tax_rate = 6; 
+                            <th>Tax (<?php echo $tax_rate = 6;
                                       ?>%)</th>
                             <td>Rs. <?php
-                                    //echo  $tax = $total * $tax_rate / 100;
-                                    //$total = $total + $tax;
-                                    //$calculatedTaxRate = (($total - $total) / $total) * 100;  
+                                    echo  $tax = $total * $tax_rate / 100;
+                                    $total = $total + $tax;
+                                    $calculatedTaxRate = (($total - $total) / $total) * 100;
                                     ?></td>
                           </tr>
                           <tr>
                             <th>Shipping:</th>
-                            <td>Rs. <?php //echo $shipping = 10; 
+                            <td>Rs. <?php echo $shipping = 10;
                                     ?></td>
                           </tr>
                           <tr>
                             <th>Total:</th>
-                            <td>Rs. <?php // echo ($shipping + $total); 
+                            <td>Rs. <?php echo ($shipping + $total);
                                     ?></td>
                           </tr>
                         </table>

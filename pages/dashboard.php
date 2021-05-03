@@ -102,6 +102,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'dashboard') {
                 <a href="#" onclick="_comments()">Manage Post</a>
                 |
                 <a href="#" onclick="chat_history()">Manage Chat History</a>
+                |
+                <a href="#" onclick="manage_orders()">Manage Orders</a>
               </div>
             </div>
           </div><!-- /.container-fluid -->
