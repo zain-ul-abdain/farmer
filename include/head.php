@@ -239,6 +239,13 @@
                     </a>
                   </li>
 
+                  <li class="nav-item">
+                    <a onclick="manage_orders()" href="#" class="nav-link">
+                      <i class="fas fa-clone nav-icon"></i>
+                      <p> Manage Orders</p>
+                    </a>
+                  </li>
+
                 </ul>
               </li>
 

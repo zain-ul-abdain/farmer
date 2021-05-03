@@ -557,3 +557,34 @@ function _rating_p(p_id) {
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   aj.send("action=product_rate&star=" + star + "&feedback=" + msg+"&p_id="+p_id);
 }
+
+/* Manage Orders*/
+function manage_orders() {
+
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      document.getElementById("content").innerHTML = aj.responseText;
+    }
+  };
+
+  aj.open("POST", "pages/manage_orders.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=manage_orders");
+}
+
+
+/* Manage Order Status*/
+function order_status(order_id) {
+  
+  var value = document.getElementById("status").value;
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      alert(aj.responseText);
+      manage_orders();
+    }
+  };
+
+  aj.open("POST", "pages/manage_orders.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=order_status&order_id="+order_id+"&value="+value);
+}

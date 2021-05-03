@@ -3,22 +3,8 @@ session_start();
 $s_address = $_REQUEST['s_address'] ?? 'same as billing address';
 require_once '../require/database.php';
 
-foreach ($_SESSION['cart'] as $key => $value) {
-
-  $select = "SELECT quantity FROM product WHERE product_id=" . $key;
-  $db->_result($select);
-  $qty = mysqli_fetch_assoc($db->result);
-  $result = $qty['quantity'] - $value['quantity'];
-  $query = "UPDATE product SET quantity=$result WHERE product_id=" . $key;
-  $db->_result($query);
-}
-$sess = $db->result;
-
-$db->_result("INSERT INTO customer_order ( user_assign_role_id,billing_address, shipping_address )  VALUES('" . $_SESSION['user']['user_assign_role_id'] . "','" . $_REQUEST['address'] . "','" . $s_address . "')");
-
-if ($db->result) {
-  $last_id = mysqli_insert_id($db->connection);
-}
+$q = "SELECT *,customer_order_detail.quantity AS 'qty' FROM customer_order INNER JOIN customer_order_detail ON customer_order_detail.customer_order_id=customer_order.customer_order_id INNER JOIN product ON product.product_id=customer_order_detail.product_id WHERE product.product_id=" . $_REQUEST['pro_id'];
+$db->_result($q);
 
 ?>
 <!DOCTYPE html>
@@ -398,35 +384,30 @@ if ($db->result) {
                       </address>
                     </div>
                     <!-- /.col -->
-                    <?php
-                    if (isset($_REQUEST['sameadr']) && $_REQUEST['sameadr'] == 'on') {
-                    ?>
-                      <div class="col-sm-3 invoice-col">
-                        Shipping Address
-                        <address>
-                          <strong> Same as Billing Address </strong><br>
-                        </address>
-                      </div>
-                    <?php
-                    } else {
-                    ?>
-                      <div class="col-sm-3 invoice-col">
-                        Shipping Address
-                        <address>
-                          <strong><?php echo $_REQUEST['s_firstname'] ?? ''; ?></strong><br>
-                          <?php echo $_REQUEST['s_address'] ?? ''; ?><br>
-                          Phone: <?php echo $_REQUEST['s_phone_number'] ?? ''; ?><br>
-                          Email: <?php echo $_REQUEST['s_email'] ?? ''; ?>
-                        </address>
-                      </div>
-                    <?php
-                    }
-                    ?>
+
+                    <div class="col-sm-3 invoice-col">
+                      Shipping Address
+                      <address>
+                        <strong><?php echo $_REQUEST['s_firstname'] ?? ''; ?></strong><br>
+                        <?php echo $_REQUEST['s_address'] ?? ''; ?><br>
+                        Phone: <?php echo $_REQUEST['s_phone_number'] ?? ''; ?><br>
+                        Email: <?php echo $_REQUEST['s_email'] ?? ''; ?>
+                      </address>
+                    </div>
+
                     <!-- /.col -->
                     <div class="col-sm-3 invoice-col">
                       <br>
-                      <b>Order ID:</b> <?php echo $last_id; ?><br>
-                      <b>Payment Due:</b> <?php echo "Date: " . date("d/m/Y", time() + (24 * 60 * 60)); ?><br>
+                      <b>Order ID:</b> <label id="order_id"><?php echo $_REQUEST['pro_id']; ?></label> <br>
+                      <b>Order Status:</b>
+                      <select disabled name="status" id="status">
+                        <?php
+                        $db->_result("SELECT status FROM customer_order WHERE customer_order_id=" . $_REQUEST['pro_id']);
+                        $status = mysqli_fetch_assoc($db->result);
+                        ?>
+                        <option><?php echo $status['status']; ?></option>
+                      </select>
+                      <br>
                     </div>
                     <!-- /.col -->
                   </div>
@@ -446,26 +427,16 @@ if ($db->result) {
                           </tr>
                         </thead>
                         <tbody>
-                          <?php
 
-                          $total = 0;
-                          $a = 1;
-
-                          foreach ($_SESSION['cart'] as $key => $value) {
-
-                            $db->_result("SELECT * FROM product,product_image WHERE product.product_id=product_image.product_id AND product.is_featured=1 AND product_image.is_main=1 AND product.is_active=1 AND product.product_id=" . $key);
-                            $cart = mysqli_fetch_assoc($db->result);
-                          ?>
-                            <tr>
-                              <td><?php echo $a++; ?></td>
+                          <tr>
+                            <td><?php /*echo $a++; ?></td>
                               <td><?php echo $cart['product_title']; ?></td>
                               <td><?php echo $cart['product_description']; ?></td>
                               <td><?php echo $_SESSION['cart'][$key]['quantity']; ?></td>
                               <td>Rs. <?php echo ($cart['price'] * $_SESSION['cart'][$key]['quantity']);
-                                      $total += ($cart['price'] * $_SESSION['cart'][$key]['quantity']); ?></td>
-                            </tr>
-                          <?php }
-                          ?>
+                                      $total += ($cart['price'] * $_SESSION['cart'][$key]['quantity']); */ ?></td>
+                          </tr>
+
                         </tbody>
                       </table>
                     </div>
@@ -490,28 +461,34 @@ if ($db->result) {
                     </div>
                     <!-- /.col -->
                     <div class="col-6">
-                      <p class="lead">Amount Due <?php echo "Date: " . date("d/m/Y", time() + (24 * 60 * 60)); ?></p>
+                      <p class="lead">Amount Due <?php // echo "Date: " . date("d/m/Y", time() + (24 * 60 * 60)); 
+                                                  ?></p>
 
                       <div class="table-responsive">
                         <table class="table">
                           <tr>
                             <th style="width:50%">Subtotal:</th>
-                            <td>Rs. <?php echo $total; ?></td>
+                            <td>Rs. <?php // echo $total; 
+                                    ?></td>
                           </tr>
                           <tr>
-                            <th>Tax (<?php echo $tax_rate = 6; ?>%)</th>
+                            <th>Tax (<?php //echo $tax_rate = 6; 
+                                      ?>%)</th>
                             <td>Rs. <?php
-                                    echo  $tax = $total * $tax_rate / 100;
-                                    $total = $total + $tax;
-                                    $calculatedTaxRate = (($total - $total) / $total) * 100;  ?></td>
+                                    //echo  $tax = $total * $tax_rate / 100;
+                                    //$total = $total + $tax;
+                                    //$calculatedTaxRate = (($total - $total) / $total) * 100;  
+                                    ?></td>
                           </tr>
                           <tr>
                             <th>Shipping:</th>
-                            <td>Rs. <?php echo $shipping = 10; ?></td>
+                            <td>Rs. <?php //echo $shipping = 10; 
+                                    ?></td>
                           </tr>
                           <tr>
                             <th>Total:</th>
-                            <td>Rs. <?php echo ($shipping + $total); ?></td>
+                            <td>Rs. <?php // echo ($shipping + $total); 
+                                    ?></td>
                           </tr>
                         </table>
                       </div>
@@ -519,12 +496,7 @@ if ($db->result) {
                     <!-- /.col -->
                   </div>
                   <!-- /.row -->
-                  <?php
-                  if ($sess) {
-                    unset($_SESSION['cart']);
-                  }
 
-                  ?>
                   <!-- this row will not appear when printing -->
                   <div class="row no-print">
                     <div class="col-12">
