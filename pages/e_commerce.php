@@ -135,29 +135,8 @@ $item = mysqli_fetch_assoc($res);
                   $total = mysqli_fetch_assoc($db->result);
 
                 ?>
-            <div class="rate">
-              <input type="radio" id="star5" name="rate<?php echo $consultant['user_id']; ?>" value="5" <?php if (isset($stars['Stars']) && $stars['Stars'][0] == 5) {
-                                                                                                          echo 'checked';
-                                                                                                        } ?> disabled />
-              <label for="star5" title="text">5 stars</label>
-              <input type="radio" id="star4" name="rate<?php echo $consultant['user_id']; ?>" value="4" <?php if (isset($stars['Stars']) && $stars['Stars'][0] == 4) {
-                                                                                                          echo 'checked';
-                                                                                                        } ?> disabled />
-              <label for="star4" title="text">4 stars</label>
-              <input type="radio" id="star3" name="rate<?php echo $consultant['user_id']; ?>" value="3" <?php if (isset($stars['Stars']) && $stars['Stars'][0] == 3) {
-                                                                                                          echo 'checked';
-                                                                                                        } ?> disabled />
-              <label for="star3" title="text">3 stars</label>
-              <input type="radio" id="star2" name="rate<?php echo $consultant['user_id']; ?>" value="2" <?php if (isset($stars['Stars']) && $stars['Stars'][0] == 2) {
-                                                                                                          echo 'checked';
-                                                                                                        } ?> disabled />
-              <label for="star2" title="text">2 stars</label>
-              <input type="radio" id="star1" name="rate<?php echo $consultant['user_id']; ?>" value="1" <?php if (isset($stars['Stars']) && $stars['Stars'][0] == 1) {
-                                                                                                          echo 'checked';
-                                                                                                        } ?> disabled />
-              <label for="star1" title="text">1 star</label>
-            </div>
-            <h3><?php echo substr($stars['Stars'], 0, 3) . " / 5  Reviews  " . $total['total']; ?></h3>
+
+            <h3><?php echo substr($stars['Stars'], 0, 3) . "/5  Reviews ( " . $total['total'] . " )"; ?></h3>
           <?php
                 }
           ?>
@@ -174,7 +153,7 @@ $item = mysqli_fetch_assoc($res);
                   <a class="nav-item nav-link" id="product-rating-tab" data-toggle="tab" href="#product-rating" role="tab" aria-controls="product-rating" aria-selected="false">Rating</a>
                 </div>
               </nav>
-              <div class="tab-content p-3" id="nav-tabContent">
+              <div class="tab-content p-3" id="nav-tabContent" style="width: 500px;">
 
                 <div class="tab-pane fade active in show" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab">
                   <?php
@@ -190,7 +169,7 @@ $item = mysqli_fetch_assoc($res);
                           <div class="comment-text">
                             <span class="username">
                               <?php echo $comments['first_name']; ?>
-                              <span class="text-muted float-right"><?php echo $comments['added_on']; ?></span>
+                              <span class="text-muted float-right"><?php echo date("h:m a d-F-y", strtotime($comments['added_on'])); ?></span>
                             </span><!-- /.username -->
                             <?php echo $comments['comment']; ?>
                           </div>
@@ -202,6 +181,8 @@ $item = mysqli_fetch_assoc($res);
                   <?php
 
                     }
+                  } else {
+                    echo "No Feedback available ..!";
                   }
                   ?>
                 </div>
@@ -209,7 +190,7 @@ $item = mysqli_fetch_assoc($res);
 
 
                   <div class="rate">
-                    <input onclick="_star(this.value)" type="radio" id="star5" name="rate" value="5" />
+                    <input onclick="  (this.value)" type="radio" id="star5" name="rate" value="5" />
                     <label for="star5" title="text">5 stars</label>
                     <input onclick="_star(this.value)" type="radio" id="star4" name="rate" value="4" />
                     <label for="star4" title="text">4 stars</label>
@@ -223,11 +204,11 @@ $item = mysqli_fetch_assoc($res);
                   <input type="hidden" id="stars" value="0">
 
                   <!-- /.contacts-list-info -->
-                  <textarea id="rating_msg" style="color:black;"></textarea>
+                  <textarea class="form-control" id="rating_msg" style="color:black;" placeholder="Enter your feedback here ..!"></textarea>
                   <?php
 
                   if (isset($_SESSION['user'])) { ?>
-                    <button onclick="_rating_p(<?php echo $id; ?>)" class="w3-button w3-success">Rate</button>
+                    <button onclick="_rating_p(<?php echo $id; ?>)" class="btn btn-success btn-block mt-1">Rate</button>
                   <?php
                   } ?>
                   </li>
@@ -250,7 +231,7 @@ $item = mysqli_fetch_assoc($res);
     <div class="row">
       <h2>Related Products</h2>
       <?php
-      $q = "SELECT * FROM product INNER JOIN category ON category.category_id=product.category_id WHERE category.category_id=$c_id AND product.product_id <> $id";
+      $q = "SELECT * FROM product INNER JOIN category ON category.category_id=product.category_id WHERE category.category_id=$c_id AND product.product_id <> $id LIMIT 4";
       $db->_result($q);
       $res2 = $db->result;
       if ($res2->num_rows) {
