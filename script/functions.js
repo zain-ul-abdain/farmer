@@ -76,7 +76,7 @@ function _discussion_forum(p = 1) {
 }
 
 /* E-Commerce*/
-function _e_commerce() {
+function _e_commerce(pageno = 1) {
   aj.onreadystatechange = function () {
     if (aj.readyState == 4 && aj.status == 200) {
       document.getElementById("content").innerHTML = aj.responseText;
@@ -85,7 +85,7 @@ function _e_commerce() {
 
   aj.open("POST", "pages/shop.php");
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  aj.send();
+  aj.send("page_no=" + pageno);
 }
 
 /* Manage Users*/
@@ -258,6 +258,7 @@ function add_product_form() {
 function change_product_image(obj) {
   document.getElementById("main").src = obj;
 }
+
 /* Show single category posts*/
 function category_post(a, n) {
   var id = a;
@@ -275,6 +276,21 @@ function category_post(a, n) {
   } else {
     aj.send("action=kb&id=" + id);
   }
+}
+
+/* Show single category category_product*/
+function category_product(id) {
+
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      document.getElementById("filter").innerHTML = aj.responseText;
+    }
+  };
+
+  aj.open("POST", "pages/category_product.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    aj.send("action=category_product&id=" + id);
+  
 }
 
 /* Show single category posts*/

@@ -5,7 +5,13 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_chat_history") {
 
   $db->_select("product");
   if ($_SESSION['user']['user_role'] == 'Admin') {
-    $q = "SELECT * FROM consultancy_service INNER JOIN user_assign_role ON user_assign_role.user_assign_role_id=consultancy_service.consultant INNER JOIN user ON user.user_id=user_assign_role.user_id INNER JOIN category ON category.category_id=consultancy_service.category_id ORDER BY consultancy_service.consultancy_service_id DESC";
+    $q = "SELECT consultancy_service_id, CONCAT(con.first_name , ' ', con.last_name) AS 'consultant' ,CONCAT(cli.first_name ,' ', cli.last_name) AS 'client' , category.category , consultancy_service.query , consultancy_service.discussion_start, consultancy_service.discussion_end, consultancy_service.status, consultancy_service.rating, consultancy_service.feedback
+    FROM USER AS con, USER AS cli, category,consultancy_service, user_assign_role AS conr, user_assign_role AS clir
+    WHERE consultancy_service.category_id=category.category_id
+    AND conr.user_id=con.user_id
+    AND clir.user_id=cli.user_id
+    AND consultancy_service.consultant=conr.user_assign_role_id
+    AND consultancy_service.client=clir.user_assign_role_id ORDER BY consultancy_service.consultancy_service_id DESC";
     $db->_result($q);
   } else {
     $q = "SELECT * FROM consultancy_service INNER JOIN user_assign_role ON user_assign_role.user_assign_role_id=consultancy_service.consultant INNER JOIN user ON user.user_id=user_assign_role.user_id INNER JOIN category ON category.category_id=consultancy_service.category_id WHERE user_assign_role.user_assign_role_id='" . $_SESSION['user']['user_assign_role_id'] . "' ORDER BY consultancy_service.consultancy_service_id DESC";
@@ -116,7 +122,7 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_chat_history") {
                     ?>
                       <tr>
                         <td><?php echo $product['consultancy_service_id']; ?></td>
-                        <td><?php echo $product['first_name']; ?></td>
+                        <td><?php echo $product['consultant']; ?></td>
                         <td><?php echo $product['client']; ?></td>
                         <td><?php echo $product['category']; ?></td>
                         <td><?php echo $product['query']; ?></td>

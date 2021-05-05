@@ -12,6 +12,10 @@ MySQL - 10.4.17-MariaDB : Database - farmer
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`farmer` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+
+USE `farmer`;
+
 /*Table structure for table `category` */
 
 DROP TABLE IF EXISTS `category`;
@@ -154,7 +158,7 @@ insert  into `consultancy_service`(`consultancy_service_id`,`consultant`,`client
 (51,8,2,6,'fertiziler','2021-04-21 12:06:29','2021-04-21 12:08:51','Complete',5,'it helped me alot thanks'),
 (52,8,2,6,'flour','2021-04-21 13:01:01','2021-04-21 13:04:34','Complete',1,'im not satisfied'),
 (53,4,2,1,'hi','2021-04-21 13:44:12','2021-04-21 14:41:05','Complete',3,'nice'),
-(54,10,2,7,'hello','2021-04-21 14:41:17','2021-04-21 14:41:17','In-Process',NULL,NULL);
+(54,10,2,7,'hello','2021-04-21 14:41:17','0000-00-00 00:00:00','In-Process',NULL,NULL);
 
 /*Table structure for table `consultancy_service_chat` */
 
@@ -243,23 +247,15 @@ CREATE TABLE `customer_order` (
   `status` enum('New Order','On The Way','Delivered','Cancel') NOT NULL DEFAULT 'New Order',
   `delivered_on` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`customer_order_id`),
-  KEY `user_assign_role_id` (`user_assign_role_id`),
-  CONSTRAINT `customer_order_ibfk_1` FOREIGN KEY (`user_assign_role_id`) REFERENCES `user_assign_role` (`user_assign_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
+  KEY `customer_order_ibfk_1` (`user_assign_role_id`),
+  CONSTRAINT `customer_order_ibfk_1` FOREIGN KEY (`user_assign_role_id`) REFERENCES `user_assign_role` (`user_assign_role_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `customer_order` */
 
 insert  into `customer_order`(`customer_order_id`,`user_assign_role_id`,`added_on`,`payment_method`,`billing_address`,`shipping_address`,`status`,`delivered_on`) values 
-(10,1,'2021-04-28 15:24:28','Cash On Delivery','h# A-29 SUECHS phase 2','','New Order',NULL),
-(11,1,'2021-04-29 13:52:41','Cash On Delivery','h# A-29 SUECHS phase 2','','New Order',NULL),
-(12,1,'2021-04-30 11:10:43','Cash On Delivery','h# A-29 SUECHS phase 2','','New Order',NULL),
-(13,1,'2021-04-30 11:11:01','Cash On Delivery','h# A-29 SUECHS phase 2','','New Order',NULL),
-(14,1,'2021-04-30 11:16:45','Cash On Delivery','h# A-29 SUECHS phase 2','','New Order',NULL),
-(15,1,'2021-04-30 11:28:00','Cash On Delivery','h# A-29 SUECHS phase 2','','New Order',NULL),
-(16,1,'2021-04-30 11:29:30','Cash On Delivery','h# A-29 SUECHS phase 2','','New Order',NULL),
-(17,1,'2021-04-30 11:29:53','Cash On Delivery','h# A-29 SUECHS phase 2','','New Order',NULL),
-(18,1,'2021-04-30 11:31:21','Cash On Delivery','h# A-29 SUECHS phase 2','','New Order',NULL),
-(19,1,'2021-04-30 11:31:33','Cash On Delivery','','','New Order',NULL);
+(24,1,'2021-05-04 10:16:42','Cash On Delivery','society','','Cancel',NULL),
+(25,2,'2021-05-04 10:48:59','Cash On Delivery','society','','Cancel',NULL);
 
 /*Table structure for table `customer_order_detail` */
 
@@ -273,11 +269,17 @@ CREATE TABLE `customer_order_detail` (
   PRIMARY KEY (`customer_order_detail_id`),
   KEY `customer_order_id` (`customer_order_id`),
   KEY `product_id` (`product_id`),
-  CONSTRAINT `customer_order_detail_ibfk_1` FOREIGN KEY (`customer_order_id`) REFERENCES `customer_order` (`customer_order_id`),
+  CONSTRAINT `customer_order_detail_ibfk_1` FOREIGN KEY (`customer_order_id`) REFERENCES `customer_order` (`customer_order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `customer_order_detail_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `customer_order_detail` */
+
+insert  into `customer_order_detail`(`customer_order_detail_id`,`customer_order_id`,`product_id`,`quantity`) values 
+(5,24,14,2),
+(6,24,11,3),
+(7,25,11,1),
+(8,25,10,4);
 
 /*Table structure for table `post` */
 
@@ -450,16 +452,24 @@ CREATE TABLE `product` (
   PRIMARY KEY (`product_id`),
   KEY `category_id` (`category_id`),
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `product` */
 
 insert  into `product`(`product_id`,`category_id`,`user_assign_role_id`,`product_title`,`product_description`,`price`,`quantity`,`low_inventory`,`added_on`,`updated_on`,`updated_by`,`is_active`,`is_featured`,`is_free_shipping`,`shipping_charges`,`is_rating_allowed`,`is_comment_allowed`) values 
-(1,7,1,'Carrot','The carrot is a root vegetable, usually orange in color, though purple, black, red, white, and yellow cultivars exist. They are a domesticated form of the wild carrot, Daucus carota, native to Europe and Southwestern Asia. The plant probably originated in Persia and was originally cultivated for its leaves and seeds.',100,50,20,'2021-04-30 09:53:20',NULL,NULL,1,0,1,0,1,1),
-(10,3,1,'Apple','An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found today. ',150,992,100,'2021-04-30 11:28:00',NULL,NULL,1,1,1,0,1,1),
-(11,16,8,'Fertiliser','A fertilizer or fertiliser is any material of natural or synthetic origin that is applied to soil or to plant tissues to supply plant nutrients. Fertilizers may be distinct from liming materials or other non-nutrient soil amendments. Many sources of fertilizer exist, both natural and industrially produced.',500,30,15,'2021-04-30 09:53:27',NULL,NULL,1,1,1,0,1,1),
-(14,3,10,'Mango','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.',100,993,15,'2021-04-30 11:31:33',NULL,NULL,1,1,1,0,1,1),
-(15,3,1,'Banana','A banana is an elongated, edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa. In some countries, bananas used for cooking may be called \"plantains\", distinguishing them from dessert bananas.',50,100,20,'2021-04-30 11:43:09',NULL,NULL,1,1,1,0,1,1);
+(10,3,1,'Apple','An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found today. ',150,991,100,'2021-05-04 10:47:27',NULL,NULL,1,1,1,0,1,1),
+(11,16,8,'Fertiliser','A fertilizer or fertiliser is any material of natural or synthetic origin that is applied to soil or to plant tissues to supply plant nutrients. Fertilizers may be distinct from liming materials or other non-nutrient soil amendments. Many sources of fertilizer exist, both natural and industrially produced.',500,30,15,'2021-05-04 10:47:27',NULL,NULL,1,1,1,0,1,1),
+(14,3,10,'Mango','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.',100,990,15,'2021-05-04 10:16:42',NULL,NULL,1,1,1,0,1,1),
+(16,3,1,'Banana','A banana is an elongated, edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa. In some countries, bananas used for cooking may be called \"plantains\", distinguishing them from dessert bananas',100,500,0,'2021-05-04 14:11:16',NULL,NULL,1,1,1,0,1,1),
+(17,3,1,'Apple2','An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found today. ',150,991,100,'2021-05-05 09:47:25',NULL,NULL,1,1,1,0,1,1),
+(18,16,8,'Fertiliser2','A fertilizer or fertiliser is any material of natural or synthetic origin that is applied to soil or to plant tissues to supply plant nutrients. Fertilizers may be distinct from liming materials or other non-nutrient soil amendments. Many sources of fertilizer exist, both natural and industrially produced.',500,30,15,'2021-05-05 09:47:27',NULL,NULL,1,1,1,0,1,1),
+(19,3,10,'Mango2','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.',100,990,15,'2021-05-05 09:47:28',NULL,NULL,1,1,1,0,1,1),
+(20,3,1,'Banana2','A banana is an elongated, edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa. In some countries, bananas used for cooking may be called \"plantains\", distinguishing them from dessert bananas',100,500,0,'2021-05-05 09:47:30',NULL,NULL,1,1,1,0,1,1),
+(21,3,1,'Apple3','An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found today. ',150,991,100,'2021-05-05 10:37:45',NULL,NULL,1,1,1,0,1,1),
+(22,16,8,'Fertiliser3','A fertilizer or fertiliser is any material of natural or synthetic origin that is applied to soil or to plant tissues to supply plant nutrients. Fertilizers may be distinct from liming materials or other non-nutrient soil amendments. Many sources of fertilizer exist, both natural and industrially produced.',500,30,15,'2021-05-04 10:47:27',NULL,NULL,1,1,1,0,1,1),
+(23,3,10,'Mango3','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.',100,990,15,'2021-05-04 10:16:42',NULL,NULL,1,1,1,0,1,1),
+(24,3,1,'Banana3','A banana is an elongated, edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa. In some countries, bananas used for cooking may be called \"plantains\", distinguishing them from dessert bananas',100,500,0,'2021-05-04 14:11:16',NULL,NULL,1,1,1,0,1,1),
+(25,3,10,'Mango4','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.',100,990,15,'2021-05-04 10:16:42',NULL,NULL,1,1,1,0,1,1);
 
 /*Table structure for table `product_comment` */
 
@@ -480,11 +490,8 @@ CREATE TABLE `product_comment` (
 /*Data for the table `product_comment` */
 
 insert  into `product_comment`(`product_comment_id`,`user_assign_role_id`,`product_id`,`comment`,`added_on`,`is_active`) values 
-(2,1,15,'banana very nice fruit','2021-04-29 14:53:02',0),
-(3,1,15,'banana very nice fruit','2021-04-29 14:53:36',0),
 (4,1,14,'Mango is a summer season fruit','2021-04-29 14:54:34',0),
-(5,1,11,'Fertilizer is good to grow production fast','2021-04-29 14:55:33',0),
-(6,1,15,'Banana 2','2021-04-30 09:46:10',0);
+(5,1,11,'Fertilizer is good to grow production fast','2021-04-29 14:55:33',0);
 
 /*Table structure for table `product_image` */
 
@@ -499,14 +506,11 @@ CREATE TABLE `product_image` (
   PRIMARY KEY (`product_image_id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `product_image_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `product_image` */
 
 insert  into `product_image`(`product_image_id`,`product_id`,`image_path`,`is_main`,`added_on`) values 
-(1,1,'https://www.jessicagavin.com/wp-content/uploads/2019/02/carrots-7-1200.jpg',1,'2021-03-10 17:58:23'),
-(2,1,'pages/shop/images/img-pro-01.jpg',0,'2021-03-10 17:58:29'),
-(3,1,'https://www.highmowingseeds.com/wordpress/wp-content/uploads/2017/05/dolciva_carrot-92416-039-2x2.jpg',0,'2021-03-10 17:55:13'),
 (6,10,'products/10/35552.jpeg',1,'2021-03-24 18:42:12'),
 (7,10,'products/10/5f4dcc3b5aa765d61d8327deb882cf99.png',0,'2021-03-24 18:41:42'),
 (8,10,'products/10/71278886.jpg',0,'2021-03-24 18:41:42'),
@@ -517,9 +521,18 @@ insert  into `product_image`(`product_image_id`,`product_id`,`image_path`,`is_ma
 (19,14,'products/14/707021_3090737_mangoes_akhbar.jpg',1,'2021-03-30 18:24:59'),
 (20,14,'products/14/mango.jpg',0,'2021-03-30 18:24:59'),
 (21,14,'products/14/mangoes-chopped-and-fresh.jpg',0,'2021-03-30 18:24:59'),
-(22,15,'products/15/42E9as7NaTaAi4A6JcuFwG-1200-80.jpg',1,'2021-04-26 14:35:55'),
-(23,15,'products/15/190902_banannas_full-1440x813.jpg',0,'2021-04-26 14:35:55'),
-(24,15,'products/15/271157_2200-732x549.jpg',0,'2021-04-26 14:35:55');
+(25,16,'products/16/42E9as7NaTaAi4A6JcuFwG-1200-80.jpg',1,'2021-05-04 14:10:39'),
+(26,16,'products/16/190902_banannas_full-1440x813.jpg',0,'2021-05-04 14:10:39'),
+(27,16,'products/16/271157_2200-732x549.jpg',0,'2021-05-04 14:10:39'),
+(28,24,'products/16/190902_banannas_full-1440x813.jpg',1,'2021-05-05 10:42:53'),
+(29,23,'products/14/mangoes-chopped-and-fresh.jpg',1,'2021-05-05 10:43:23'),
+(30,22,'products/11/outlook-for-the-global-fertilizer-market.jpg',1,'2021-05-05 10:43:54'),
+(31,21,'products/10/Jonagold_NYAS-Apples2.png',1,'2021-05-05 10:44:35'),
+(32,17,'products/10/Jonagold_NYAS-Apples2.png',1,'2021-05-05 10:45:54'),
+(33,18,'products/11/outlook-for-the-global-fertilizer-market.jpg',1,'2021-05-05 10:45:57'),
+(34,19,'products/14/mangoes-chopped-and-fresh.jpg',1,'2021-05-05 10:46:07'),
+(35,20,'products/16/190902_banannas_full-1440x813.jpg',1,'2021-05-05 10:42:53'),
+(37,25,'products/14/mangoes-chopped-and-fresh.jpg',1,'2021-05-05 10:46:07');
 
 /*Table structure for table `product_rating` */
 
@@ -539,8 +552,6 @@ CREATE TABLE `product_rating` (
 /*Data for the table `product_rating` */
 
 insert  into `product_rating`(`product_rating_id`,`user_assign_role_id`,`product_id`,`rating`,`added_on`) values 
-(1,1,15,3,'2021-04-29 14:53:02'),
-(2,1,15,3,'2021-04-29 14:53:36'),
 (3,1,14,4,'2021-04-29 14:54:34'),
 (4,1,11,4,'2021-04-29 14:55:33');
 
@@ -609,8 +620,8 @@ insert  into `user`(`user_id`,`first_name`,`last_name`,`gender`,`user_email`,`us
 (6,'Abdullah','Shah','Male','user5@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar5.png',6,'Intermediate','0312-1231231','H# c-1 citizen colony',1,1,'2021-04-28 10:12:34',NULL,3),
 (10,'Noshad','Ali','Male','user6@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/123.jpg',2,'Intermediate','0300-1231231','H# c-1 citizen colony',1,1,'2021-03-30 15:09:49',NULL,6),
 (12,'Rehman','Brohi','Male','user7@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/user1-128x128.jpg',2,'Intermediate','0312-1233214','PH-2 SUECHS',1,1,'2021-03-30 15:09:50',NULL,7),
-(14,'Sajjad','Rajper','Male','user8@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-1.jpg',3,'Beginner','0300-1231231','PH-2 SUECHS',1,1,'2021-04-05 18:20:02',NULL,3),
-(18,'Sarang','Ali','Male','user9@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-3.jpg',1,'Intermediate','0300-1231231','PH-1 SUECHS',1,0,'2021-03-30 15:09:55',NULL,6);
+(14,'Sajjad','Rajper','Male','user8@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-1.jpg',3,'Beginner','0300-1231231','PH-2 SUECHS',0,1,'2021-05-04 10:49:47',NULL,3),
+(18,'Sarang','Ali','Male','user9@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-3.jpg',1,'Intermediate','0300-1231231','PH-1 SUECHS',1,0,'2021-05-04 10:49:43',NULL,6);
 
 /*Table structure for table `user_assign_role` */
 

@@ -3,9 +3,29 @@
 session_start();
 require_once '../require/database.php';
 
-$q = "SELECT *,product.category_id AS 'c_id' FROM product INNER JOIN user_assign_role ON product.user_assign_role_id=user_assign_role.user_assign_role_id INNER JOIN user_role ON user_role.user_role_id=user_assign_role.user_role_id INNER JOIN category ON category.category_id=product.category_id INNER JOIN USER ON user.user_id=user_assign_role.user_id WHERE product.quantity > product.low_inventory  AND product.is_active=1 ORDER BY product.product_id DESC";
+$con = $db->connection;
+
+$page_no = $_POST['page_no'];
+$limit = 12;
+$total_records_per_page = $limit;
+
+$offset = ($page_no - 1) * $total_records_per_page;
+$previous_page = $page_no - 1;
+$next_page = $page_no + 1;
+$adjacents = "2";
+$result_count = mysqli_query($con, "SELECT COUNT(*) As total_records FROM product WHERE is_active=1");
+$total_records = mysqli_fetch_array($result_count);
+$total_records = $total_records['total_records'];
+$total_no_of_pages = $total_records;
+// $total_no_of_pages = ceil($total_records / $total_records_per_page);
+// $second_last = ceil($total_no_of_pages / $limit) - 1; // total pages minus 1
+
+$q = "SELECT *,product.category_id AS 'c_id' FROM product INNER JOIN user_assign_role ON product.user_assign_role_id=user_assign_role.user_assign_role_id INNER JOIN user_role ON user_role.user_role_id=user_assign_role.user_role_id INNER JOIN category ON category.category_id=product.category_id INNER JOIN USER ON user.user_id=user_assign_role.user_id WHERE product.quantity > product.low_inventory  AND product.is_active=1 ORDER BY product.product_id DESC 
+				LIMIT $offset, $total_records_per_page";
 $db->_result($q);
-$res = $db->result;
+$res2 = $db->result;
+
+
 ?>
 
 <style type="text/css">
@@ -78,7 +98,7 @@ $res = $db->result;
             if ($db->result->num_rows) {
               while ($c = mysqli_fetch_assoc($db->result)) {
             ?>
-                <a href="#" class="w3-bar-item w3-button" onclick="category_post(<?php echo $c['category_id']; ?>)"><?php echo $c['category']; ?></a>
+                <a href="#" class="w3-bar-item w3-button" onclick="category_product(<?php echo $c['category_id']; ?>)"><?php echo $c['category']; ?></a>
             <?php
               }
             }
@@ -180,15 +200,15 @@ $res = $db->result;
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" id="filter">
       <?php
-      while ($product = mysqli_fetch_assoc($res)) {
+      while ($product = mysqli_fetch_assoc($res2)) {
         $db->_result("SELECT * FROM product_image WHERE product_id='" . $product['product_id'] . "' AND is_main=1");
         $img = mysqli_fetch_assoc($db->result);
       ?>
         <div class="col-sm-3">
 
-          <div class="card" style="width: 18rem; height:450px;">
+          <div class="card" style="width: 18rem; height:400px;">
 
             <img style="width: 300px; height:200px" src="<?php echo $img['image_path']; ?>" class="card-img-top img-thumbnail" alt="...">
 
@@ -199,45 +219,65 @@ $res = $db->result;
               <p class="card-text"><?php echo substr($product['product_description'], 0, 80); ?></p>
 
               <hr>
-              <p><?php
-                  $db->_result("SELECT AVG(rating) AS 'Stars' FROM product_rating WHERE product_id=" . $product['product_id']);
-                  if ($db->result->num_rows) {
-                    $stars = mysqli_fetch_assoc($db->result);
 
-                  ?>
-              <div class="rate">
-                <input type="radio" id="star5" name="rate<?php echo $consultant['user_id']; ?>" value="5" <?php if (isset($stars['Stars']) && $stars['Stars'][0] == 5) {
-                                                                                                            echo 'checked';
-                                                                                                          } ?> disabled />
-                <label for="star5" title="text">5 stars</label>
-                <input type="radio" id="star4" name="rate<?php echo $consultant['user_id']; ?>" value="4" <?php if (isset($stars['Stars']) && $stars['Stars'][0] == 4) {
-                                                                                                            echo 'checked';
-                                                                                                          } ?> disabled />
-                <label for="star4" title="text">4 stars</label>
-                <input type="radio" id="star3" name="rate<?php echo $consultant['user_id']; ?>" value="3" <?php if (isset($stars['Stars']) && $stars['Stars'][0] == 3) {
-                                                                                                            echo 'checked';
-                                                                                                          } ?> disabled />
-                <label for="star3" title="text">3 stars</label>
-                <input type="radio" id="star2" name="rate<?php echo $consultant['user_id']; ?>" value="2" <?php if (isset($stars['Stars']) && $stars['Stars'][0] == 2) {
-                                                                                                            echo 'checked';
-                                                                                                          } ?> disabled />
-                <label for="star2" title="text">2 stars</label>
-                <input type="radio" id="star1" name="rate<?php echo $consultant['user_id']; ?>" value="1" <?php if (isset($stars['Stars']) && $stars['Stars'][0] == 1) {
-                                                                                                            echo 'checked';
-                                                                                                          } ?> disabled />
-                <label for="star1" title="text">1 star</label>
-              </div>
-            <?php
-                  }
-            ?>
-            </p>
-            <a onclick="product_details(<?php echo $product['product_id']; ?>,<?php echo $product['c_id']; ?>)" href="#" class="btn btn-primary">Details</a>
-            <a onclick="add_to_cart(<?php echo $product['product_id']; ?>,1)" href="#" class="btn btn-secondary">Add to Cart</a>
+              <a onclick="product_details(<?php echo $product['product_id']; ?>,<?php echo $product['c_id']; ?>)" href="#" class="btn btn-primary">Details</a>
+              <a onclick="add_to_cart(<?php echo $product['product_id']; ?>,1)" href="#" class="btn btn-secondary">Add to Cart</a>
 
             </div>
           </div>
         </div>
       <?php } ?>
     </div>
+
+    <!-- Pagination start -->
+    <div style='padding: 10px 20px 0px; border-top: dotted 1px #CCC;'>
+      <strong>Page
+        <?php echo $page_no . " of " . ceil($total_no_of_pages / $limit); ?></strong>
+    </div>
+
+    <ul class="pagination" align="center">
+      <?php if ($page_no > 1) { ?>
+
+        <li><a href='#' onclick="_e_commerce(1)">First Page</a></li>
+      <?php } ?>
+
+      <li <?php if ($page_no <= 1) {
+            echo "class='disabled'";
+          } ?>>
+        <a <?php if ($page_no > 1) { ?> href='#' onclick="_e_commerce(<?php echo $previous_page; ?>)" <?php } ?>>
+          Previous</a>
+      </li>
+
+      <?php
+
+      if ($total_no_of_pages <= 10) {
+        for ($counter = 1; $counter <= ceil($total_no_of_pages / $limit); $counter++) {
+          if ($counter == $page_no) {
+            echo "<li class='active'><a>$counter</a></li>";
+          } else { ?>
+            <li><a href='#' onclick="_e_commerce(<?php echo $counter; ?>)"><?php echo $counter; ?></a>
+            </li>
+      <?php
+          }
+        }
+      } elseif (ceil($total_no_of_pages / $limit) > 10) {
+        // Here we will add further conditions
+      }
+
+      ?>
+
+      <li <?php if ($page_no >= ceil($total_no_of_pages / $limit)) {
+            echo "class='disabled'";
+          } ?>>
+        <a <?php if ($page_no < ceil($total_no_of_pages / $limit)) { ?> href='#' onclick="_e_commerce(<?php echo $next_page; ?>)" <?php } ?>>Next</a>
+      </li>
+
+      <?php if ($page_no < ceil($total_no_of_pages / $limit)) { ?>
+
+        <li><a href='#' onclick="_e_commerce(<?php echo ceil($total_no_of_pages / $limit); ?>)">Last
+            &rsaquo;&rsaquo;</a></li>
+      <?php } ?>
+    </ul>
+    <!-- Pagination End -->
 
   </div>
