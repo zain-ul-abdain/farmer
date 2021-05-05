@@ -6,7 +6,7 @@ require_once '../require/database.php';
 $con = $db->connection;
 
 $page_no = $_POST['page_no'];
-$limit = 12;
+$limit = 8;
 $total_records_per_page = $limit;
 
 $offset = ($page_no - 1) * $total_records_per_page;
@@ -24,6 +24,12 @@ $q = "SELECT *,product.category_id AS 'c_id' FROM product INNER JOIN user_assign
 				LIMIT $offset, $total_records_per_page";
 $db->_result($q);
 $res2 = $db->result;
+
+// 
+$db->_result("SELECT COUNT('product_id') AS 'records' FROM product WHERE is_active=1");
+if ($db->result->num_rows) {
+  $rows = mysqli_fetch_assoc($db->result);
+}
 
 
 ?>
@@ -250,7 +256,7 @@ $res2 = $db->result;
 
       <?php
 
-      if ($total_no_of_pages <= 10) {
+      if ($total_no_of_pages <= $rows['records']) {
         for ($counter = 1; $counter <= ceil($total_no_of_pages / $limit); $counter++) {
           if ($counter == $page_no) {
             echo "<li class='active'><a>$counter</a></li>";
