@@ -452,7 +452,7 @@ CREATE TABLE `product` (
   PRIMARY KEY (`product_id`),
   KEY `category_id` (`category_id`),
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `product` */
 
@@ -469,7 +469,10 @@ insert  into `product`(`product_id`,`category_id`,`user_assign_role_id`,`product
 (22,16,8,'Fertiliser3','A fertilizer or fertiliser is any material of natural or synthetic origin that is applied to soil or to plant tissues to supply plant nutrients. Fertilizers may be distinct from liming materials or other non-nutrient soil amendments. Many sources of fertilizer exist, both natural and industrially produced.',500,30,15,'2021-05-04 10:47:27',NULL,NULL,1,1,1,0,1,1),
 (23,3,10,'Mango3','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.',100,990,15,'2021-05-04 10:16:42',NULL,NULL,1,1,1,0,1,1),
 (24,3,1,'Banana3','A banana is an elongated, edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa. In some countries, bananas used for cooking may be called \"plantains\", distinguishing them from dessert bananas',100,500,0,'2021-05-04 14:11:16',NULL,NULL,1,1,1,0,1,1),
-(25,3,10,'Mango4','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.',100,990,15,'2021-05-04 10:16:42',NULL,NULL,1,1,1,0,1,1);
+(25,3,10,'Mango4','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.',100,990,15,'2021-05-04 10:16:42',NULL,NULL,1,1,1,0,1,1),
+(26,3,4,'Pineapple','The pineapple is a tropical plant with an edible fruit and the most economically significant plant in the family Bromeliaceae. The pineapple is indigenous to South America, where it has been cultivated for many centuries.',300,150,0,'2021-05-05 14:49:19',NULL,NULL,1,1,1,0,1,1),
+(27,1,1,'Basmati Rice','Basmati is a variety of long, slender-grained aromatic rice which is traditionally grown in India and Pakistan. As of 2018–19, India accounted for 65% of the international trade in basmati rice, while Pakistan accounted for the remaining 35%.',150,500,0,'2021-05-05 15:14:48',NULL,NULL,1,0,1,0,1,1),
+(28,1,1,'Brown Rice','Brown rice is a whole grain rice with the inedible outer hull removed. White rice is the same grain without the hull, the bran layer, and the cereal germ. Red rice, gold rice, and black rice are all whole rices with differently pigmented outer layers.',120,300,0,'2021-05-05 15:17:31',NULL,NULL,1,0,1,0,1,1);
 
 /*Table structure for table `product_comment` */
 
@@ -485,13 +488,14 @@ CREATE TABLE `product_comment` (
   PRIMARY KEY (`product_comment_id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `product_comment_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `product_comment` */
 
 insert  into `product_comment`(`product_comment_id`,`user_assign_role_id`,`product_id`,`comment`,`added_on`,`is_active`) values 
 (4,1,14,'Mango is a summer season fruit','2021-04-29 14:54:34',0),
-(5,1,11,'Fertilizer is good to grow production fast','2021-04-29 14:55:33',0);
+(5,1,11,'Fertilizer is good to grow production fast','2021-04-29 14:55:33',0),
+(7,4,26,'Like this fruit very much','2021-05-05 14:58:55',0);
 
 /*Table structure for table `product_image` */
 
@@ -506,7 +510,7 @@ CREATE TABLE `product_image` (
   PRIMARY KEY (`product_image_id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `product_image_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `product_image` */
 
@@ -532,7 +536,12 @@ insert  into `product_image`(`product_image_id`,`product_id`,`image_path`,`is_ma
 (33,18,'products/11/outlook-for-the-global-fertilizer-market.jpg',1,'2021-05-05 10:45:57'),
 (34,19,'products/14/mangoes-chopped-and-fresh.jpg',1,'2021-05-05 10:46:07'),
 (35,20,'products/16/190902_banannas_full-1440x813.jpg',1,'2021-05-05 10:42:53'),
-(37,25,'products/14/mangoes-chopped-and-fresh.jpg',1,'2021-05-05 10:46:07');
+(37,25,'products/14/mangoes-chopped-and-fresh.jpg',1,'2021-05-05 10:46:07'),
+(38,26,'products/26/fresh-pineapple-500x500.jpg',1,'2021-05-05 14:49:00'),
+(39,26,'products/26/pineapple-1.jpg',0,'2021-05-05 14:49:00'),
+(40,27,'products/27/basmati_rice_1.jpg',1,'2021-05-05 15:14:43'),
+(41,27,'products/27/basmati_rice_2.jpg',0,'2021-05-05 15:14:43'),
+(42,28,'products/28/brown_rice.jpg',1,'2021-05-05 15:17:27');
 
 /*Table structure for table `product_rating` */
 
@@ -547,13 +556,14 @@ CREATE TABLE `product_rating` (
   PRIMARY KEY (`product_rating_id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `product_rating_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `product_rating` */
 
 insert  into `product_rating`(`product_rating_id`,`user_assign_role_id`,`product_id`,`rating`,`added_on`) values 
 (3,1,14,4,'2021-04-29 14:54:34'),
-(4,1,11,4,'2021-04-29 14:55:33');
+(4,1,11,4,'2021-04-29 14:55:33'),
+(5,4,26,4,'2021-05-05 15:04:26');
 
 /*Table structure for table `state` */
 
