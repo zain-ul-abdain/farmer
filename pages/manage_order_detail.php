@@ -3,7 +3,9 @@ session_start();
 $s_address = $_REQUEST['s_address'] ?? 'same as billing address';
 require_once '../require/database.php';
 
-$db->_result("SELECT * FROM customer_order INNER JOIN customer_order_detail ON customer_order.customer_order_id=customer_order_detail.customer_order_id WHERE customer_order.customer_order_id=" . $_REQUEST['pro_id']);
+$db->_result("SELECT * FROM customer_order 
+INNER JOIN customer_order_detail ON customer_order.customer_order_id=customer_order_detail.customer_order_id 
+WHERE customer_order.customer_order_id=" . $_REQUEST['pro_id']);
 $order = mysqli_fetch_assoc($db->result);
 
 ?>
@@ -377,10 +379,10 @@ $order = mysqli_fetch_assoc($db->result);
                     <div class="col-sm-3 invoice-col">
                       Billing Address
                       <address>
-                        <strong><?php echo $_REQUEST['firstname'] ?? ''; ?></strong><br>
-                        <?php echo $_REQUEST['address'] ?? ''; ?><br>
-                        Phone: <?php echo $_REQUEST['phone_number'] ?? ''; ?><br>
-                        Email: <?php echo $_REQUEST['email'] ?? ''; ?>
+                        <strong><?php echo $_REQUEST['firstname'] ?? '---'; ?></strong><br>
+                        <?php echo $order['billing_address'] ?? '---'; ?><br>
+                        Phone: <?php echo $_REQUEST['phone_number'] ?? '---'; ?><br>
+                        Email: <?php echo $_REQUEST['email'] ?? '---'; ?>
                       </address>
                     </div>
                     <!-- /.col -->
@@ -388,10 +390,10 @@ $order = mysqli_fetch_assoc($db->result);
                     <div class="col-sm-3 invoice-col">
                       Shipping Address
                       <address>
-                        <strong><?php echo $_REQUEST['s_firstname'] ?? ''; ?></strong><br>
-                        <?php echo $_REQUEST['s_address'] ?? ''; ?><br>
-                        Phone: <?php echo $_REQUEST['s_phone_number'] ?? ''; ?><br>
-                        Email: <?php echo $_REQUEST['s_email'] ?? ''; ?>
+                        <strong><?php echo $_REQUEST['s_firstname'] ?? '---'; ?></strong><br>
+                        <?php echo ($order['shipping_address'] != null) ? $order['shipping_address'] : "Same As Billing Address"; ?><br>
+                        Phone: <?php echo $_REQUEST['s_phone_number'] ?? '---'; ?><br>
+                        Email: <?php echo $_REQUEST['s_email'] ?? '---'; ?>
                       </address>
                     </div>
 
@@ -419,6 +421,7 @@ $order = mysqli_fetch_assoc($db->result);
                             <th>Product Id</th>
                             <th>Product Name</th>
                             <th>Description</th>
+                            <th>Price</th>
                             <th>Qty</th>
                             <th>Subtotal</th>
                           </tr>
@@ -435,6 +438,7 @@ $order = mysqli_fetch_assoc($db->result);
                               <td><?php echo $row['product_id']; ?></td>
                               <td><?php echo $row['product_title']; ?></td>
                               <td><?php echo $row['product_description']; ?></td>
+                              <td><?php echo $row['price']; ?></td>
                               <td><?php echo $row['qty']; ?></td>
                               <td>Rs. <?php echo ($row['price'] * $row['qty']);
                                       $total += ($row['price'] * $row['qty']);  ?></td>
@@ -477,7 +481,7 @@ $order = mysqli_fetch_assoc($db->result);
                                     ?></td>
                           </tr>
                           <tr>
-                            <th>Tax (<?php echo $tax_rate = 6;
+                            <th>Tax (<?php echo $tax_rate = 0;
                                       ?>%)</th>
                             <td>Rs. <?php
                                     echo  $tax = $total * $tax_rate / 100;
@@ -487,7 +491,7 @@ $order = mysqli_fetch_assoc($db->result);
                           </tr>
                           <tr>
                             <th>Shipping:</th>
-                            <td>Rs. <?php echo $shipping = 10;
+                            <td>Rs. <?php echo $shipping = 0;
                                     ?></td>
                           </tr>
                           <tr>

@@ -560,6 +560,43 @@ function _rating_p(p_id) {
   aj.send("action=product_rate&star=" + star + "&feedback=" + msg+"&p_id="+p_id);
 }
 
+
+/* Update Product */
+function update_product(p_id) {
+
+  var price             = document.getElementById("price").value;
+  var quantity          = document.getElementById("quantity").value;
+  var low_inventory     = document.getElementById("low_inventory").value;
+  var shipping_charges  = document.getElementById("shipping_charges").value;
+
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      alert(aj.responseText);
+      _products()
+    }
+  };
+
+  aj.open("POST", "pages/manage_products.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=update_product&p_id=" + p_id + "&price=" + price+"&quantity="+quantity+"&low_inventory="+low_inventory+"&shipping_charges="+shipping_charges);
+}
+
+
+/* delete_product */
+function delete_product(p_id) {
+
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      alert(aj.responseText);
+      _products();
+    }
+  };
+
+  aj.open("POST", "pages/manage_products.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=delete_product&p_id=" + p_id);
+}
+
 /* Manage Orders*/
 function manage_orders() {
 
@@ -585,8 +622,23 @@ function order_status(order_id) {
       manage_orders();
     }
   };
-
+  
   aj.open("POST", "pages/manage_orders.php");
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   aj.send("action=order_status&order_id="+order_id+"&value="+value);
+}
+
+/* Manage chat_history_process*/
+function chat_history_process(chat_id) {
+
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      document.getElementById("content").innerHTML = aj.responseText;
+      // alert(aj.responseText);
+    }
+  };
+
+  aj.open("POST", "pages/manage_chat_history.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=chat_history_process&chat_id="+chat_id);
 }

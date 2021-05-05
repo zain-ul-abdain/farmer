@@ -245,6 +245,12 @@
                       <p> Manage Orders</p>
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a onclick="chat_history()" href="#" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p> Manage Chat History</p>
+                    </a>
+                  </li>
 
                 </ul>
               </li>

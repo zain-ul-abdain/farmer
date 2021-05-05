@@ -1,6 +1,37 @@
 <?php
 require_once '../require/database.php';
 session_start();
+
+
+// Update Product Details
+if (isset($_REQUEST['action']) && $_REQUEST['action'] == "update_product") {
+
+  extract($_REQUEST);
+
+  $q = "UPDATE product SET price=$price, quantity=$quantity, low_inventory=$low_inventory, shipping_charges=$shipping_charges WHERE product_id=$p_id";
+  $db->_result($q);
+  if ($db->result) {
+    echo "Product details Updated Successfully ..!";
+  } else {
+    echo "Product Details Not Updated";
+  }
+}
+
+// Delete Product
+if (isset($_REQUEST['action']) && $_REQUEST['action'] == "delete_product") {
+
+  extract($_REQUEST);
+
+  $q = "DELETE FROM product WHERE product_id=$p_id";
+  $db->_result($q);
+  if ($db->result) {
+    echo "Product Deleted Successfully ..!";
+  } else {
+    echo "Product Not Deleted";
+  }
+}
+
+
 if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
   $db->_select("product");
   if ($_SESSION['user']['user_role'] == 'Admin') {
@@ -87,20 +118,6 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
       }
     </style>
 
-    <script>
-      function printData() {
-        var divToPrint = document.getElementById("printTable");
-        newWin = window.open("");
-        newWin.document.write(divToPrint.outerHTML);
-        newWin.print();
-        newWin.close();
-      }
-
-      $('button').on('click', function() {
-        printData();
-      })
-    </script>
-
     <div class="content-wrapper">
       <div class="container-fluid">
         <div class="row">
@@ -119,12 +136,13 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
                       <th>Product Image</th>
                       <th>Category Id</th>
                       <th>Title</th>
-                      <th>Description</th>
                       <th>Price</th>
                       <th>Quantity</th>
                       <th>Low Inventory</th>
                       <th>Is Active</th>
                       <th>Is Featured</th>
+                      <th>Is Free Shipping</th>
+                      <th>Shipping Charges</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -139,10 +157,9 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
                         <td><img style="width: 100px;;" src="<?php echo $product['image_path']; ?>" alt=""></td>
                         <td><?php echo $product['category_id']; ?></td>
                         <td><?php echo $product['product_title']; ?></td>
-                        <td><?php echo $product['product_description']; ?></td>
-                        <td><?php echo $product['price']; ?></td>
-                        <td><?php echo $product['quantity']; ?></td>
-                        <td><?php echo $product['low_inventory']; ?></td>
+                        <td><input class="form-control" style="width: 80px;" type="number" name="price" id="price" value="<?php echo $product['price']; ?>"></td>
+                        <td><input class="form-control" style="width: 80px;" type="number" name="quantity" id="quantity" value="<?php echo $product['quantity']; ?>"></td>
+                        <td><input class="form-control" style="width: 80px;" type="number" name="low_inventory" id="low_inventory" value="<?php echo $product['low_inventory']; ?>"></td>
 
                         <td>
                           <label class="switch">
@@ -178,9 +195,30 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
                             <span class="slider round"></span>
                           </label>
                         </td>
+
+                        <td>
+                          <label class="switch">
+                            <?php
+                            if ($product['is_free_shipping'] == 1) {
+                            ?>
+
+                              <input onclick="is_free_shipping(this,<?php echo $product['product_id']; ?>)" checked type="checkbox" name="<?php echo "Approved"; ?>">
+                            <?php
+                            } else {
+                            ?>
+                              <input onclick="is_free_shipping(this,<?php echo $product['product_id']; ?>)" type="checkbox" name="<?php echo "Inapproved"; ?>">
+                            <?php
+                            }
+                            ?>
+                            <span class="slider round"></span>
+                          </label>
+                        </td>
+
+                        <td><input class="form-control" style="width: 80px;" type="number" name="shipping_charges" id="shipping_charges" value="<?php echo $product['shipping_charges']; ?>"></td>
+
                         <td class="actions" data-th="">
-                          <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-                          <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                          <button onclick="update_product(<?php echo $product['product_id']; ?>)" class="btn btn-info btn-sm">Save</button>
+                          <button onclick="delete_product(<?php echo $product['product_id']; ?>)" class="btn btn-danger btn-sm">Delete</button>
                         </td>
                       </tr>
                     <?php

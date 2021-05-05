@@ -60,7 +60,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'dashboard') {
   }
 
   //  Active users 
-  $db->query  = "SELECT count(user_id) FROM user WHERE is_active=1";
+  $db->query  = "SELECT count(user_id) FROM user WHERE is_active=1 AND is_approved=1";
   $db->result = mysqli_query($db->connection, $db->query);
 
   if ($db->result->num_rows) {

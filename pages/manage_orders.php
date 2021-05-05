@@ -9,6 +9,25 @@ if (isset($_POST['action']) && $_POST['action'] == "order_status") {
   $db->_result($q);
   if ($db->result) {
     echo "Order Status Updated Successfully ..!";
+    if ($value == "Cancel") {
+      $db->_result("SELECT * FROM customer_order_detail WHERE customer_order_id=$order_id");
+      if ($db->result) {
+        while ($item = mysqli_fetch_assoc($db->result)) {
+          $q = "SELECT * FROM product WHERE product_id=" . $item['product_id'];
+          $res = mysqli_query($db->connection, $q);
+          if ($res->num_rows) {
+            $record = mysqli_fetch_assoc($res);
+            $q2 = "UPDATE product SET quantity='" . ($item['quantity'] + $record['quantity']) . "' WHERE product_id=" . $item['product_id'];
+            $res2 = mysqli_query($db->connection, $q2);
+            if ($res2) {
+              echo "Product: " . $item['product_id'] . " Quantity Updated";
+            } else {
+              echo "Product: " . $item['product_id'] . " Not Quantity Updated";
+            }
+          }
+        }
+      }
+    }
   } else {
     echo "Order Status Not Updated..!";
   }
@@ -16,10 +35,10 @@ if (isset($_POST['action']) && $_POST['action'] == "order_status") {
 if (isset($_POST['action']) && $_POST['action'] == "manage_orders") {
 
   if ($_SESSION['user']['user_role'] == 'Admin') {
-    $q = "SELECT * FROM customer_order INNER JOIN user_assign_role ON user_assign_role.user_assign_role_id=customer_order.user_assign_role_id INNER JOIN user ON user.user_id=user_assign_role.user_id";
+    $q = "SELECT * FROM customer_order INNER JOIN user_assign_role ON user_assign_role.user_assign_role_id=customer_order.user_assign_role_id INNER JOIN user ON user.user_id=user_assign_role.user_id ORDER BY customer_order_id DESC";
     $db->_result($q);
   } else {
-    //$db->_result("SELECT * FROM costumer_order WHERE costumer_order.user_assign_role_id=" . $_SESSION['user']['user_assign_role_id'] . " ORDER BY costumer_order.costumer_order_id DESC");
+    $db->_result("SELECT * FROM customer_order INNER JOIN user_assign_role ON user_assign_role.user_assign_role_id=customer_order.user_assign_role_id INNER JOIN user ON user.user_id=user_assign_role.user_id WHERE user_assign_role.user_assign_role_id='" . $_SESSION['user']['user_assign_role_id'] . "' ORDER BY customer_order_id DESC");
   }
 
   if ($db->result->num_rows) {
@@ -121,7 +140,9 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_orders") {
                           <td><?php echo $customer_order['first_name']; ?></td>
 
                           <td>
-                            <select onchange="order_status(<?php echo $customer_order['customer_order_id']; ?>)" name="status" id="status">
+                            <select <?php if ($customer_order['status'] == "Cancel") {
+                                      echo "disabled";
+                                    } ?> onchange="order_status(<?php echo $customer_order['customer_order_id']; ?>)" name="status" id="status">
                               <option><?php echo $customer_order['status']; ?></option>
                               <option value="Cancel">Cancel</option>
                               <option value="On The Way">On The Way</option>
