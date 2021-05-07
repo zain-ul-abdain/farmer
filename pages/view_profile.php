@@ -26,7 +26,7 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'view_profile') {
         <section class="content">
           <div class="container-fluid">
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-sm-5">
 
                 <!-- Profile Image -->
                 <div class="card card-primary card-outline">
@@ -47,7 +47,7 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'view_profile') {
                 <!-- About Me Box -->
                 <div class="card card-primary">
                   <div class="card-header">
-                    <h3 class="card-title">About Me</h3>
+                    <h3 class="card-title">About</h3>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">
@@ -86,77 +86,84 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'view_profile') {
                 <!-- /.card -->
               </div>
               <!-- /.col -->
-              <div class="col-md-9">
-                <div class="card">
-                  <div class="card-header p-2">
-                    <ul class="nav nav-pills">
+              <?php
+              if (isset($_SESSION['user']) && $_SESSION['user']['user_assign_role_id'] == $profile['user_assign_role_id']) {
+              ?>
+                <div class="col-sm-7">
+                  <div class="card">
+                    <div class="card-header p-2">
+                      <ul class="nav nav-pills">
 
-                      <li class="nav-item active"><a class="nav-link active" href="#settings" data-toggle="tab" aria-expanded="true">Settings</a></li>
-                    </ul>
-                  </div><!-- /.card-header -->
-                  <div class="card-body">
-                    <div class="tab-content">
-                      <div class="tab-pane active" id="settings">
-                        <form class="form-horizontal">
-                          <div class="form-group row">
-                            <label for="inputName" class="col-sm-2 col-form-label">First Name</label>
-                            <div class="col-sm-10">
-                              <input type="email" class="form-control" id="inputName" placeholder="Name">
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputName" class="col-sm-2 col-form-label">Last Name</label>
-                            <div class="col-sm-10">
-                              <input type="email" class="form-control" id="inputName" placeholder="Name">
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-                            <div class="col-sm-10">
-                              <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputName2" class="col-sm-2 col-form-label">Phone Number</label>
-                            <div class="col-sm-10">
-                              <input type="text" class="form-control" id="inputName2" placeholder="Name">
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputExperience" class="col-sm-2 col-form-label">Password</label>
-                            <div class="col-sm-10">
-                              <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
-                            <div class="col-sm-10">
-                              <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <div class="offset-sm-2 col-sm-10">
-                              <div class="checkbox">
-                                <label>
-                                  <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                                </label>
+                        <li class="nav-item active"><a class="nav-link active" href="#settings" data-toggle="tab" aria-expanded="true">Settings</a></li>
+                      </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="settings">
+                          <form class="form-horizontal">
+                            <div class="form-group row">
+                              <label for="inputName" class="col-sm-2 col-form-label">First Name</label>
+                              <div class="col-sm-10">
+                                <input type="email" class="form-control" id="inputName" placeholder="Name">
                               </div>
                             </div>
-                          </div>
-                          <div class="form-group row">
-                            <div class="offset-sm-2 col-sm-10">
-                              <button type="submit" class="btn btn-danger">Submit</button>
+                            <div class="form-group row">
+                              <label for="inputName" class="col-sm-2 col-form-label">Last Name</label>
+                              <div class="col-sm-10">
+                                <input type="email" class="form-control" id="inputName" placeholder="Name">
+                              </div>
                             </div>
-                          </div>
-                        </form>
+                            <div class="form-group row">
+                              <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                              <div class="col-sm-10">
+                                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="inputName2" class="col-sm-2 col-form-label">Phone Number</label>
+                              <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputName2" placeholder="Name">
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="inputExperience" class="col-sm-2 col-form-label">Password</label>
+                              <div class="col-sm-10">
+                                <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
+                              <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <div class="offset-sm-2 col-sm-10">
+                                <div class="checkbox">
+                                  <label>
+                                    <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <div class="offset-sm-2 col-sm-10">
+                                <button type="submit" class="btn btn-danger">Submit</button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                        <!-- /.tab-pane -->
                       </div>
-                      <!-- /.tab-pane -->
-                    </div>
-                    <!-- /.tab-content -->
-                  </div><!-- /.card-body -->
+                      <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
                 </div>
-                <!-- /.card -->
-              </div>
+
+              <?php
+              }
+              ?>
               <!-- /.col -->
             </div>
             <!-- /.row -->

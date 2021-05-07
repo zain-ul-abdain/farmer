@@ -37,11 +37,9 @@ include 'include/head.php';
       </div>
 
       <div class="row">
-        <div class="col-12">
+        <div class="col-sm-12">
 
-          <div class="w3-card w3-margin w3-padding">
-            <?php include 'slider/main.php'; ?>
-          </div>
+          <?php include 'slider/main.php'; ?>
 
         </div>
       </div>

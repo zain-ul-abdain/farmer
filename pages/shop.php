@@ -6,7 +6,7 @@ require_once '../require/database.php';
 $con = $db->connection;
 
 $page_no = $_POST['page_no'];
-$limit = 8;
+$limit = 12;
 $total_records_per_page = $limit;
 
 $offset = ($page_no - 1) * $total_records_per_page;
@@ -140,10 +140,32 @@ if ($db->result->num_rows) {
 
 
     <h2 align="center">Featured Products</h2>
-    <div class="row p-4">
-      <div class="col-sm-3">
-      </div>
+    <div class="row">
       <div class="col-sm-6">
+
+
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+        <!-- Bootstrap core CSS -->
+        <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+          .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+          }
+
+          @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+              font-size: 3.5rem;
+            }
+          }
+        </style>
+        <!-- Custom styles for this template -->
+        <link href="carousel.css" rel="stylesheet">
+
+
 
         <div id="carouselExampleDark" class="carousel slide" data-bs-ride="carousel">
 
@@ -202,88 +224,87 @@ if ($db->result->num_rows) {
           </button>
         </div>
       </div>
-      <div class="col-sm-3">
-      </div>
     </div>
+  </div>
 
-    <div class="row" id="filter">
-      <?php
-      while ($product = mysqli_fetch_assoc($res2)) {
-        $db->_result("SELECT * FROM product_image WHERE product_id='" . $product['product_id'] . "' AND is_main=1");
-        $img = mysqli_fetch_assoc($db->result);
-      ?>
-        <div class="col-sm-3">
+  <div class="row" id="filter">
+    <?php
+    while ($product = mysqli_fetch_assoc($res2)) {
+      $db->_result("SELECT * FROM product_image WHERE product_id='" . $product['product_id'] . "' AND is_main=1");
+      $img = mysqli_fetch_assoc($db->result);
+    ?>
+      <div class="col-sm-3">
 
-          <div class="card" style="width: 18rem; height:400px;">
+        <div class="card" style="width: 18rem; height:400px;">
 
-            <img style="width: 300px; height:200px" src="<?php echo $img['image_path']; ?>" class="card-img-top img-thumbnail" alt="...">
+          <img style="width: 300px; height:200px" src="<?php echo $img['image_path']; ?>" class="card-img-top img-thumbnail" alt="...">
 
-            <div class="card-body">
+          <div class="card-body">
 
-              <h5 class="card-title"><?php echo $product['product_title']; ?></h5>
+            <h5 class="card-title"><?php echo $product['product_title']; ?></h5>
 
-              <p class="card-text"><?php echo substr($product['product_description'], 0, 80); ?></p>
+            <p class="card-text"><?php echo substr($product['product_description'], 0, 80); ?></p>
 
-              <hr>
+            <hr>
 
-              <a onclick="product_details(<?php echo $product['product_id']; ?>,<?php echo $product['c_id']; ?>)" href="#" class="btn btn-primary">Details</a>
-              <a onclick="add_to_cart(<?php echo $product['product_id']; ?>,1)" href="#" class="btn btn-secondary">Add to Cart</a>
+            <a onclick="product_details(<?php echo $product['product_id']; ?>,<?php echo $product['c_id']; ?>)" href="#" class="btn btn-primary">Details</a>
+            <a onclick="add_to_cart(<?php echo $product['product_id']; ?>,1)" href="#" class="btn btn-secondary">Add to Cart</a>
 
-            </div>
           </div>
         </div>
-      <?php } ?>
-    </div>
-
-    <!-- Pagination start -->
-    <div style='padding: 10px 20px 0px; border-top: dotted 1px #CCC;'>
-      <strong>Page
-        <?php echo $page_no . " of " . ceil($total_no_of_pages / $limit); ?></strong>
-    </div>
-
-    <ul class="pagination" align="center">
-      <?php if ($page_no > 1) { ?>
-
-        <li><a href='#' onclick="_e_commerce(1)">First Page</a></li>
-      <?php } ?>
-
-      <li <?php if ($page_no <= 1) {
-            echo "class='disabled'";
-          } ?>>
-        <a <?php if ($page_no > 1) { ?> href='#' onclick="_e_commerce(<?php echo $previous_page; ?>)" <?php } ?>>
-          Previous</a>
-      </li>
-
-      <?php
-
-      if ($total_no_of_pages <= $rows['records']) {
-        for ($counter = 1; $counter <= ceil($total_no_of_pages / $limit); $counter++) {
-          if ($counter == $page_no) {
-            echo "<li class='active'><a>$counter</a></li>";
-          } else { ?>
-            <li><a href='#' onclick="_e_commerce(<?php echo $counter; ?>)"><?php echo $counter; ?></a>
-            </li>
-      <?php
-          }
-        }
-      } elseif (ceil($total_no_of_pages / $limit) > 10) {
-        // Here we will add further conditions
-      }
-
-      ?>
-
-      <li <?php if ($page_no >= ceil($total_no_of_pages / $limit)) {
-            echo "class='disabled'";
-          } ?>>
-        <a <?php if ($page_no < ceil($total_no_of_pages / $limit)) { ?> href='#' onclick="_e_commerce(<?php echo $next_page; ?>)" <?php } ?>>Next</a>
-      </li>
-
-      <?php if ($page_no < ceil($total_no_of_pages / $limit)) { ?>
-
-        <li><a href='#' onclick="_e_commerce(<?php echo ceil($total_no_of_pages / $limit); ?>)">Last
-            &rsaquo;&rsaquo;</a></li>
-      <?php } ?>
-    </ul>
-    <!-- Pagination End -->
-
+      </div>
+    <?php } ?>
   </div>
+
+  <!-- Pagination start -->
+  <div style='padding: 10px 20px 0px; border-top: dotted 1px #CCC;'>
+    <strong>Page
+      <?php echo $page_no . " of " . ceil($total_no_of_pages / $limit); ?></strong>
+  </div>
+
+  <ul class="pagination" align="center">
+    <?php if ($page_no > 1) { ?>
+
+      <li><a href='#' onclick="_e_commerce(1)">First Page</a></li>
+    <?php } ?>
+
+    <li <?php if ($page_no <= 1) {
+          echo "class='disabled'";
+        } ?>>
+      <a <?php if ($page_no > 1) { ?> href='#' onclick="_e_commerce(<?php echo $previous_page; ?>)" <?php } ?>>
+        Previous</a>
+    </li>
+
+    <?php
+
+    if ($total_no_of_pages <= $rows['records']) {
+      for ($counter = 1; $counter <= ceil($total_no_of_pages / $limit); $counter++) {
+        if ($counter == $page_no) {
+          echo "<li class='active'><a>$counter</a></li>";
+        } else { ?>
+          <li><a href='#' onclick="_e_commerce(<?php echo $counter; ?>)"><?php echo $counter; ?></a>
+          </li>
+    <?php
+        }
+      }
+    } elseif (ceil($total_no_of_pages / $limit) > 10) {
+      // Here we will add further conditions
+    }
+
+    ?>
+
+    <li <?php if ($page_no >= ceil($total_no_of_pages / $limit)) {
+          echo "class='disabled'";
+        } ?>>
+      <a <?php if ($page_no < ceil($total_no_of_pages / $limit)) { ?> href='#' onclick="_e_commerce(<?php echo $next_page; ?>)" <?php } ?>>Next</a>
+    </li>
+
+    <?php if ($page_no < ceil($total_no_of_pages / $limit)) { ?>
+
+      <li><a href='#' onclick="_e_commerce(<?php echo ceil($total_no_of_pages / $limit); ?>)">Last
+          &rsaquo;&rsaquo;</a></li>
+    <?php } ?>
+  </ul>
+  <!-- Pagination End -->
+
+</div>
