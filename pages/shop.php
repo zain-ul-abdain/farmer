@@ -141,6 +141,7 @@ if ($db->result->num_rows) {
 
     <h2 align="center">Featured Products</h2>
     <div class="row">
+      <div class="col-sm-3"></div>
       <div class="col-sm-6">
 
 
@@ -225,86 +226,96 @@ if ($db->result->num_rows) {
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="row" id="filter">
-    <?php
-    while ($product = mysqli_fetch_assoc($res2)) {
-      $db->_result("SELECT * FROM product_image WHERE product_id='" . $product['product_id'] . "' AND is_main=1");
-      $img = mysqli_fetch_assoc($db->result);
-    ?>
-      <div class="col-sm-3">
+    <br>
 
-        <div class="card" style="width: 18rem; height:400px;">
+    <div class="row" id="filter">
+      <?php
+      while ($product = mysqli_fetch_assoc($res2)) {
+        $db->_result("SELECT * FROM product_image WHERE product_id='" . $product['product_id'] . "' AND is_main=1");
+        $img = mysqli_fetch_assoc($db->result);
+      ?>
+        <div class="col-sm-3">
 
-          <img style="width: 300px; height:200px" src="<?php echo $img['image_path']; ?>" class="card-img-top img-thumbnail" alt="...">
+          <div class="card" style="width: 18rem; height:400px;">
 
-          <div class="card-body">
+            <img style="width: 300px; height:200px" src="<?php echo $img['image_path']; ?>" class="card-img-top img-thumbnail" alt="...">
 
-            <h5 class="card-title"><?php echo $product['product_title']; ?></h5>
+            <div class="card-body">
 
-            <p class="card-text"><?php echo substr($product['product_description'], 0, 80); ?></p>
+              <h5 class="card-title"><?php echo $product['product_title']; ?></h5>
 
-            <hr>
+              <p class="card-text"><?php echo substr($product['product_description'], 0, 80); ?></p>
 
-            <a onclick="product_details(<?php echo $product['product_id']; ?>,<?php echo $product['c_id']; ?>)" href="#" class="btn btn-primary">Details</a>
-            <a onclick="add_to_cart(<?php echo $product['product_id']; ?>,1)" href="#" class="btn btn-secondary">Add to Cart</a>
+              <hr>
 
+              <a onclick="product_details(<?php echo $product['product_id']; ?>,<?php echo $product['c_id']; ?>)" href="#" class="btn btn-primary">Details</a>
+              <a onclick="add_to_cart(<?php echo $product['product_id']; ?>,1)" href="#" class="btn btn-secondary">Add to Cart</a>
+
+            </div>
           </div>
         </div>
-      </div>
-    <?php } ?>
-  </div>
+      <?php } ?>
+    </div>
 
-  <!-- Pagination start -->
-  <div style='padding: 10px 20px 0px; border-top: dotted 1px #CCC;'>
-    <strong>Page
-      <?php echo $page_no . " of " . ceil($total_no_of_pages / $limit); ?></strong>
-  </div>
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6">
 
-  <ul class="pagination" align="center">
-    <?php if ($page_no > 1) { ?>
 
-      <li><a href='#' onclick="_e_commerce(1)">First Page</a></li>
-    <?php } ?>
+        <!-- Pagination start -->
+        <div style='padding: 10px 20px 0px; border-top: dotted 1px #CCC;'>
+          <strong>Page
+            <?php echo $page_no . " of " . ceil($total_no_of_pages / $limit); ?></strong>
+        </div>
 
-    <li <?php if ($page_no <= 1) {
-          echo "class='disabled'";
-        } ?>>
-      <a <?php if ($page_no > 1) { ?> href='#' onclick="_e_commerce(<?php echo $previous_page; ?>)" <?php } ?>>
-        Previous</a>
-    </li>
+        <ul class="pagination" align="center">
+          <?php if ($page_no > 1) { ?>
 
-    <?php
+            <li><a href='#' onclick="_e_commerce(1)">First Page</a></li>
+          <?php } ?>
 
-    if ($total_no_of_pages <= $rows['records']) {
-      for ($counter = 1; $counter <= ceil($total_no_of_pages / $limit); $counter++) {
-        if ($counter == $page_no) {
-          echo "<li class='active'><a>$counter</a></li>";
-        } else { ?>
-          <li><a href='#' onclick="_e_commerce(<?php echo $counter; ?>)"><?php echo $counter; ?></a>
+          <li <?php if ($page_no <= 1) {
+                echo "class='disabled'";
+              } ?>>
+            <a <?php if ($page_no > 1) { ?> href='#' onclick="_e_commerce(<?php echo $previous_page; ?>)" <?php } ?>>
+              Previous</a>
           </li>
-    <?php
-        }
-      }
-    } elseif (ceil($total_no_of_pages / $limit) > 10) {
-      // Here we will add further conditions
-    }
 
-    ?>
+          <?php
 
-    <li <?php if ($page_no >= ceil($total_no_of_pages / $limit)) {
-          echo "class='disabled'";
-        } ?>>
-      <a <?php if ($page_no < ceil($total_no_of_pages / $limit)) { ?> href='#' onclick="_e_commerce(<?php echo $next_page; ?>)" <?php } ?>>Next</a>
-    </li>
+          if ($total_no_of_pages <= $rows['records']) {
+            for ($counter = 1; $counter <= ceil($total_no_of_pages / $limit); $counter++) {
+              if ($counter == $page_no) {
+                echo "<li class='active'><a>$counter</a></li>";
+              } else { ?>
+                <li><a href='#' onclick="_e_commerce(<?php echo $counter; ?>)"><?php echo $counter; ?></a>
+                </li>
+          <?php
+              }
+            }
+          } elseif (ceil($total_no_of_pages / $limit) > 10) {
+            // Here we will add further conditions
+          }
 
-    <?php if ($page_no < ceil($total_no_of_pages / $limit)) { ?>
+          ?>
 
-      <li><a href='#' onclick="_e_commerce(<?php echo ceil($total_no_of_pages / $limit); ?>)">Last
-          &rsaquo;&rsaquo;</a></li>
-    <?php } ?>
-  </ul>
-  <!-- Pagination End -->
+          <li <?php if ($page_no >= ceil($total_no_of_pages / $limit)) {
+                echo "class='disabled'";
+              } ?>>
+            <a <?php if ($page_no < ceil($total_no_of_pages / $limit)) { ?> href='#' onclick="_e_commerce(<?php echo $next_page; ?>)" <?php } ?>>Next</a>
+          </li>
+
+          <?php if ($page_no < ceil($total_no_of_pages / $limit)) { ?>
+
+            <li><a href='#' onclick="_e_commerce(<?php echo ceil($total_no_of_pages / $limit); ?>)">Last
+                &rsaquo;&rsaquo;</a></li>
+          <?php } ?>
+        </ul>
+        <!-- Pagination End -->
+      </div>
+
+    </div>
+  </div>
 
 </div>

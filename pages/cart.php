@@ -188,9 +188,8 @@
   <h1 class="text-center">Shopping Cart</h1>
   <hr>
   <?php
-
-  require_once '../require/database.php';
   session_start();
+  require_once '../require/database.php';
   if (isset($_SESSION['cart'])) {
   ?>
     <div class="container">
@@ -217,8 +216,7 @@
           $total = 0;
 
           foreach ($_SESSION['cart'] as $key => $value) {
-
-            $db->_result("SELECT * FROM product,product_image WHERE product.product_id=product_image.product_id AND product.is_featured=1 AND product_image.is_main=1 AND product.is_active=1 AND product.product_id=" . $key);
+            $db->_result("SELECT * FROM product,product_image WHERE product.product_id=product_image.product_id AND product_image.is_main=1 AND product.is_active=1 AND product.product_id=" . $key);
             $cart = mysqli_fetch_assoc($db->result);
           ?>
             <tr>

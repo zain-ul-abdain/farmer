@@ -210,6 +210,20 @@ function is_approved_p(s, id) {
   aj.send("action=featured&id=" + id + "&status=" + status);
 }
 
+/* Free Shipping*/
+function is_free_shipping(s, id) {
+  var status = s.name;
+  aj.onreadystatechange = function () {
+    if (aj.readyState == 4 && aj.status == 200) {
+      alert(aj.responseText);
+    }
+  };
+
+  aj.open("POST", "pages/manage_products.php");
+  aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  aj.send("action=shipping&id=" + id + "&status=" + status);
+}
+
 /* Post active/inactive*/
 function active_post(s, id) {
   var status = s.name;
@@ -580,10 +594,10 @@ function _rating_p(p_id) {
 /* Update Product */
 function update_product(p_id) {
 
-  var price             = document.getElementById("price").value;
-  var quantity          = document.getElementById("quantity").value;
-  var low_inventory     = document.getElementById("low_inventory").value;
-  var shipping_charges  = document.getElementById("shipping_charges").value;
+  var price             = document.getElementById("price"+p_id).value;
+  var quantity          = document.getElementById("quantity"+p_id).value;
+  var low_inventory     = document.getElementById("low_inventory"+p_id).value;
+  var shipping_charges  = document.getElementById("shipping_charges"+p_id).value;
 
   aj.onreadystatechange = function () {
     if (aj.readyState == 4 && aj.status == 200) {
@@ -650,11 +664,39 @@ function chat_history_process(chat_id) {
   aj.onreadystatechange = function () {
     if (aj.readyState == 4 && aj.status == 200) {
       document.getElementById("content").innerHTML = aj.responseText;
-      // alert(aj.responseText);
     }
   };
 
   aj.open("POST", "pages/manage_chat_history.php");
   aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   aj.send("action=chat_history_process&chat_id="+chat_id);
+}
+
+
+function update_profile() {
+
+  var c_pass = document.getElementById('c_password').value;
+  var n_pass = document.getElementById('n_password').value;
+  var r_pass = document.getElementById('r_password').value;
+
+  if (n_pass == r_pass) {
+
+    aj.onreadystatechange = function () {
+      if (aj.readyState == 4 && aj.status == 200) {
+        alert(aj.responseText);
+        document.getElementById('c_password').value = "";
+        document.getElementById('n_password').value = "";
+        document.getElementById('r_password').value = "";
+      }
+    };
+  
+    aj.open("POST", "pages/update_profile.php");
+    aj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    aj.send("action=update_profile&n_pass="+n_pass+"&c_pass="+c_pass);
+    
+  }else{
+    alert("Password does not match");
+  }
+
+  
 }

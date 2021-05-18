@@ -157,9 +157,9 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
                         <td><img style="width: 100px;;" src="<?php echo $product['image_path']; ?>" alt=""></td>
                         <td><?php echo $product['category_id']; ?></td>
                         <td><?php echo $product['product_title']; ?></td>
-                        <td><input class="form-control" style="width: 80px;" type="number" name="price" id="price" value="<?php echo $product['price']; ?>"></td>
-                        <td><input class="form-control" style="width: 80px;" type="number" name="quantity" id="quantity" value="<?php echo $product['quantity']; ?>"></td>
-                        <td><input class="form-control" style="width: 80px;" type="number" name="low_inventory" id="low_inventory" value="<?php echo $product['low_inventory']; ?>"></td>
+                        <td><input class="form-control" style="width: 80px;" type="number" name="price" id="price<?php echo $product['product_id']; ?>" value="<?php echo $product['price']; ?>"></td>
+                        <td><input class="form-control" style="width: 80px;" type="number" name="quantity" id="quantity<?php echo $product['product_id']; ?>" value="<?php echo $product['quantity']; ?>"></td>
+                        <td><input class="form-control" style="width: 80px;" type="number" name="low_inventory" id="low_inventory<?php echo $product['product_id']; ?>" value="<?php echo $product['low_inventory']; ?>"></td>
 
                         <td>
                           <label class="switch">
@@ -214,7 +214,7 @@ if (isset($_POST['action']) && $_POST['action'] == "manage_products") {
                           </label>
                         </td>
 
-                        <td><input class="form-control" style="width: 80px;" type="number" name="shipping_charges" id="shipping_charges" value="<?php echo $product['shipping_charges']; ?>"></td>
+                        <td><input class="form-control" style="width: 80px;" type="number" name="shipping_charges" id="shipping_charges<?php echo $product['product_id']; ?>" value="<?php echo ($product['is_free_shipping'] == 1) ? 0 : $product['shipping_charges']; ?>"></td>
 
                         <td class="actions" data-th="">
                           <button onclick="update_product(<?php echo $product['product_id']; ?>)" class="btn btn-info btn-sm">Save</button>
@@ -274,6 +274,27 @@ if (isset($_POST['action']) && $_POST['action'] == "featured") {
   }
   if ($status == 'Inapproved') {
     $q = "UPDATE product SET is_featured=1 WHERE product_id=" . $id;
+  }
+
+  $db->_result($q);
+  if ($db->result) {
+    echo "Status updated";
+  } else {
+    echo "Status not updated";
+  }
+}
+
+/* Featured Products*/
+if (isset($_POST['action']) && $_POST['action'] == "shipping") {
+
+  $id = $_POST['id'];
+  $status = $_POST['status'];
+
+  if ($status == 'Approved') {
+    $q = "UPDATE product SET is_free_shipping=0 WHERE product_id=" . $id;
+  }
+  if ($status == 'Inapproved') {
+    $q = "UPDATE product SET is_free_shipping=1 WHERE product_id=" . $id;
   }
 
   $db->_result($q);
