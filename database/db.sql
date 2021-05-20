@@ -146,7 +146,7 @@ CREATE TABLE `consultancy_service` (
   PRIMARY KEY (`consultancy_service_id`),
   KEY `category_id` (`category_id`),
   CONSTRAINT `consultancy_service_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `consultancy_service` */
 
@@ -158,7 +158,8 @@ insert  into `consultancy_service`(`consultancy_service_id`,`consultant`,`client
 (51,8,2,6,'fertiziler','2021-04-21 12:06:29','2021-04-21 12:08:51','Complete',5,'it helped me alot thanks'),
 (52,8,2,6,'flour','2021-04-21 13:01:01','2021-04-21 13:04:34','Complete',1,'im not satisfied'),
 (53,4,2,1,'hi','2021-04-21 13:44:12','2021-04-21 14:41:05','Complete',3,'nice'),
-(54,10,2,7,'hello','2021-04-21 14:41:17','0000-00-00 00:00:00','In-Process',NULL,NULL);
+(54,10,2,7,'hello','2021-04-21 14:41:17','0000-00-00 00:00:00','In-Process',NULL,NULL),
+(55,8,1,6,'hi','2021-05-19 09:37:58','2021-05-19 09:40:16','Complete',4,'ok');
 
 /*Table structure for table `consultancy_service_chat` */
 
@@ -173,7 +174,7 @@ CREATE TABLE `consultancy_service_chat` (
   PRIMARY KEY (`consultancy_service_chat_id`),
   KEY `consultancy_service_id` (`consultancy_service_id`),
   CONSTRAINT `consultancy_service_chat_ibfk_1` FOREIGN KEY (`consultancy_service_id`) REFERENCES `consultancy_service` (`consultancy_service_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `consultancy_service_chat` */
 
@@ -213,7 +214,15 @@ insert  into `consultancy_service_chat`(`consultancy_service_chat_id`,`consultan
 (36,53,'hi',2,'2021-04-21 13:44:12'),
 (37,53,'hello',4,'2021-04-21 13:45:04'),
 (38,53,'how are you',2,'2021-04-21 14:39:36'),
-(39,54,'hello',2,'2021-04-21 14:41:17');
+(39,54,'hello',2,'2021-04-21 14:41:17'),
+(40,55,'hi',1,'2021-05-19 09:37:58'),
+(41,55,'hello',8,'2021-05-19 09:38:56'),
+(42,55,'how r u',1,'2021-05-19 09:39:04'),
+(43,55,'im fine',8,'2021-05-19 09:39:17'),
+(44,55,'what about u',8,'2021-05-19 09:39:26'),
+(45,55,'im also good',1,'2021-05-19 09:39:34'),
+(46,55,'need help',1,'2021-05-19 09:39:40'),
+(47,55,'ask please',8,'2021-05-19 09:39:47');
 
 /*Table structure for table `country` */
 
@@ -249,13 +258,18 @@ CREATE TABLE `customer_order` (
   PRIMARY KEY (`customer_order_id`),
   KEY `customer_order_ibfk_1` (`user_assign_role_id`),
   CONSTRAINT `customer_order_ibfk_1` FOREIGN KEY (`user_assign_role_id`) REFERENCES `user_assign_role` (`user_assign_role_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `customer_order` */
 
 insert  into `customer_order`(`customer_order_id`,`user_assign_role_id`,`added_on`,`payment_method`,`billing_address`,`shipping_address`,`status`,`delivered_on`) values 
 (24,1,'2021-05-04 10:16:42','Cash On Delivery','society','','Cancel',NULL),
-(25,2,'2021-05-04 10:48:59','Cash On Delivery','society','','Cancel',NULL);
+(25,2,'2021-05-04 10:48:59','Cash On Delivery','society','','Cancel',NULL),
+(26,1,'2021-05-17 17:57:50','Cash On Delivery','','','Delivered',NULL),
+(27,1,'2021-05-18 10:42:07','Cash On Delivery','','','New Order',NULL),
+(28,1,'2021-05-18 10:42:58','Cash On Delivery','','','New Order',NULL),
+(29,1,'2021-05-18 10:43:25','Cash On Delivery','','','New Order',NULL),
+(30,1,'2021-05-18 10:43:58','Cash On Delivery','','','New Order',NULL);
 
 /*Table structure for table `customer_order_detail` */
 
@@ -271,7 +285,7 @@ CREATE TABLE `customer_order_detail` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `customer_order_detail_ibfk_1` FOREIGN KEY (`customer_order_id`) REFERENCES `customer_order` (`customer_order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `customer_order_detail_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `customer_order_detail` */
 
@@ -279,7 +293,16 @@ insert  into `customer_order_detail`(`customer_order_detail_id`,`customer_order_
 (5,24,14,2),
 (6,24,11,3),
 (7,25,11,1),
-(8,25,10,4);
+(8,25,10,4),
+(9,26,29,2),
+(10,26,22,1),
+(11,26,21,1),
+(12,26,17,1),
+(13,27,11,1),
+(14,27,31,1),
+(15,28,20,1),
+(16,29,20,1),
+(17,30,20,1);
 
 /*Table structure for table `post` */
 
@@ -315,7 +338,7 @@ insert  into `post`(`post_id`,`category_id`,`user_assign_role_id`,`post_title`,`
 (60,3,10,'Fruit','In botany, a fruit is the seed-bearing structure in flowering plants formed from the ovary after flowering. Fruits are the means by which angiosperms disseminate seeds','Fruit, the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Thus, apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits','Knowledge Base',1,'2021-04-05 17:46:11',NULL,NULL),
 (61,6,3,'Where can I get some?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable. ','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn&#039;t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.','Discussion Forum',0,'2021-04-05 17:54:10',NULL,NULL),
 (62,1,1,'Where can I get some?','There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Where can I get some?Where can I get some?There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#039;t look even slightly believable.','Discussion Forum',0,'2021-03-27 13:20:23',NULL,NULL),
-(63,6,1,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?What is Lorem Ipsum What is Lorem Ipsum?What is Lorem Ipsum What is Lorem Ipsum?','Discussion Forum',0,'2021-03-27 13:23:36',NULL,NULL),
+(63,6,1,'What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?','What is Lorem Ipsum What is Lorem Ipsum?What is Lorem Ipsum What is Lorem Ipsum?What is Lorem Ipsum What is Lorem Ipsum?','Discussion Forum',1,'2021-05-18 09:55:56',NULL,NULL),
 (64,3,1,'Mango','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit.','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.','Knowledge Base',1,'2021-04-05 18:08:45',NULL,NULL);
 
 /*Table structure for table `post_attachment` */
@@ -458,24 +481,24 @@ CREATE TABLE `product` (
 
 insert  into `product`(`product_id`,`category_id`,`user_assign_role_id`,`product_title`,`product_description`,`price`,`quantity`,`low_inventory`,`added_on`,`updated_on`,`updated_by`,`is_active`,`is_featured`,`is_free_shipping`,`shipping_charges`,`is_rating_allowed`,`is_comment_allowed`) values 
 (10,3,1,'Apple','An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found today. ',150,991,100,'2021-05-04 10:47:27',NULL,NULL,1,1,1,0,1,1),
-(11,16,8,'Fertiliser','A fertilizer or fertiliser is any material of natural or synthetic origin that is applied to soil or to plant tissues to supply plant nutrients. Fertilizers may be distinct from liming materials or other non-nutrient soil amendments. Many sources of fertilizer exist, both natural and industrially produced.',500,30,15,'2021-05-04 10:47:27',NULL,NULL,1,1,1,0,1,1),
+(11,16,8,'Fertiliser','A fertilizer or fertiliser is any material of natural or synthetic origin that is applied to soil or to plant tissues to supply plant nutrients. Fertilizers may be distinct from liming materials or other non-nutrient soil amendments. Many sources of fertilizer exist, both natural and industrially produced.',500,29,15,'2021-05-18 10:42:07',NULL,NULL,1,1,1,0,1,1),
 (14,3,10,'Mango','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.',100,990,15,'2021-05-04 10:16:42',NULL,NULL,1,1,1,0,1,1),
 (16,3,1,'Banana','A banana is an elongated, edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa. In some countries, bananas used for cooking may be called \"plantains\", distinguishing them from dessert bananas',100,500,0,'2021-05-04 14:11:16',NULL,NULL,1,1,1,0,1,1),
-(17,3,1,'Apple2','An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found today. ',150,991,100,'2021-05-05 09:47:25',NULL,NULL,1,1,1,0,1,1),
+(17,3,1,'Apple2','An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found today. ',150,990,100,'2021-05-17 16:41:13',NULL,NULL,1,1,1,0,1,1),
 (18,16,8,'Fertiliser2','A fertilizer or fertiliser is any material of natural or synthetic origin that is applied to soil or to plant tissues to supply plant nutrients. Fertilizers may be distinct from liming materials or other non-nutrient soil amendments. Many sources of fertilizer exist, both natural and industrially produced.',500,30,15,'2021-05-05 09:47:27',NULL,NULL,1,1,1,0,1,1),
 (19,3,10,'Mango2','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.',100,990,15,'2021-05-05 09:47:28',NULL,NULL,1,1,1,0,1,1),
-(20,3,1,'Banana2','A banana is an elongated, edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa. In some countries, bananas used for cooking may be called \"plantains\", distinguishing them from dessert bananas',100,500,0,'2021-05-05 09:47:30',NULL,NULL,1,1,1,0,1,1),
-(21,3,1,'Apple3','An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found today. ',150,991,100,'2021-05-05 10:37:45',NULL,NULL,1,1,1,0,1,1),
-(22,16,8,'Fertiliser3','A fertilizer or fertiliser is any material of natural or synthetic origin that is applied to soil or to plant tissues to supply plant nutrients. Fertilizers may be distinct from liming materials or other non-nutrient soil amendments. Many sources of fertilizer exist, both natural and industrially produced.',500,30,15,'2021-05-04 10:47:27',NULL,NULL,1,1,1,0,1,1),
+(20,3,1,'Banana2','A banana is an elongated, edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa. In some countries, bananas used for cooking may be called \"plantains\", distinguishing them from dessert bananas',100,497,0,'2021-05-18 10:43:58',NULL,NULL,1,1,1,0,1,1),
+(21,3,1,'Apple3','An apple is an edible fruit produced by an apple tree. Apple trees are cultivated worldwide and are the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found today. ',150,990,100,'2021-05-17 16:41:13',NULL,NULL,1,1,1,0,1,1),
+(22,16,8,'Fertiliser3','A fertilizer or fertiliser is any material of natural or synthetic origin that is applied to soil or to plant tissues to supply plant nutrients. Fertilizers may be distinct from liming materials or other non-nutrient soil amendments. Many sources of fertilizer exist, both natural and industrially produced.',500,29,15,'2021-05-17 16:41:13',NULL,NULL,1,1,1,0,1,1),
 (23,3,10,'Mango3','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.',100,990,15,'2021-05-04 10:16:42',NULL,NULL,1,1,1,0,1,1),
 (24,3,1,'Banana3','A banana is an elongated, edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa. In some countries, bananas used for cooking may be called \"plantains\", distinguishing them from dessert bananas',100,500,0,'2021-05-04 14:11:16',NULL,NULL,1,1,1,0,1,1),
 (25,3,10,'Mango4','A mango is a stone fruit produced from numerous species of tropical trees belonging to the flowering plant genus Mangifera, cultivated mostly for their edible fruit. Most of these species are found in nature as wild mangoes. The genus belongs to the cashew family Anacardiaceae.',100,990,15,'2021-05-04 10:16:42',NULL,NULL,1,1,1,0,1,1),
 (26,3,4,'Pineapple','The pineapple is a tropical plant with an edible fruit and the most economically significant plant in the family Bromeliaceae. The pineapple is indigenous to South America, where it has been cultivated for many centuries.',300,150,0,'2021-05-05 14:49:19',NULL,NULL,1,1,1,0,1,1),
 (27,1,1,'Basmati Rice','Basmati is a variety of long, slender-grained aromatic rice which is traditionally grown in India and Pakistan. As of 2018–19, India accounted for 65% of the international trade in basmati rice, while Pakistan accounted for the remaining 35%.',150,500,0,'2021-05-05 15:14:48',NULL,NULL,1,0,1,0,1,1),
 (28,1,1,'Brown Rice','Brown rice is a whole grain rice with the inedible outer hull removed. White rice is the same grain without the hull, the bran layer, and the cereal germ. Red rice, gold rice, and black rice are all whole rices with differently pigmented outer layers.',120,300,0,'2021-05-05 15:17:31',NULL,NULL,1,0,1,0,1,1),
-(29,7,1,'Onion','The onion, also known as the bulb onion or common onion, is a vegetable that is the most widely cultivated species of the genus Allium. The shallot is a botanical variety of the onion. Until 2010, the shallot was classified as a separate species.',50,1000,0,'2021-05-07 09:42:32',NULL,NULL,1,0,1,0,1,1),
-(30,7,1,'Carrot','The carrot is a root vegetable, usually orange in color, though purple, black, red, white, and yellow cultivars exist. They are a domesticated form of the wild carrot, Daucus carota, native to Europe and Southwestern Asia. The plant probably originated in Persia and was originally cultivated for its leaves and seeds.',60,300,0,'2021-05-07 09:44:36',NULL,NULL,1,0,1,0,1,1),
-(31,7,1,'Spinach','Spinach is a leafy green flowering plant native to central and western Asia. It is of the order Caryophyllales, family Amaranthaceae, subfamily Chenopodioideae. Its leaves are a common edible vegetable consumed either fresh, or after storage using preservation techniques by canning, freezing, or dehydration.',40,500,0,'2021-05-07 09:46:41',NULL,NULL,1,0,1,0,1,1);
+(29,7,1,'Onion','The onion, also known as the bulb onion or common onion, is a vegetable that is the most widely cultivated species of the genus Allium. The shallot is a botanical variety of the onion. Until 2010, the shallot was classified as a separate species.',50,998,0,'2021-05-17 16:41:13',NULL,NULL,1,0,1,0,1,1),
+(30,7,1,'Carrot','The carrot is a root vegetable, usually orange in color, though purple, black, red, white, and yellow cultivars exist. They are a domesticated form of the wild carrot, Daucus carota, native to Europe and Southwestern Asia. The plant probably originated in Persia and was originally cultivated for its leaves and seeds.',50,300,30,'2021-05-17 18:09:20',NULL,NULL,1,0,0,150,1,1),
+(31,7,1,'Spinach','Spinach is a leafy green flowering plant native to central and western Asia. It is of the order Caryophyllales, family Amaranthaceae, subfamily Chenopodioideae. Its leaves are a common edible vegetable consumed either fresh, or after storage using preservation techniques by canning, freezing, or dehydration.',40,499,0,'2021-05-18 10:42:07',NULL,NULL,1,0,1,200,1,1);
 
 /*Table structure for table `product_comment` */
 
@@ -627,20 +650,20 @@ CREATE TABLE `user` (
   PRIMARY KEY (`user_id`),
   KEY `city_id` (`city_id`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city` (`city_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `user` */
 
 insert  into `user`(`user_id`,`first_name`,`last_name`,`gender`,`user_email`,`user_password`,`user_image`,`city_id`,`expert_level`,`phone_number`,`address`,`is_active`,`is_approved`,`added_on`,`updated_on`,`category_id`) values 
-(1,'Ahmed','Shah','Male','user1@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar5.png',1,'Expert','0321-1231231','H# c-1 citizen colony',1,1,'2021-04-28 10:12:29',NULL,1),
+(1,'Ahmed','Shah','Male','user1@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar5.png',1,'Expert','0321-1231231','H# c-1 citizen colony',1,1,'2021-05-18 17:29:11',NULL,1),
 (2,'Aliya','Qureshi','Female','user2@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar2.png',3,'Intermediate','0311-1231231','H# c-1 citizen colony',1,1,'2021-04-28 10:12:30',NULL,3),
 (3,'Siraj','Baig','Male','user3@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar4.png',4,'Intermediate','0345-1231231','H# c-1 citizen colony',1,1,'2021-04-28 10:12:31',NULL,6),
 (5,'Nisar','Shah','Male','user4@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar4.png',5,'Beginner','0331-1231231','H# c-1 citizen colony',1,1,'2021-04-28 10:12:31',NULL,7),
 (6,'Abdullah','Shah','Male','user5@example.com','5f4dcc3b5aa765d61d8327deb882cf99','dist/img/avatar5.png',6,'Intermediate','0312-1231231','H# c-1 citizen colony',1,1,'2021-04-28 10:12:34',NULL,3),
-(10,'Noshad','Ali','Male','user6@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/123.jpg',2,'Intermediate','0300-1231231','H# c-1 citizen colony',1,1,'2021-03-30 15:09:49',NULL,6),
+(10,'Noshad','Ali','Male','user6@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/123.jpg',2,'Intermediate','0300-1231231','H# c-1 citizen colony',1,1,'2021-05-18 17:30:33',NULL,6),
 (12,'Rehman','Brohi','Male','user7@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/user1-128x128.jpg',2,'Intermediate','0312-1233214','PH-2 SUECHS',1,1,'2021-03-30 15:09:50',NULL,7),
 (14,'Sajjad','Rajper','Male','user8@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-1.jpg',3,'Beginner','0300-1231231','PH-2 SUECHS',0,1,'2021-05-04 10:49:47',NULL,3),
-(18,'Sarang','Ali','Male','user9@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-3.jpg',1,'Intermediate','0300-1231231','PH-1 SUECHS',1,0,'2021-05-04 10:49:43',NULL,6);
+(18,'Sarang','Ali','Male','user9@example.com','5f4dcc3b5aa765d61d8327deb882cf99','images/img-3.jpg',1,'Intermediate','0300-1231231','PH-1 SUECHS',1,1,'2021-05-17 16:21:05',NULL,6);
 
 /*Table structure for table `user_assign_role` */
 

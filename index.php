@@ -1,16 +1,25 @@
 <?php
+
 include 'include/head.php';
 
 ?>
 
 <!-- JS functions on click -->
 <script type="text/javascript" src="script/functions.js"></script>
+<script src="jquery-3.6.0.js"></script>
 
-<script>
-  if (window.location == "http://localhost/11100/Farmer/farmer/index.php?action=shop") {
-    _e_commerce();
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Proza+Libre&family=Rubik&display=swap" rel="stylesheet">
+
+<style>
+  * {
+    /* font-family: 'Rubik', sans-serif; */
+    font-family: 'Proza Libre', sans-serif;
+    /* font-weight: bold; */
+
   }
-</script>
+</style>
+
 
 <div id="content">
   <div class="content-wrapper">
@@ -29,7 +38,7 @@ include 'include/head.php';
           <div class="w3-panel w3-blue w3-center">
             <h1 class="w3-text-orange" style="text-shadow:1px 1px 0 #444">
               <img style="width: 100px;" src="logo.jpg" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-              <b>Welcome to the Farmer Connection</b>
+              <b id="b">Welcome to the Farmer Connection</b>
             </h1>
           </div>
 
@@ -60,3 +69,10 @@ include 'include/head.php';
 <?php
 include 'include/footer.php';
 ?>
+<script>
+  $(document).ready(function() {
+    $("b").click(function() {
+      $(this).hide();
+    });
+  });
+</script>
